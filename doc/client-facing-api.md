@@ -56,9 +56,9 @@ All iso-time-strings are given in UTC. Different to ISO 86001, all parts of the 
 | :--- | :--- |
 | operator| operator interaction |
 | material | missing material |
-| auxiliary | missing auxiliary |
+| auxiliary | missing auxiliary consumable |
 | process | process fault |
-| equipment | equipment fault |
+| tool | equipment or machine fault |
 | unknown | unknown reason (default) |
 
 
