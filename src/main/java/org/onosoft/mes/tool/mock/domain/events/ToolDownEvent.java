@@ -1,13 +1,14 @@
-package com.onouv.mes.tool.mock.adapters.web.api;
+package org.onosoft.mes.tool.mock.domain.events;
 
-import com.onouv.mes.domain.DownTimeReason;
-import com.onouv.mes.domain.TimeInstant;
+import org.onosoft.mes.tool.mock.domain.tool.value.DownTimeReason;
+import org.onosoft.mes.tool.mock.domain.value.DomainEvent;
+import org.onosoft.mes.tool.mock.domain.value.TimeInstant;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-
-public class ToolDownEvent extends ToolUpEvent {
+@org.onosoft.ddd.annotations.DomainEvent
+public class ToolDownEvent extends DomainEvent {
 	
 	private final DownTimeReason reason;
 

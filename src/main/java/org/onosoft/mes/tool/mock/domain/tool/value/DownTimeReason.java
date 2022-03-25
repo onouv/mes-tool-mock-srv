@@ -1,5 +1,8 @@
-package com.onouv.mes.domain;
+package org.onosoft.mes.tool.mock.domain.tool.value;
 
+import org.onosoft.ddd.annotations.ValueObject;
+
+@ValueObject
 public enum DownTimeReason {
 	UNKNOWN("UNKNOWN", "Unknown reason"),
 	OPERATOR("OPERATOR", "Operator interaction"),
@@ -11,7 +14,7 @@ public enum DownTimeReason {
 	public final String value;
 	public final String description;
 	
-	private DownTimeReason(String val, String desc) {
+	DownTimeReason(String val, String desc) {
 		this.value = val;
 		this.description = desc;
 	}

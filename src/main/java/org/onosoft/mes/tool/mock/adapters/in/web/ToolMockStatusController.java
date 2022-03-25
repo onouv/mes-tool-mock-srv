@@ -1,7 +1,7 @@
-package com.onouv.mes.tool.mock.adapters.web;
+package org.onosoft.mes.tool.mock.adapters.in.web;
 
-import com.onouv.mes.tool.mock.adapters.web.api.ToolUpEvent;
-import com.onouv.mes.tool.mock.adapters.web.api.ToolDownEvent;
+import org.onosoft.mes.tool.mock.domain.events.ToolUpEvent;
+import org.onosoft.mes.tool.mock.domain.events.ToolDownEvent;
 
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +17,6 @@ import org.slf4j.LoggerFactory;
 @RestController
 public class ToolMockStatusController {
 	
-	
 	private static final Logger logger=LoggerFactory.getLogger(ToolMockStatusController.class);
 	
 	@RequestMapping(
@@ -32,7 +31,7 @@ public class ToolMockStatusController {
 				toolId, 
 				body.toString()));
 		
-		return new ResponseEntity<Void>(HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	@RequestMapping(
@@ -47,7 +46,7 @@ public class ToolMockStatusController {
 				toolId, 
 				body.toString()));
 		
-		return new ResponseEntity<Void>(HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.OK);
 		
 	}
 }

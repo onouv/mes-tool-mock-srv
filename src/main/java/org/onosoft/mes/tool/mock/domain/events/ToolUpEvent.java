@@ -1,18 +1,17 @@
-package com.onouv.mes.tool.mock.adapters.web.api;
+package org.onosoft.mes.tool.mock.domain.events;
 
-import com.onouv.mes.domain.TimeInstant;
+import org.onosoft.mes.tool.mock.domain.value.DomainEvent;
+import org.onosoft.mes.tool.mock.domain.value.TimeInstant;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class ToolUpEvent {
-	
-	protected final TimeInstant timeStamp;
-	
-	
+@org.onosoft.ddd.annotations.DomainEvent
+public class ToolUpEvent extends DomainEvent {
+
 	@JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
 	public ToolUpEvent(@JsonProperty("time") TimeInstant timeStamp) {
-		this.timeStamp = timeStamp;
+		super(timeStamp);
 	}
 	
 	public TimeInstant getTimeStamp() {
