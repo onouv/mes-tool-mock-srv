@@ -3,7 +3,7 @@ package org.onosoft.mes.tool.mock.domain.provided;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.onosoft.ddd.annotations.Entity;
-import org.onosoft.mes.tool.mock.domain.tool.value.PartStatus;
+import org.onosoft.mes.tool.mock.domain.provided.value.PartStatus;
 
 @Entity
 @Getter

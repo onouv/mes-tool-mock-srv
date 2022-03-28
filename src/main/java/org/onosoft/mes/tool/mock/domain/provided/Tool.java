@@ -4,8 +4,8 @@ import lombok.Getter;
 import org.onosoft.ddd.annotations.AggregateRoot;
 import org.onosoft.mes.tool.mock.domain.exception.NoPartAvailableException;
 import org.onosoft.mes.tool.mock.domain.exception.ToolInputBufferFullException;
-import org.onosoft.mes.tool.mock.domain.tool.value.DownTimeReason;
-import org.onosoft.mes.tool.mock.domain.tool.value.ToolStatus;
+import org.onosoft.mes.tool.mock.domain.provided.value.DownTimeReason;
+import org.onosoft.mes.tool.mock.domain.provided.value.ToolStatus;
 
 @AggregateRoot
 @Getter

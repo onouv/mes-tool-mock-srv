@@ -1,6 +1,6 @@
 package org.onosoft.mes.tool.mock.domain.events;
 
-import org.onosoft.mes.tool.mock.domain.tool.value.DownTimeReason;
+import org.onosoft.mes.tool.mock.domain.provided.value.DownTimeReason;
 import org.onosoft.mes.tool.mock.domain.value.DomainEvent;
 import org.onosoft.mes.tool.mock.domain.value.TimeInstant;
 

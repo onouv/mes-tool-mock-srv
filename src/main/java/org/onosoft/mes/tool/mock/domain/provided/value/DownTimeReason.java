@@ -1,4 +1,4 @@
-package org.onosoft.mes.tool.mock.domain.tool.value;
+package org.onosoft.mes.tool.mock.domain.provided.value;
 
 import org.onosoft.ddd.annotations.ValueObject;
 

@@ -1,7 +1,7 @@
 package org.onosoft.mes.tool.mock.domain.tool.entity;
 
 import org.onosoft.mes.tool.mock.domain.provided.Part;
-import org.onosoft.mes.tool.mock.domain.tool.value.PartStatus;
+import org.onosoft.mes.tool.mock.domain.provided.value.PartStatus;
 
 public class PartImpl extends Part {
 
