@@ -1,6 +1,5 @@
 package org.onosoft.mes.tool.mock.domain.tool;
 
-import lombok.NoArgsConstructor;
 import org.onosoft.ddd.annotations.AggregateRoot;
 import org.onosoft.mes.tool.mock.domain.exception.NoPartAvailableException;
 import org.onosoft.mes.tool.mock.domain.exception.ToolInputBufferFullException;
@@ -11,11 +10,29 @@ import org.onosoft.mes.tool.mock.domain.tool.value.ToolStatus;
 import java.util.concurrent.LinkedBlockingQueue;
 
 @AggregateRoot
-@NoArgsConstructor
 public class ToolImpl extends Tool {
 
-    private static final int CAPACITY = 10;
-    private final LinkedBlockingQueue<Part> process = new LinkedBlockingQueue<>(CAPACITY);
+    private static final int WIP_CAPACITY_DEFAULT = 10;
+    private final LinkedBlockingQueue<Part> process;
+
+    private ToolImpl () {
+        this.process = null;
+    }
+
+    public ToolImpl(String id) {
+        super(id);
+        this.process = new LinkedBlockingQueue<>(WIP_CAPACITY_DEFAULT);
+    }
+
+    public ToolImpl(String id, int wipCapacity) {
+        super(id);
+
+        if (wipCapacity < 0) {
+            throw new IllegalArgumentException("wipCapacity must be positive number.");
+        }
+
+        this.process = new LinkedBlockingQueue<>(wipCapacity);
+    }
 
     @Override
     public void start() {
@@ -60,5 +77,15 @@ public class ToolImpl extends Tool {
         } else {
             throw new NoPartAvailableException(this);
         }
+    }
+
+    @Override
+    public void breakDown() {
+
+    }
+
+    @Override
+    public void repair() {
+
     }
 }

@@ -1,0 +1,47 @@
+@startuml
+'https://plantuml.com/state-diagram
+
+scale 350 width
+
+hide empty description
+state DOWN : entry/ issue ToolDownEvent
+
+[*] --> UP
+UP --> DOWN: 10
+DOWN --> UP: 11
+state UP {
+    state STOPPED: entry/ issue ToolStoppedEvent
+    state IDLE
+    state PROCESSING: entry/ issue ToolProcessingEvent(Part); process(part)
+    state PROCESSING: loadPart(Part) [input != FULL] / input.add(part)
+    state PROCESSING: unloadPart() [outPut != EMPTY ] / output.take()
+
+    [*] --> STOPPED: 0
+    STOPPED --> IDLE: 1
+    STOPPED --> PROCESSING: 2
+    PROCESSING --> PROCESSING: 3
+    PROCESSING --> IDLE: 4, 5
+    IDLE --> PROCESSING: 6, 7
+    IDLE --> STOPPED: 8
+    PROCESSING --> STOPPED: 9
+    STOPPED --> [*]
+    IDLE --> [*]
+    PROCESSING --> [*]
+
+}
+note as T
+       event(event parameter) [guard condition] / action1; action2
+    0: / issue ToolUpEvent
+    1: start()  [input == EMPTY || output == FULL] / issue ToolIdleEvent(MATERIAL_MISSING)
+    2: start() [input != EMPTY && output != FULL]
+    3: process(Part) finished [input != EMPTY && output != FULL]
+    4: process(Part) finished [input == EMPTY] / issue ToolIdleEvent(MATERIAL_MISSING)
+    5: process(Part) finished [output == FULL] / issue ToolIdleEvent(DOWNSTREAM_BLOCK)
+    6: loadPart(Part) [output != FULL]
+    7: unloadPart() [input != EMPTY]
+    8: stop()
+    9: stop()
+    10: break()
+    11: repair()
+end note
+@enduml

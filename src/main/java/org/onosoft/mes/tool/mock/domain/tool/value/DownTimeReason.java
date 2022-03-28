@@ -6,8 +6,8 @@ import org.onosoft.ddd.annotations.ValueObject;
 public enum DownTimeReason {
 	UNKNOWN("UNKNOWN", "Unknown reason"),
 	OPERATOR("OPERATOR", "Operator interaction"),
-	MATERIAL("MATERIAL", "Lack of material for product"),
-	AUXILIARY("AUXILIARY", "Lack of auxiliary consumable or resource"),
+	MATERIAL_MISSING("MATERIAL", "Lack of material for product"),
+	AUXILIARY_MISSING("AUXILIARY", "Lack of auxiliary consumable or resource"),
 	PROCESS("PROCESS", "Related to production process "),
 	TOOL("TOOL", "Issued by tool (equiment or machine)");	
 	
