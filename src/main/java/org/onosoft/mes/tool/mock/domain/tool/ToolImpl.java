@@ -1,5 +1,6 @@
 package org.onosoft.mes.tool.mock.domain.tool;
 
+import lombok.Getter;
 import org.onosoft.ddd.annotations.AggregateRoot;
 import org.onosoft.mes.tool.mock.domain.exception.NoPartAvailableException;
 import org.onosoft.mes.tool.mock.domain.exception.ToolInputBufferFullException;
@@ -7,76 +8,56 @@ import org.onosoft.mes.tool.mock.domain.provided.Part;
 import org.onosoft.mes.tool.mock.domain.provided.Tool;
 import org.onosoft.mes.tool.mock.domain.provided.value.DownTimeReason;
 import org.onosoft.mes.tool.mock.domain.provided.value.ToolStatus;
+import org.onosoft.mes.tool.mock.domain.tool.state.ToolState;
+import org.onosoft.mes.tool.mock.domain.tool.state.StateContext;
+import org.onosoft.mes.tool.mock.domain.tool.state.StoppedState;
+
 import java.util.concurrent.LinkedBlockingQueue;
 
 @AggregateRoot
-public class ToolImpl extends Tool {
+@Getter
+public class ToolImpl implements Tool, StateContext {
 
-    private static final int WIP_CAPACITY_DEFAULT = 10;
-    private final LinkedBlockingQueue<Part> process;
-
-    private ToolImpl () {
-        this.process = null;
-    }
+    protected String id;
+    protected static final int WIP_CAPACITY_DEFAULT = 10;
+    protected final LinkedBlockingQueue<Part> process;
+    protected ToolState currentState;
 
     public ToolImpl(String id) {
-        super(id);
+        this.id = id;
+        this.currentState = StoppedState.instance();
         this.process = new LinkedBlockingQueue<>(WIP_CAPACITY_DEFAULT);
     }
 
     public ToolImpl(String id, int wipCapacity) {
-        super(id);
-
         if (wipCapacity < 0) {
             throw new IllegalArgumentException("wipCapacity must be positive number.");
         }
-
+        this.id = id;
+        this.currentState = StoppedState.instance();
         this.process = new LinkedBlockingQueue<>(wipCapacity);
     }
 
     @Override
     public void start() {
-        if (this.status == ToolStatus.DOWN) {
-            this.status = ToolStatus.UP;
 
-            // TODO: fire domain event...
-        }
+        this.currentState.start(this);
     }
 
     @Override
     public void stop(DownTimeReason reason) {
-        if(this.status == ToolStatus.UP) {
-            this.status = ToolStatus.DOWN;
-            this.downTimeReason = reason;
 
-            // TODO: fire domain event...
-        }
+        this.currentState.stop(this, reason);
     }
 
     @Override
     public void loadPart(Part part) throws ToolInputBufferFullException {
-
-        if(this.process.offer(part)) {
-
-            // TODO: fire domain event, return success state of that operation ...
-
-        } else {
-            throw new ToolInputBufferFullException(this, part);
-        }
-
+        this.currentState.loadPart(this, part);
     }
 
     @Override
     public Part unloadPart() throws NoPartAvailableException {
-
-        Part part = this.process.poll();
-        if(part != null) {
-
-            // TODO : fire domain event, return success state of that operation ...
-            return part;
-        } else {
-            throw new NoPartAvailableException(this);
-        }
+        return this.currentState.unloadPart(this);
     }
 
     @Override
@@ -87,5 +68,14 @@ public class ToolImpl extends Tool {
     @Override
     public void repair() {
 
+    }
+
+    @Override
+    public void changeStateTo(ToolState newState) throws NullPointerException {
+        if(newState != null) {
+            this.currentState = newState;
+        } else {
+            throw new NullPointerException();
+        }
     }
 }

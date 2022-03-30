@@ -1,7 +1,7 @@
 package org.onosoft.mes.tool.mock.adapters.in.web;
 
-import org.onosoft.mes.tool.mock.domain.events.ToolUpEvent;
-import org.onosoft.mes.tool.mock.domain.events.ToolDownEvent;
+import org.onosoft.mes.tool.mock.domain.event.ToolUpEvent;
+import org.onosoft.mes.tool.mock.domain.event.ToolDownEvent;
 
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestMapping;

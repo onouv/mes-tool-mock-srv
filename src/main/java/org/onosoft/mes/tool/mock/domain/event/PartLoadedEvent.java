@@ -1,4 +1,4 @@
-package org.onosoft.mes.tool.mock.domain.events;
+package org.onosoft.mes.tool.mock.domain.event;
 
 public class PartLoadedEvent extends PartEvent {
 

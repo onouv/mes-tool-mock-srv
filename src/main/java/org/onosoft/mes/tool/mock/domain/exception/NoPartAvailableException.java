@@ -2,6 +2,7 @@ package org.onosoft.mes.tool.mock.domain.exception;
 
 import lombok.Getter;
 import org.onosoft.mes.tool.mock.domain.provided.Tool;
+import org.onosoft.mes.tool.mock.domain.tool.AbstractTool;
 
 @Getter
 public class NoPartAvailableException extends Exception {

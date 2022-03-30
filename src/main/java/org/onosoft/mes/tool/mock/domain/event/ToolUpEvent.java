@@ -1,4 +1,4 @@
-package org.onosoft.mes.tool.mock.domain.events;
+package org.onosoft.mes.tool.mock.domain.event;
 
 import org.onosoft.mes.tool.mock.domain.value.DomainEvent;
 import org.onosoft.mes.tool.mock.domain.value.TimeInstant;
