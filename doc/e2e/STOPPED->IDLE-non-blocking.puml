@@ -1,0 +1,30 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+activate WebClient
+WebClient -> @Controller: POST /tools/123/start
+activate @Controller
+@Controller -> @Service: startTool(123)
+activate @Service
+@Service -> Tool: start()
+activate Tool
+Tool -> StateMachine: sendEvent(START)
+activate StateMachine
+Tool <-- StateMachine
+@Service <-- Tool
+deactivate Tool
+@Controller <-- @Service
+deactivate @Service
+WebClient <- @Controller
+deactivate @Controller
+StateMachine -> StateMachine: checkGuards
+StateMachine -> StateMachine: transition
+WebClient -> WebClient: render UI
+activate WebClient
+deactivate WebClient
+
+
+
+@enduml

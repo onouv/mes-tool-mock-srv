@@ -11,24 +11,25 @@ UP --> DOWN: FAULT
 DOWN --> UP: FAULT_CLEAR
 state UP {
     state UP: entry/ ToolUpEvt
+    state UP: PART_LOAD(Part) [!InPortFull] / input.add(part); PartLoadEvt(tool, part)
+    state UP: PART_UNLOAD() [!OutportEmpty] / part=output.unload(); PartUnloadEvt(tool, part)
     state STOPPED: entry/ ToolStoppedEvt
     state IDLE
-    state PROCESSING: entry/ ToolProcessingEvt(tool, part); process(inport.next(part))
-    state PROCESSING: tool.process.run(Part) returns / FINISHED(tool, part); output.add(part)
-    state PROCESSING: loadPart(Part) [!InPortFull] / input.add(part); PartLoadEvt(tool, part)
-    state PROCESSING: unloadPart() [!OutportEmpty] / output.take(); PartUnloadEvt(tool, part)
+    state PROCESSING: entry/ part=inport.next();ToolProcessingEvt(tool, part); process(part)
+    state PROCESSING: tool.process.run(Part) returns part/ FINISHED(part); output.add(part)
+
     state PROCESSING: exit/ PartProcessedEvt(tool, part)
 
     [*] --> STOPPED
     STOPPED --> IDLE: START [InportEmpty] / \nToolIdleEvt(tool, UPSTREAM)
     STOPPED --> IDLE: START [OutportFull] / \nToolIdleEvt(tool, DOWNSTREAM)
 
-    STOPPED --> PROCESSING: START [FlowFree]}
-    PROCESSING --> PROCESSING: FINISHED(tool, part) [FlowFree]
-    PROCESSING --> IDLE: FINISHED [InportEmpty]/ \nToolIdleEvt((tool, UPSTREAM)
-    PROCESSING --> IDLE: FINISHED [OutportFull]/ \nToolIdleEvt((tool, DOWNSTREAM)
-    IDLE --> PROCESSING: PART_LOAD [!OutportFull]
-    IDLE --> PROCESSING: PART_UNLOAD [!InportEmpty]
+    STOPPED --> PROCESSING: START [FlowIsFree]
+    PROCESSING --> PROCESSING: FINISHED(part) [FlowFree]
+    PROCESSING --> IDLE: FINISHED(part) [InportEmpty]/ \nToolIdleEvt((tool, UPSTREAM)
+    PROCESSING --> IDLE: FINISHED(part) [OutportFull]/ \nToolIdleEvt((tool, DOWNSTREAM)
+    IDLE --> PROCESSING: [FlowIsFree]
+
 
     IDLE --> STOPPED: STOP
     PROCESSING --> STOPPED: STOP
@@ -37,8 +38,10 @@ state UP {
     IDLE --> [*]
     PROCESSING --> [*]
 
+    note as T
+        FlowIsFree: (!InportEmpty && !OutportFull)
+    end note
+
 }
-note as T
-    FlowFree: (!InportEmpty && !OutportFull)
-end note
+
 @enduml
