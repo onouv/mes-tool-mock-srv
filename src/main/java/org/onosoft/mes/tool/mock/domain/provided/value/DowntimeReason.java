@@ -3,18 +3,19 @@ package org.onosoft.mes.tool.mock.domain.provided.value;
 import org.onosoft.ddd.annotations.ValueObject;
 
 @ValueObject
-public enum DownTimeReason {
+public enum DowntimeReason {
 	UNKNOWN("UNKNOWN", "Unknown reason"),
 	OPERATOR("OPERATOR", "Operator interaction"),
-	MATERIAL_MISSING("MATERIAL", "Lack of material for product"),
-	AUXILIARY_MISSING("AUXILIARY", "Lack of auxiliary consumable or resource"),
+	UPSTREAM("UPSTREAM", "Lack of material for product"),
+	DOWNSTREAM("DOWNSREAM", "product cannot flow downstream/ out buffer full"),
+	AUXILIARY("AUXILIARY", "Lack of auxiliary consumable or resource"),
 	PROCESS("PROCESS", "Related to production process "),
-	TOOL("TOOL", "Issued by tool (equiment or machine)");	
-	
+	FAULT("FAULT", "Equipment fault of tool");
+
 	public final String value;
 	public final String description;
 	
-	DownTimeReason(String val, String desc) {
+	DowntimeReason(String val, String desc) {
 		this.value = val;
 		this.description = desc;
 	}

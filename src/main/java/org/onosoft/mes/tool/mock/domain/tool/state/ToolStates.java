@@ -5,5 +5,5 @@ public enum ToolStates {
     UP,
     STOPPED,
     IDLE,
-    PROCESSING
+    PROCESSING,
 }

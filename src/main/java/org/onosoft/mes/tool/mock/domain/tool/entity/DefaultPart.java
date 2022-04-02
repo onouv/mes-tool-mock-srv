@@ -3,13 +3,13 @@ package org.onosoft.mes.tool.mock.domain.tool.entity;
 import org.onosoft.mes.tool.mock.domain.provided.Part;
 import org.onosoft.mes.tool.mock.domain.provided.value.PartStatus;
 
-public class PartImpl extends Part {
+public class DefaultPart extends Part {
 
-    public PartImpl(String id) {
+    public DefaultPart(String id) {
         super(id, PartStatus.UNPROCESSED);
     }
 
-    public PartImpl(String id, PartStatus status) {
+    public DefaultPart(String id, PartStatus status) {
         super(id, status);
     }
 

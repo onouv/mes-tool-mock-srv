@@ -26,8 +26,8 @@ state UP {
 
     STOPPED --> PROCESSING: START [FlowIsFree]
     PROCESSING --> PROCESSING: FINISHED(part) [FlowFree]
-    PROCESSING --> IDLE: FINISHED(part) [InportEmpty]/ \nToolIdleEvt((tool, UPSTREAM)
-    PROCESSING --> IDLE: FINISHED(part) [OutportFull]/ \nToolIdleEvt((tool, DOWNSTREAM)
+    PROCESSING --> IDLE: FINISHED(part) [InportEmpty]/ \nToolIdleEvt(tool, UPSTREAM)
+    PROCESSING --> IDLE: FINISHED(part) [OutportFull]/ \nToolIdleEvt(tool, DOWNSTREAM)
     IDLE --> PROCESSING: [FlowIsFree]
 
 
