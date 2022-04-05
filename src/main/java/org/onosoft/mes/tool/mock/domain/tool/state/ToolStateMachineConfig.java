@@ -1,5 +1,10 @@
 package org.onosoft.mes.tool.mock.domain.tool.state;
 
+import org.onosoft.mes.tool.mock.domain.tool.state.action.ToolIdleEventDownStreamAction;
+import org.onosoft.mes.tool.mock.domain.tool.state.action.ToolIdleEventUpstreamAction;
+import org.onosoft.mes.tool.mock.domain.tool.state.guard.FlowIsFreeGuard;
+import org.onosoft.mes.tool.mock.domain.tool.state.guard.InportEmptyGuard;
+import org.onosoft.mes.tool.mock.domain.tool.state.guard.OutportFullGuard;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.statemachine.config.EnableStateMachineFactory;
 import org.springframework.statemachine.config.EnumStateMachineConfigurerAdapter;
@@ -41,22 +46,22 @@ public class ToolStateMachineConfig extends EnumStateMachineConfigurerAdapter<To
             .withExternal()
                 .source(ToolStates.STOPPED)
                 .target(ToolStates.IDLE)
-                // TODO: InportEmptyGuard
-                // TODO: IdleForUpstreamAction
                 .event(ToolEvents.START)
+                .guard(new InportEmptyGuard())
+                .action(new ToolIdleEventUpstreamAction())
                 .and()
             .withExternal()
                 .source(ToolStates.STOPPED)
                 .target(ToolStates.IDLE)
-                // TODO: OutportFullGuard
-                // TODO: IdleForDownstreamAction
                 .event(ToolEvents.START)
+                .guard(new OutportFullGuard())
+                .action(new ToolIdleEventDownStreamAction())
                 .and()
             .withExternal()
                 .source(ToolStates.STOPPED)
                 .target(ToolStates.PROCESSING)
-                // TODO: FlowIsFreeGuard
                 .event(ToolEvents.START)
+                .guard(new FlowIsFreeGuard())
                 .and()
             .withExternal()
                 .source(ToolStates.IDLE)
@@ -66,21 +71,21 @@ public class ToolStateMachineConfig extends EnumStateMachineConfigurerAdapter<To
             .withExternal()
                 .source(ToolStates.IDLE)
                 .target(ToolStates.PROCESSING)
-                // TODO:  FlowIsFreeGuard
+                .guard(new FlowIsFreeGuard())
                 .and()
             .withExternal()
                 .source(ToolStates.PROCESSING)
                 .target(ToolStates.IDLE)
                 .event(ToolEvents.FINISHED)
-                // TODO: InportEmptyGuard
-                // TODO: IdleForUpstreamAction
+                .guard(new InportEmptyGuard())
+                .action(new ToolIdleEventUpstreamAction())
                 .and()
             .withExternal()
                 .source(ToolStates.PROCESSING)
                 .target(ToolStates.IDLE)
                 .event(ToolEvents.FINISHED)
-                // TODO: OutportFullGuard
-                // TODO: IdleForDownstreamAction
+                .guard(new OutportFullGuard())
+                .action(new ToolIdleEventDownStreamAction())
              ;
 
     }

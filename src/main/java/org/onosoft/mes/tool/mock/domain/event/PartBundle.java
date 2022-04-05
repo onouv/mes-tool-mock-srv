@@ -2,7 +2,6 @@ package org.onosoft.mes.tool.mock.domain.event;
 
 import org.onosoft.mes.tool.mock.domain.provided.Part;
 import org.onosoft.mes.tool.mock.domain.tool.DefaultTool;
-import org.onosoft.mes.tool.mock.domain.value.DomainEvent;
 
 import java.util.List;
 

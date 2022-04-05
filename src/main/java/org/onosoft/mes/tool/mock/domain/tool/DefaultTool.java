@@ -6,8 +6,8 @@ import org.onosoft.mes.tool.mock.domain.exception.NoPartAvailableException;
 import org.onosoft.mes.tool.mock.domain.exception.LoadportFullException;
 import org.onosoft.mes.tool.mock.domain.provided.Part;
 import org.onosoft.mes.tool.mock.domain.provided.Tool;
-import org.onosoft.mes.tool.mock.domain.provided.value.DowntimeReason;
-import org.onosoft.mes.tool.mock.domain.util.LoadPort;
+import org.onosoft.mes.tool.mock.domain.provided.value.IdleReason;
+import org.onosoft.mes.tool.mock.domain.tool.entity.LoadPort;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.statemachine.StateMachine;
 
@@ -47,7 +47,7 @@ public class DefaultTool implements Tool {
     }
 
     @Override
-    public void stop(DowntimeReason reason) {
+    public void stop(IdleReason reason) {
     }
 
     @Override
