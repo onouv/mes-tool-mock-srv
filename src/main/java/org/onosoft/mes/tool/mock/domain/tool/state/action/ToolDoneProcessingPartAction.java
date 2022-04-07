@@ -5,10 +5,12 @@ import org.onosoft.mes.tool.mock.domain.tool.state.ToolStates;
 import org.springframework.statemachine.StateContext;
 import org.springframework.statemachine.action.Action;
 
-public class LoadPartAction implements Action<ToolStates, ToolEvents> {
+public class ToolDoneProcessingPartAction implements Action<ToolStates, ToolEvents> {
 
-    @Override
-    public void execute(final StateContext<ToolStates, ToolEvents> context) {
-        System.out.println("Tool loads part and issues LoadPartEvent...");
-    }
+  @Override
+  public void execute(final StateContext<ToolStates, ToolEvents> context){
+    System.out.println("Tool done processing part ...");
+
+
+  }
 }

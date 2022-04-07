@@ -1,6 +1,7 @@
 package org.onosoft.mes.tool.mock.domain.tool.entity;
 
 import org.onosoft.mes.tool.mock.domain.provided.Part;
+import org.onosoft.mes.tool.mock.domain.provided.value.Identifier;
 import org.onosoft.mes.tool.mock.domain.tool.state.guard.PortStatus;
 
 import java.util.concurrent.LinkedBlockingQueue;
@@ -8,10 +9,10 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class LoadPort implements PortStatus {
 
     protected final LinkedBlockingQueue<Part> buffer;
-    protected final String id;
+    protected final Identifier id;
     protected final int capacity;
 
-    public LoadPort(String portId, int capacity) throws IllegalArgumentException {
+    public LoadPort(Identifier portId, int capacity) throws IllegalArgumentException {
         if(capacity <= 0)
             throw new IllegalArgumentException(String
                 .format("capacity must be null or positive, but was given as %i", capacity));
@@ -31,7 +32,7 @@ public class LoadPort implements PortStatus {
         return this.buffer.poll();
     }
 
-    public String getId() {
+    public Identifier getId() {
         return this.id;
     }
 

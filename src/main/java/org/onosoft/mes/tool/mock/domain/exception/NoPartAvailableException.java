@@ -2,11 +2,11 @@ package org.onosoft.mes.tool.mock.domain.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.onosoft.mes.tool.mock.domain.provided.Tool;
+import org.onosoft.mes.tool.mock.domain.provided.value.Identifier;
 
 @Getter
 @AllArgsConstructor
 public class NoPartAvailableException extends Exception {
-    protected final String toolId;
-    protected final String portId;
+    protected final Identifier toolId;
+    protected final Identifier portId;
 }

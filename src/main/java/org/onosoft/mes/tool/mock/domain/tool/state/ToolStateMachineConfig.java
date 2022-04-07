@@ -1,10 +1,8 @@
 package org.onosoft.mes.tool.mock.domain.tool.state;
 
-import org.onosoft.mes.tool.mock.domain.tool.state.action.ToolIdleEventDownStreamAction;
-import org.onosoft.mes.tool.mock.domain.tool.state.action.ToolIdleEventUpstreamAction;
-import org.onosoft.mes.tool.mock.domain.tool.state.guard.FlowIsFreeGuard;
-import org.onosoft.mes.tool.mock.domain.tool.state.guard.InportEmptyGuard;
-import org.onosoft.mes.tool.mock.domain.tool.state.guard.OutportFullGuard;
+import org.onosoft.mes.tool.mock.domain.provided.Tool;
+import org.onosoft.mes.tool.mock.domain.tool.state.action.*;
+import org.onosoft.mes.tool.mock.domain.tool.state.guard.*;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.statemachine.config.EnableStateMachineFactory;
 import org.springframework.statemachine.config.EnumStateMachineConfigurerAdapter;
@@ -20,14 +18,18 @@ public class ToolStateMachineConfig extends EnumStateMachineConfigurerAdapter<To
         states
             .withStates()
             .initial(ToolStates.UP)
+            .state(ToolStates.UP, new ToolUpEventAction(), null)
             .state(ToolStates.DOWN)
             .and()
             .withStates()
                 .parent(ToolStates.UP)
                 .initial(ToolStates.STOPPED)
+            .state(ToolStates.STOPPED,new ToolStoppedEventAction(), null )
                 .state(ToolStates.IDLE)
-                .state(ToolStates.PROCESSING);
-
+                .state(
+                    ToolStates.PROCESSING,
+                    new ToolBeginProcessingPartAction(),
+                    new ToolDoneProcessingPartAction());
     }
 
     @Override
@@ -86,8 +88,24 @@ public class ToolStateMachineConfig extends EnumStateMachineConfigurerAdapter<To
                 .event(ToolEvents.FINISHED)
                 .guard(new OutportFullGuard())
                 .action(new ToolIdleEventDownStreamAction())
-             ;
+                .and()
+            .withInternal()
+                .source(ToolStates.UP)
+                .event(ToolEvents.PART_LOADING)
+                .guard(new InportNotFullGuard())
+                .action(new LoadPartAction())
+                .and()
+            .withInternal()
+                .source(ToolStates.UP)
+                .event(ToolEvents.PART_UNLOADING)
+                .guard(new OutportNotEmptyGuard())
+                .action(new UnloadPartAction())
+                .and()
+            .withInternal()
+                .source(ToolStates.PROCESSING)
+                .timer(Tool.getCycleTime())
+                .guard(new InportNotFullGuard())
+                .action(new LoadPartAction());
 
     }
-
 }
