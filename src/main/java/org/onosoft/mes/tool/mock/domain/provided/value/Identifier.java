@@ -30,4 +30,8 @@ public abstract class Identifier {
     return result;
   }
 
+  @Override
+  public String toString() {
+    return String.format("Identifier{ id=%s }", id);
+  }
 }

@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import org.onosoft.mes.tool.mock.domain.value.TimeInstant;
 
 @AllArgsConstructor
-public class DomainEvent {
+public abstract class DomainEvent {
 
     @JsonProperty("time")
     protected final TimeInstant timeStamp;
@@ -13,4 +13,7 @@ public class DomainEvent {
     protected DomainEvent() {
         this.timeStamp = new TimeInstant();
     }
+
+    // mask Objects method to ensure our descendands implement a meaningful variant
+    public abstract String toString();
 }

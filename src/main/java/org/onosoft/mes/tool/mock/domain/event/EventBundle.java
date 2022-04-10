@@ -5,11 +5,25 @@ import lombok.Getter;
 import org.onosoft.mes.tool.mock.domain.tool.DefaultTool;
 
 import java.util.List;
+import java.util.ListIterator;
 
 @AllArgsConstructor
 @Getter
 public class EventBundle {
 
-    final DefaultTool instance;
+    final DefaultTool tool;
     final List<DomainEvent> events;
+
+    @Override
+    public String toString() {
+        StringBuilder eventsStr = new StringBuilder("events={\n");
+
+        ListIterator<DomainEvent> iter = events.listIterator();
+        while (iter.hasNext()) {
+            eventsStr.append(iter.next().toString());
+            eventsStr.append('\n');
+        }
+        eventsStr.append('}')
+        return String.format("\nEventBundle{ tool=%s,\n%s\n", tool.getId(), eventsStr.toString());
+    }
 }

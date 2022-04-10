@@ -14,11 +14,10 @@ import org.onosoft.mes.tool.mock.domain.provided.value.Identifier;
 import org.onosoft.mes.tool.mock.domain.provided.value.ToolId;
 import org.onosoft.mes.tool.mock.domain.tool.entity.LoadPort;
 import org.onosoft.mes.tool.mock.domain.tool.entity.Process;
-import org.onosoft.mes.tool.mock.domain.tool.state.StateVarKeys;
+import org.onosoft.mes.tool.mock.domain.tool.state.StateVarUtil;
 import org.onosoft.mes.tool.mock.domain.tool.state.ToolEvents;
 import org.onosoft.mes.tool.mock.domain.tool.state.ToolStates;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.statemachine.ExtendedState;
 import org.springframework.statemachine.StateMachine;
 
 import java.util.ArrayList;
@@ -28,10 +27,11 @@ import java.util.Map;
 @AggregateRoot
 public class DefaultTool implements Tool {
 
+    public static final int CYCLE_TIME = 2000;  // ms
+
     protected Identifier id;
     protected static final int WIP_CAPACITY_DEFAULT = 11;
     protected static final int WIP_PROCESS = 1;
-    protected static final int CYCLE_TIME = 2000;  // ms
 
     protected final LoadPort outport;
     protected final LoadPort inport;
@@ -39,7 +39,6 @@ public class DefaultTool implements Tool {
 
     @Autowired
     StateMachine<ToolStates, ToolEvents> stateMachine;
-    Map<Object, Object> extendedStateVars;
 
     public DefaultTool(Identifier id) {
         this.id = id;
@@ -50,7 +49,6 @@ public class DefaultTool implements Tool {
             new ToolId("out.1"),
             WIP_CAPACITY_DEFAULT - WIP_PROCESS);
         this.process = new Process();
-        this.initStateMachine();
     }
 
     public DefaultTool(Identifier id, int wipCapacity) {
@@ -61,16 +59,13 @@ public class DefaultTool implements Tool {
         this.inport = new LoadPort(new ToolId("in.1"), wipCapacity - WIP_PROCESS);
         this.outport = new LoadPort(new ToolId("out.1"), wipCapacity - WIP_PROCESS);
         this.process = new Process();
-        this.initStateMachine();
+
     }
 
-    protected void initStateMachine() {
-        this.extendedStateVars = this.stateMachine.getExtendedState().getVariables();
-        this.extendedStateVars.put(StateVarKeys.toolId, this.id);
-        this.extendedStateVars.put(StateVarKeys.inport, this.inport);
-        this.extendedStateVars.put(StateVarKeys.outport, this.outport);
-        this.extendedStateVars.put(StateVarKeys.process, this.process;
-        this.stateMachine.start();
+    protected EventBundle domainResult() {
+        List<DomainEvent> events = (List<DomainEvent>) StateVarUtil.getDomainEvents(this.stateMachine);
+        EventBundle bundle = new EventBundle(this, events);
+        return bundle;
     }
 
     public Identifier getId() {
@@ -80,21 +75,25 @@ public class DefaultTool implements Tool {
 
     @Override
     public EventBundle start() {
+
         this.stateMachine.sendEvent(ToolEvents.START);
+        return this.domainResult();
+
     }
 
     @Override
     public EventBundle stop(IdleReason reason) {
         this.stateMachine.sendEvent(ToolEvents.STOP);
+        return this.domainResult();
     }
 
     @Override
     public EventBundle loadPart(Part part) throws LoadportFullException {
-        this.extendedStateVars.put(StateVarKeys.part, part);
+        StateVarUtil.setPart(this.stateMachine, part);
+
         this.stateMachine.sendEvent(ToolEvents.PART_LOADING);
-        List<DomainEvent> events = (List<DomainEvent>) this.extendedStateVars.get(StateVarKeys.domainEvents);
-        EventBundle bundle = new EventBundle(this, events);
-        return bundle;
+
+        return this.domainResult();
     }
 
     @Override
@@ -102,21 +101,19 @@ public class DefaultTool implements Tool {
 
         this.stateMachine.sendEvent(ToolEvents.PART_UNLOADING);
 
-        List<DomainEvent> events = (List<DomainEvent>) this.extendedStateVars.get(StateVarKeys.domainEvents);
-        Part part = (Part) this.extendedStateVars.get(StateVarKeys.part);
-
-        EventBundle bundle = new EventBundle(this, events);
-        return bundle;
+        return this.domainResult();
     }
 
     @Override
     public EventBundle breakDown() {
 
+        return this.domainResult();
     }
 
     @Override
     public EventBundle repair() {
 
+        return this.domainResult();
     }
 
 }

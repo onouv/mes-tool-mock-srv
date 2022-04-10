@@ -1,8 +1,10 @@
 package org.onosoft.mes.tool.mock.adapters.in.web;
 
+import org.onosoft.mes.tool.mock.domain.ToolService;
 import org.onosoft.mes.tool.mock.domain.event.ToolUpEvent;
 import org.onosoft.mes.tool.mock.domain.event.ToolDownEvent;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +20,9 @@ import org.slf4j.LoggerFactory;
 public class ToolMockStatusController {
 	
 	private static final Logger logger=LoggerFactory.getLogger(ToolMockStatusController.class);
+
+	@Autowired
+	ToolService domainService;
 	
 	@RequestMapping(
 			value={"/mes/tool/{tool-id-string}/mock/status/up"},
@@ -30,6 +35,8 @@ public class ToolMockStatusController {
 				"mes-toolmock-srv: processing PUT /mes/tool/%s/mock/status/up with body %s",
 				toolId, 
 				body.toString()));
+
+
 		
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

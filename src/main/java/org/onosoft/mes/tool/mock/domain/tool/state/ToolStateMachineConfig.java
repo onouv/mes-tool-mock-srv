@@ -1,6 +1,7 @@
 package org.onosoft.mes.tool.mock.domain.tool.state;
 
 import org.onosoft.mes.tool.mock.domain.provided.Tool;
+import org.onosoft.mes.tool.mock.domain.tool.DefaultTool;
 import org.onosoft.mes.tool.mock.domain.tool.state.action.*;
 import org.onosoft.mes.tool.mock.domain.tool.state.guard.*;
 import org.springframework.context.annotation.Configuration;
@@ -103,7 +104,7 @@ public class ToolStateMachineConfig extends EnumStateMachineConfigurerAdapter<To
                 .and()
             .withInternal()
                 .source(ToolStates.PROCESSING)
-                .timer(Tool.getCycleTime())
+                .timer(DefaultTool.CYCLE_TIME)
                 .guard(new InportNotFullGuard())
                 .action(new LoadPartAction());
 

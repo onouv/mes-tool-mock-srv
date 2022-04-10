@@ -1,11 +1,9 @@
 package org.onosoft.mes.tool.mock.domain.event;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 import org.onosoft.mes.tool.mock.domain.provided.value.PartId;
 
 @AllArgsConstructor
-@Getter
-public abstract class PartEvent {
-    private PartId partId;
+public abstract class PartEvent extends DomainEvent {
+    protected PartId partId;
 }

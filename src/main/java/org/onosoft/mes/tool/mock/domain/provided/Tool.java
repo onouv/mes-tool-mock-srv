@@ -12,7 +12,4 @@ public interface Tool {
     EventBundle unloadPart() throws NoPartAvailableException;
     EventBundle breakDown();
     EventBundle repair();
-    static int getCycleTime() {
-        return 2200;
-    }
 }
