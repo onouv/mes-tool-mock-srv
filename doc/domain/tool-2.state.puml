@@ -11,10 +11,8 @@ UP --> DOWN: FAULT
 DOWN --> UP: FAULT_CLEAR
 state UP {
     state UP: entry/ ToolUpEvt
-    state UP: PART_LOAD(Part) [!InPortFull] / input.add(part); PartLoadEvt(tool, part)
-    state UP: PART_LOAD(Part) [InportFull] / return LoadPortFullException
-    state UP: PART_UNLOAD() [!OutportEmpty] / part=output.unload(); PartUnloadEvt(tool, part)
-    state UP: PART_UNLOAD() [OutportEmpty] / return NoPartAvailableException
+    state UP: PART_LOAD(Part) / input.add(part); PartLoadEvt(tool, part)
+    state UP: PART_UNLOAD() / part=output.unload(); PartUnloadEvt(tool, part)
     state STOPPED: entry/ ToolStoppedEvt
     state IDLE
     state PROCESSING: entry/ part=inport.next();ToolProcessingEvt(tool, part); process(part)
@@ -45,5 +43,4 @@ state UP {
     end note
 
 }
-
 @enduml

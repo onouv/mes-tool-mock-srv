@@ -1,6 +1,9 @@
 package org.onosoft.mes.tool.mock.domain.tool.state;
 
 import org.onosoft.mes.tool.mock.domain.event.DomainEvent;
+import org.onosoft.mes.tool.mock.domain.exception.ApplicationException;
+import org.onosoft.mes.tool.mock.domain.exception.LoadportFullException;
+import org.onosoft.mes.tool.mock.domain.exception.NoPartAvailableException;
 import org.onosoft.mes.tool.mock.domain.provided.Part;
 import org.onosoft.mes.tool.mock.domain.provided.value.ToolId;
 import org.onosoft.mes.tool.mock.domain.tool.entity.LoadPort;
@@ -9,6 +12,7 @@ import org.springframework.statemachine.StateContext;
 import org.springframework.statemachine.StateMachine;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class StateVarUtil {
 
@@ -18,7 +22,8 @@ public class StateVarUtil {
     toolId,
     process,
     part,
-    domainResult
+    domainResult,
+    exception
   }
 
 
@@ -118,4 +123,11 @@ public class StateVarUtil {
     context.getExtendedState().getVariables().put(Keys.domainResult, events);
   }
 
+  public static void setException(StateContext<ToolStates, ToolEvents> context, ApplicationException ex) {
+    context.getExtendedState().getVariables().put(Keys.exception, ex);
+  }
+
+  public static ApplicationException getException(StateContext<ToolStates, ToolEvents> context)  {
+    return (ApplicationException) context.getExtendedState().getVariables().get(Keys.exception);
+  }
 }

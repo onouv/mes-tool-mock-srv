@@ -13,6 +13,13 @@ public class ToolMockExceptionHandler extends ResponseEntityExceptionHandler {
 
   @ExceptionHandler(LoadportFullException.class)
   protected ResponseEntity<Object> handleLoadportFull(LoadportFullException ex) {
-    ApiError err = new ApiError(HttpStatus.CONFLICT, ex.getMessage())
+    ApiError err = new ApiError(HttpStatus.CONFLICT, ex.getMessage(), ex);
+    return new ResponseEntity<>(err, HttpStatus.CONFLICT)
+  }
+
+
+
+  protected ResponseEntity<Object> createResponse(ApiError error) {
+    return new ResponseEntity<>(error, error.getHttpStatus());
   }
 }
