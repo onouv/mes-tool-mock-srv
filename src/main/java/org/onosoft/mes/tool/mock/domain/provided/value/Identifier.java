@@ -32,6 +32,6 @@ public abstract class Identifier {
 
   @Override
   public String toString() {
-    return String.format("Identifier{ id=%s }", id);
+    return id;
   }
 }

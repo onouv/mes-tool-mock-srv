@@ -2,7 +2,6 @@ package org.onosoft.mes.tool.mock.domain.tool;
 
 import org.onosoft.ddd.annotations.AggregateRoot;
 import org.onosoft.mes.tool.mock.domain.event.DomainEvent;
-import org.onosoft.mes.tool.mock.domain.event.EventBundle;
 import org.onosoft.mes.tool.mock.domain.exception.ApplicationException;
 import org.onosoft.mes.tool.mock.domain.exception.NoPartAvailableException;
 import org.onosoft.mes.tool.mock.domain.provided.Part;
@@ -14,10 +13,11 @@ import org.onosoft.mes.tool.mock.domain.tool.entity.LoadPort;
 import org.onosoft.mes.tool.mock.domain.tool.entity.Process;
 import org.onosoft.mes.tool.mock.domain.tool.state.StateVarUtil;
 import org.onosoft.mes.tool.mock.domain.tool.state.ToolEvents;
-import org.onosoft.mes.tool.mock.domain.tool.state.ToolStates;
+import org.onosoft.mes.tool.mock.domain.provided.value.ToolStates;
 import org.onosoft.mes.tool.mock.domain.value.DomainResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.statemachine.StateMachine;
+import org.springframework.statemachine.state.State;
 
 import java.util.List;
 
@@ -61,12 +61,18 @@ public class DefaultTool implements Tool {
 
     }
 
-    protected EventBundle domainResult() {
-        DomainResult domainResult = StateVarUtil.getDomainResult(this.stateMachine);
-        List<DomainEvent> events = domainResult.getEvents();
-        ApplicationException exception = domainResult.getApplicationException();
-        EventBundle bundle = new EventBundle(this, events, exception);
-        return bundle;
+    protected DomainResult domainResult() {
+        List<DomainEvent> events = StateVarUtil.getDomainEvents(this.stateMachine);
+        ApplicationException exception = StateVarUtil.getApplicationException(this.stateMachine);
+        State<ToolStates, ToolEvents> toolState = this.stateMachine.getState();
+
+        DomainResult result = new DomainResult.DomainResultBuilder()
+            .withToolId(id)
+            .withToolState(toolState)
+            .withDomainEvents(events)
+            .withApplicationException(exception)
+            .build();
+        return result;
     }
 
     public ToolId getId() {
@@ -75,19 +81,19 @@ public class DefaultTool implements Tool {
 
 
     @Override
-    public EventBundle start() {
+    public DomainResult start() {
         this.stateMachine.sendEvent(ToolEvents.START);
         return this.domainResult();
     }
 
     @Override
-    public EventBundle stop(IdleReason reason) {
+    public DomainResult stop(IdleReason reason) {
         this.stateMachine.sendEvent(ToolEvents.STOP);
         return this.domainResult();
     }
 
     @Override
-    public EventBundle loadPart(Part part, LoadportId portId) {
+    public DomainResult loadPart(Part part, LoadportId portId) {
         StateVarUtil.setToolId(this.stateMachine, this.id);
         StateVarUtil.setPart(this.stateMachine, part);
 
@@ -98,7 +104,7 @@ public class DefaultTool implements Tool {
     }
 
     @Override
-    public EventBundle unloadPart(LoadportId port) throws NoPartAvailableException {
+    public DomainResult unloadPart(LoadportId port) throws NoPartAvailableException {
         StateVarUtil.setToolId(this.stateMachine, this.id);
         // TODO: lookup requested port by id, verify it's an outport
         StateVarUtil.setOutport(this.stateMachine, this.outport);
@@ -107,13 +113,13 @@ public class DefaultTool implements Tool {
     }
 
     @Override
-    public EventBundle breakDown() {
+    public DomainResult breakDown() {
         this.stateMachine.sendEvent(ToolEvents.FAULT);
         return this.domainResult();
     }
 
     @Override
-    public EventBundle repair() {
+    public DomainResult repair() {
         this.stateMachine.sendEvent(ToolEvents.FAULT_CLEARED);
         return this.domainResult();
     }

@@ -8,7 +8,7 @@ import org.onosoft.mes.tool.mock.domain.provided.value.ToolId;
 import org.onosoft.mes.tool.mock.domain.tool.entity.LoadPort;
 import org.onosoft.mes.tool.mock.domain.tool.state.StateVarUtil;
 import org.onosoft.mes.tool.mock.domain.tool.state.ToolEvents;
-import org.onosoft.mes.tool.mock.domain.tool.state.ToolStates;
+import org.onosoft.mes.tool.mock.domain.provided.value.ToolStates;
 import org.springframework.statemachine.StateContext;
 import org.springframework.statemachine.action.Action;
 

@@ -7,7 +7,7 @@ import org.onosoft.mes.tool.mock.domain.tool.DefaultTool;
 
 import java.util.List;
 import java.util.ListIterator;
-
+/*
 @AllArgsConstructor
 @Getter
 public class EventBundle {
@@ -29,3 +29,6 @@ public class EventBundle {
         return String.format("\nEventBundle{ tool=%s,\n%s\n", tool.getId(), eventsStr.toString());
     }
 }
+
+
+ */

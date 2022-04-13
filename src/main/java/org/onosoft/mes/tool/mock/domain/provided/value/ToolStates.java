@@ -1,12 +1,15 @@
 package org.onosoft.mes.tool.mock.domain.provided.value;
 
-public enum ToolStatus {
+public enum ToolStates {
+    DOWN("DOWN"),
     UP("UP"),
-    DOWN("DOWN");
+    STOPPED("STOPPED"),
+    IDLE("IDLE"),
+    PROCESSING("PROCESSING");
 
     public final String value;
 
-    ToolStatus(String value) {
+    ToolStates(String value) {
         this.value = value;
     }
 

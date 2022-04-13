@@ -1,7 +1,8 @@
 package org.onosoft.mes.tool.mock.domain;
 
 import org.onosoft.ddd.annotations.DomainService;
-import org.onosoft.mes.tool.mock.domain.event.EventBundle;
+import org.onosoft.mes.tool.mock.adapters.in.web.status.dto.ToolStatusResponse;
+import org.onosoft.mes.tool.mock.domain.value.DomainResult;
 import org.onosoft.mes.tool.mock.domain.exception.ApplicationException;
 import org.onosoft.mes.tool.mock.domain.exception.LoadportFullException;
 import org.onosoft.mes.tool.mock.domain.exception.NoPartAvailableException;
@@ -23,21 +24,24 @@ public class ToolService  {
   private final DefaultTool tool1 = new DefaultTool(new ToolId(":100.001"));
   private final DefaultTool tool2 = new DefaultTool(new ToolId(":100.002"));
 
-  public void start(ToolId toolId) throws NoSuchElementException {
+  public ToolStatusResponse start(ToolId toolId) throws NoSuchElementException {
     Tool tool = this.validateTool(toolId);
-    EventBundle result = tool.start();
+    DomainResult result = tool.start();
     this.postDomainEvents(result);
+
+    return new ToolStatusResponse(toolId, result.getToolState());
   }
 
-  public void stop(ToolId toolId, IdleReason reason) throws NoSuchElementException {
+  public ToolStatusResponse stop(ToolId toolId, IdleReason reason) throws NoSuchElementException {
     Tool tool = this.validateTool(toolId);
-    EventBundle result = tool.stop(reason);
+    DomainResult result = tool.stop(reason);
     this.postDomainEvents(result);
+    return new ToolStatusResponse(toolId, result.getToolState());
   }
 
   public void loadPart(ToolId toolId, LoadportId portId, Part part) throws NoSuchElementException, LoadportFullException {
     Tool tool = this.validateTool(toolId);
-    EventBundle result = tool.loadPart(part, portId);
+    DomainResult result = tool.loadPart(part, portId);
 
     // expose application-level exceptions to our clients
     ApplicationException e = result.getApplicationException();
@@ -51,7 +55,7 @@ public class ToolService  {
       throws NoSuchElementException, NoPartAvailableException {
 
     Tool tool = this.validateTool(toolId);
-    EventBundle result = tool.unloadPart(portId);
+    DomainResult result = tool.unloadPart(portId);
 
     // expose application-level exceptions to our clients
     Exception e = result.getApplicationException();
@@ -61,16 +65,18 @@ public class ToolService  {
     this.postDomainEvents(result);
   }
 
-  public void breakDown(ToolId toolId) {
+  public ToolStatusResponse breakDown(ToolId toolId) {
     Tool tool = this.validateTool(toolId);
-    EventBundle result = tool.breakDown();
+    DomainResult result = tool.breakDown();
     this.postDomainEvents(result);
+    return new ToolStatusResponse(toolId, result.getToolState());
   }
 
-  public void repair(ToolId toolId) {
+  public ToolStatusResponse repair(ToolId toolId) {
     Tool tool = this.validateTool(toolId);
-    EventBundle result = tool.repair();
+    DomainResult result = tool.repair();
     this.postDomainEvents(result);
+    return new ToolStatusResponse(toolId, result.getToolState());
   }
 
   protected Tool validateTool(ToolId toolId) throws NoSuchElementException {
@@ -83,7 +89,7 @@ public class ToolService  {
     throw new NoSuchElementException(String.format("no tool with identifier %s found", toolId));
   }
 
-  protected void postDomainEvents(EventBundle domainResult) {
+  protected void postDomainEvents(DomainResult domainResult) {
     System.out.printf("Posting domain events... \n%s%n", domainResult.toString());
     // TODO: actually post domainResult.events to MesBus
   }

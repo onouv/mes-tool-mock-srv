@@ -1,9 +1,11 @@
-package org.onosoft.mes.tool.mock.adapters.in.web;
+package org.onosoft.mes.tool.mock.adapters.in.web.status;
 
+import org.onosoft.mes.tool.mock.adapters.in.web.status.dto.ToolStatusResponse;
 import org.onosoft.mes.tool.mock.domain.ToolService;
 import org.onosoft.mes.tool.mock.domain.event.ToolUpEvent;
 import org.onosoft.mes.tool.mock.domain.event.ToolDownEvent;
 
+import org.onosoft.mes.tool.mock.domain.provided.value.ToolId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,24 +27,23 @@ public class ToolMockStatusController {
 	ToolService domainService;
 	
 	@RequestMapping(
-			value={"/mes/tool/{tool-id-string}/mock/status/up"},
+			value={"/mes/tool/{tool-id-string}/mock/status/start"},
 			method=RequestMethod.PUT)
-	public ResponseEntity<Void> startTool(
+	public ResponseEntity<ToolStatusResponse> startTool(
 			@PathVariable("tool-id-string") String toolId,
 			@RequestBody ToolUpEvent body) {
 		
 		logger.info(String.format(
 				"mes-toolmock-srv: processing PUT /mes/tool/%s/mock/status/up with body %s",
-				toolId, 
+				toolId,
 				body.toString()));
 
-
-		
-		return new ResponseEntity<>(HttpStatus.OK);
+		ToolStatusResponse response = this.domainService.start(new ToolId(toolId));
+		return new ResponseEntity<ToolStatusResponse>(response, HttpStatus.OK);
 	}
 
 	@RequestMapping(
-			value= {"/mes/tool/{tool-id-string}/mock/status/down"},
+			value= {"/mes/tool/{tool-id-string}/mock/status/stop"},
 			method=RequestMethod.PUT)
 	public ResponseEntity<Void> stopTool(
 			@PathVariable("tool-id-string") String toolId,

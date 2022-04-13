@@ -1,6 +1,6 @@
 package org.onosoft.mes.tool.mock.domain.tool.state;
 
-import org.onosoft.mes.tool.mock.domain.provided.Tool;
+import org.onosoft.mes.tool.mock.domain.provided.value.ToolStates;
 import org.onosoft.mes.tool.mock.domain.tool.DefaultTool;
 import org.onosoft.mes.tool.mock.domain.tool.state.action.*;
 import org.onosoft.mes.tool.mock.domain.tool.state.guard.*;
@@ -94,13 +94,13 @@ public class ToolStateMachineConfig extends EnumStateMachineConfigurerAdapter<To
                 .source(ToolStates.UP)
                 .event(ToolEvents.PART_LOADING)
                 //.guard(new InportNotFullGuard())
-                .action(new LoadPartAction(), new LoadportErrorAction())
+                .action(new LoadPartAction())
                 .and()
             .withInternal()
                 .source(ToolStates.UP)
                 .event(ToolEvents.PART_UNLOADING)
                 //.guard(new OutportNotEmptyGuard())
-                .action(new UnloadPartAction(), new LoadportErrorAction())
+                .action(new UnloadPartAction())
                 .and()
             .withInternal()
                 .source(ToolStates.PROCESSING)

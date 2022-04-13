@@ -3,7 +3,7 @@ package org.onosoft.mes.tool.mock.domain.tool.state.action;
 import org.onosoft.mes.tool.mock.domain.event.ToolIdleEvent;
 import org.onosoft.mes.tool.mock.domain.provided.value.IdleReason;
 import org.onosoft.mes.tool.mock.domain.tool.state.ToolEvents;
-import org.onosoft.mes.tool.mock.domain.tool.state.ToolStates;
+import org.onosoft.mes.tool.mock.domain.provided.value.ToolStates;
 import org.springframework.statemachine.StateContext;
 import org.springframework.statemachine.action.Action;
 
