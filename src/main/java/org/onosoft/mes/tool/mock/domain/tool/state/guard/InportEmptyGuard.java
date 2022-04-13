@@ -1,7 +1,6 @@
 package org.onosoft.mes.tool.mock.domain.tool.state.guard;
 
 import org.onosoft.mes.tool.mock.domain.provided.Tool;
-import org.onosoft.mes.tool.mock.domain.tool.state.StateVarKeys;
 import org.onosoft.mes.tool.mock.domain.tool.state.StateVarUtil;
 import org.onosoft.mes.tool.mock.domain.tool.state.ToolEvents;
 import org.onosoft.mes.tool.mock.domain.tool.state.ToolStates;

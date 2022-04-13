@@ -2,6 +2,7 @@ package org.onosoft.mes.tool.mock.domain;
 
 import org.onosoft.ddd.annotations.DomainService;
 import org.onosoft.mes.tool.mock.domain.event.EventBundle;
+import org.onosoft.mes.tool.mock.domain.exception.ApplicationException;
 import org.onosoft.mes.tool.mock.domain.exception.LoadportFullException;
 import org.onosoft.mes.tool.mock.domain.exception.NoPartAvailableException;
 import org.onosoft.mes.tool.mock.domain.provided.Part;
@@ -39,7 +40,7 @@ public class ToolService  {
     EventBundle result = tool.loadPart(part);
 
     // expose appplication-level exceptions to our clients
-    Exception e = result.getApplicationException();
+    ApplicationException e = result.getApplicationException();
     if(e instanceof LoadportFullException)
       throw (LoadportFullException) e;
 

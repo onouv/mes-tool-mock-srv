@@ -26,13 +26,15 @@ public class UnloadPartAction
     LoadPort outport = StateVarUtil.getOutport(context);
     ToolId toolId = StateVarUtil.getToolId(context);
 
-    Part unloaded = outport.next();
-    if(unloaded != null) {
+    try {
+      Part unloaded = outport.next();
       PartUnloadedEvent event = new PartUnloadedEvent(unloaded.getPartId());
       List<DomainEvent> events = new ArrayList<>();
       events.add(event);
-
       StateVarUtil.setDomainEvents(context, events);
+    }
+    catch(NoPartAvailableException e) {
+      StateVarUtil.setApplicationException(context, e);
     }
   }
 }

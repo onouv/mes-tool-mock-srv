@@ -8,6 +8,7 @@ import org.onosoft.mes.tool.mock.domain.provided.Part;
 import org.onosoft.mes.tool.mock.domain.provided.value.ToolId;
 import org.onosoft.mes.tool.mock.domain.tool.entity.LoadPort;
 import org.onosoft.mes.tool.mock.domain.tool.entity.Process;
+import org.onosoft.mes.tool.mock.domain.value.DomainResult;
 import org.springframework.statemachine.StateContext;
 import org.springframework.statemachine.StateMachine;
 
@@ -107,14 +108,14 @@ public class StateVarUtil {
     context.getExtendedState().getVariables().put(Keys.part, part);
   }
 
-  public static List<DomainEvent> getDomainResult(StateMachine<ToolStates, ToolEvents> fsm) {
-    return (List<DomainEvent>) fsm.getExtendedState().getVariables().get(Keys.domainResult);
+  public static DomainResult getDomainResult(StateMachine<ToolStates, ToolEvents> fsm) {
+    return (DomainResult) fsm.getExtendedState().getVariables().get(Keys.domainResult);
   }
-
+/*
   public static List<DomainEvent> getDomainResult(StateContext<ToolStates, ToolEvents> context) {
     return (List<DomainEvent>) context.getExtendedState().getVariables().get(Keys.domainResult);
   }
-
+*/
   public static void setDomainEvents(StateMachine<ToolStates, ToolEvents> fsm,  List<DomainEvent> events) {
     fsm.getExtendedState().getVariables().put(Keys.domainResult, events);
   }
@@ -123,11 +124,12 @@ public class StateVarUtil {
     context.getExtendedState().getVariables().put(Keys.domainResult, events);
   }
 
-  public static void setException(StateContext<ToolStates, ToolEvents> context, ApplicationException ex) {
+  public static void setApplicationException(StateContext<ToolStates, ToolEvents> context, ApplicationException ex) {
     context.getExtendedState().getVariables().put(Keys.exception, ex);
   }
 
-  public static ApplicationException getException(StateContext<ToolStates, ToolEvents> context)  {
+  public static ApplicationException getApplicationException(StateContext<ToolStates, ToolEvents> context)  {
     return (ApplicationException) context.getExtendedState().getVariables().get(Keys.exception);
   }
+
 }

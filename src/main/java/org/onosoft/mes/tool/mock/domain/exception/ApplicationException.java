@@ -6,6 +6,6 @@ import org.onosoft.mes.tool.mock.domain.provided.value.Identifier;
 
 @Getter
 @AllArgsConstructor
-public abstract class ApplicationException {
+public abstract class ApplicationException extends Exception {
   protected final Identifier toolId;
 }

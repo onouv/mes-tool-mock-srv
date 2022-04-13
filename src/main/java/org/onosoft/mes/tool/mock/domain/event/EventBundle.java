@@ -2,6 +2,7 @@ package org.onosoft.mes.tool.mock.domain.event;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.onosoft.mes.tool.mock.domain.exception.ApplicationException;
 import org.onosoft.mes.tool.mock.domain.tool.DefaultTool;
 
 import java.util.List;
@@ -13,6 +14,7 @@ public class EventBundle {
 
     final DefaultTool tool;
     final List<DomainEvent> events;
+    final ApplicationException applicationException;
 
     @Override
     public String toString() {
@@ -23,7 +25,7 @@ public class EventBundle {
             eventsStr.append(iter.next().toString());
             eventsStr.append('\n');
         }
-        eventsStr.append('}')
+        eventsStr.append('}');
         return String.format("\nEventBundle{ tool=%s,\n%s\n", tool.getId(), eventsStr.toString());
     }
 }
