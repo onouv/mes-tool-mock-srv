@@ -7,8 +7,8 @@ import org.onosoft.mes.tool.mock.domain.exception.LoadportFullException;
 import org.onosoft.mes.tool.mock.domain.exception.NoPartAvailableException;
 import org.onosoft.mes.tool.mock.domain.provided.Part;
 import org.onosoft.mes.tool.mock.domain.provided.Tool;
-import org.onosoft.mes.tool.mock.domain.provided.value.Identifier;
 import org.onosoft.mes.tool.mock.domain.provided.value.IdleReason;
+import org.onosoft.mes.tool.mock.domain.provided.value.LoadportId;
 import org.onosoft.mes.tool.mock.domain.provided.value.ToolId;
 import org.onosoft.mes.tool.mock.domain.tool.DefaultTool;
 import org.springframework.stereotype.Service;
@@ -19,60 +19,58 @@ import java.util.NoSuchElementException;
 @DomainService
 public class ToolService  {
 
-  // TODO: make fixed set of tools changeable (API + persistency)
+  // TODO: make fixed set of tools changeable (API + persistence)
   private final DefaultTool tool1 = new DefaultTool(new ToolId(":100.001"));
   private final DefaultTool tool2 = new DefaultTool(new ToolId(":100.002"));
 
   public void start(ToolId toolId) throws NoSuchElementException {
     Tool tool = this.validateTool(toolId);
     EventBundle result = tool.start();
-    System.out.println(String.format("Tool.start produced domain result: ", result));
+    this.postDomainEvents(result);
   }
 
   public void stop(ToolId toolId, IdleReason reason) throws NoSuchElementException {
     Tool tool = this.validateTool(toolId);
     EventBundle result = tool.stop(reason);
-    System.out.println(String.format("Tool.stop produced domain result: ", result));
+    this.postDomainEvents(result);
   }
 
-  public void loadPart(ToolId toolId, Part part) throws NoSuchElementException, LoadportFullException {
+  public void loadPart(ToolId toolId, LoadportId portId, Part part) throws NoSuchElementException, LoadportFullException {
     Tool tool = this.validateTool(toolId);
-    EventBundle result = tool.loadPart(part);
+    EventBundle result = tool.loadPart(part, portId);
 
-    // expose appplication-level exceptions to our clients
+    // expose application-level exceptions to our clients
     ApplicationException e = result.getApplicationException();
     if(e instanceof LoadportFullException)
       throw (LoadportFullException) e;
 
-    System.out.println(String.format("Tool.loadPart produced domain result: ", result));
-
-    // TODO : post domain events
+    this.postDomainEvents(result);
   }
 
-  public void unloadPart(ToolId toolId, Identifier port)
+  public void unloadPart(ToolId toolId, LoadportId portId)
       throws NoSuchElementException, NoPartAvailableException {
 
     Tool tool = this.validateTool(toolId);
-    EventBundle result = tool.unloadPart();
+    EventBundle result = tool.unloadPart(portId);
 
-    // expose appplication-level exceptions to our clients
+    // expose application-level exceptions to our clients
     Exception e = result.getApplicationException();
     if(e instanceof NoPartAvailableException)
       throw (NoPartAvailableException) e;
 
-    System.out.println(String.format("Tool.unloadPart produced domain result: ", result));
+    this.postDomainEvents(result);
   }
 
   public void breakDown(ToolId toolId) {
     Tool tool = this.validateTool(toolId);
     EventBundle result = tool.breakDown();
-    System.out.println(String.format("Tool.breakdown produced domain result: ", result));
+    this.postDomainEvents(result);
   }
 
   public void repair(ToolId toolId) {
     Tool tool = this.validateTool(toolId);
     EventBundle result = tool.repair();
-    System.out.println(String.format("Tool.repair produced domain result: ", result));
+    this.postDomainEvents(result);
   }
 
   protected Tool validateTool(ToolId toolId) throws NoSuchElementException {
@@ -85,14 +83,8 @@ public class ToolService  {
     throw new NoSuchElementException(String.format("no tool with identifier %s found", toolId));
   }
 
-  protected void rethrowAnyApplicationException(EventBundle result)
-      throws NoPartAvailableException, LoadportFullException {
-
-    Exception e = result.getApplicationException();
-    if(e instanceof NoPartAvailableException)
-      throw (NoPartAvailableException) e;
-
-    if(e instanceof LoadportFullException)
-      throw (LoadportFullException) e;
+  protected void postDomainEvents(EventBundle domainResult) {
+    System.out.printf("Posting domain events... \n%s%n", domainResult.toString());
+    // TODO: actually post domainResult.events to MesBus
   }
 }

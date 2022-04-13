@@ -87,14 +87,21 @@ public class DefaultTool implements Tool {
     }
 
     @Override
-    public EventBundle loadPart(Part part) {
+    public EventBundle loadPart(Part part, LoadportId portId) {
+        StateVarUtil.setToolId(this.stateMachine, this.id);
         StateVarUtil.setPart(this.stateMachine, part);
+
+        // TODO: lookup requested port by id, verify it's an inport
+        StateVarUtil.setInport(this.stateMachine, this.inport);
         this.stateMachine.sendEvent(ToolEvents.PART_LOADING);
         return this.domainResult();
     }
 
     @Override
-    public EventBundle unloadPart() throws NoPartAvailableException {
+    public EventBundle unloadPart(LoadportId port) throws NoPartAvailableException {
+        StateVarUtil.setToolId(this.stateMachine, this.id);
+        // TODO: lookup requested port by id, verify it's an outport
+        StateVarUtil.setOutport(this.stateMachine, this.outport);
         this.stateMachine.sendEvent(ToolEvents.PART_UNLOADING);
         return this.domainResult();
     }

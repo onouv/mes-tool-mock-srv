@@ -12,8 +12,7 @@ public class OutportFullGuard implements Guard<ToolStates, ToolEvents> {
     PortStatus port = (PortStatus) context
         .getExtendedState()
         .getVariables()
-        .get(StateVarUtil.getOutport());
-
+        .get(StateVarUtil.getOutport(context));
     return port.isFull();
   }
 }
