@@ -1,13 +1,15 @@
 package org.onosoft.mes.tool.mock.domain.provided.value;
 
+import lombok.Builder;
 import lombok.Getter;
 
 @Getter
+@Builder
 public class PartType {
   protected final String id;
   protected final String description;
   protected final String parentid;
-
+/*
   protected PartType(Builder b) {
     this.id = b.id;
     this.description = b.description;
@@ -34,5 +36,5 @@ public class PartType {
     public Builder withParent(PartType parent) {
       this.parentid = parent.id;
     }
-  }
+  } */
 }

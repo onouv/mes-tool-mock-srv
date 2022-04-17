@@ -1,6 +1,6 @@
-package org.onosoft.mes.tool.mock.adapters.in.web;
+package org.onosoft.mes.tool.mock.adapters.in.web.exception;
 
-import org.onosoft.mes.tool.mock.adapters.in.web.error.ApiError;
+import org.onosoft.mes.tool.mock.adapters.in.web.dto.ApiError;
 import org.onosoft.mes.tool.mock.domain.exception.ApplicationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

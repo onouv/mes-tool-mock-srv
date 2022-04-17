@@ -1,17 +1,17 @@
 package org.onosoft.mes.tool.mock.domain.event;
 
-import org.onosoft.mes.tool.mock.domain.provided.value.PartId;
+import org.onosoft.mes.tool.mock.domain.provided.Part;
 
 public class PartLoadedEvent extends PartEvent {
 
-    public PartLoadedEvent(PartId partId) {
-        super(partId);
+    public PartLoadedEvent(Part part) {
+        super(part);
     }
 
     @Override
     public String toString() {
         return String.format(
-            "Part %s loaded at %s.", this.partId, this.timeStamp);
+            "Part %s loaded at %s.", this.part.getId(), this.timeStamp);
     }
 
 }

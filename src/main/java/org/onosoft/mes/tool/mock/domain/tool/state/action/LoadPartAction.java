@@ -26,7 +26,7 @@ public class LoadPartAction implements Action<ToolStates, ToolEvents> {
         try{
             inport.load(part);
             List<DomainEvent> events = new ArrayList<DomainEvent>();
-            events.add(new PartLoadedEvent(part.getPartId()));
+            events.add(new PartLoadedEvent(part));
             StateVarUtil.setDomainEvents(context, events);
         } catch (LoadportFullException e) {
 

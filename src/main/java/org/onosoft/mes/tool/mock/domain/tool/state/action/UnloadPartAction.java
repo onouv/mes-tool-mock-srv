@@ -28,8 +28,8 @@ public class UnloadPartAction
 
     try {
       Part unloaded = outport.next();
-      PartUnloadedEvent event = new PartUnloadedEvent(unloaded.getPartId());
-      List<DomainEvent> events = new ArrayList<>();
+      PartUnloadedEvent event = new PartUnloadedEvent(unloaded);
+
       events.add(event);
       StateVarUtil.setDomainEvents(context, events);
     }

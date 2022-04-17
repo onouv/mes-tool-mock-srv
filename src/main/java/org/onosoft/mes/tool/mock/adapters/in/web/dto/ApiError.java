@@ -1,4 +1,4 @@
-package org.onosoft.mes.tool.mock.adapters.in.web.error;
+package org.onosoft.mes.tool.mock.adapters.in.web.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;

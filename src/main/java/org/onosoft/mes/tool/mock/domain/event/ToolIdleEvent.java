@@ -3,6 +3,7 @@ package org.onosoft.mes.tool.mock.domain.event;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.onosoft.mes.tool.mock.domain.provided.value.IdleReason;
+import org.onosoft.mes.tool.mock.domain.provided.value.ToolId;
 import org.onosoft.mes.tool.mock.domain.value.TimeInstant;
 
 @org.onosoft.ddd.annotations.DomainEvent
@@ -13,7 +14,7 @@ public class ToolIdleEvent extends ToolEvent {
 
   @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
   public ToolIdleEvent(
-      @JsonProperty("toolId") String toolId,
+      @JsonProperty("toolId") ToolId toolId,
       IdleReason reason) {
     super(toolId);
     this.reason = reason;

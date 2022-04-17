@@ -1,17 +1,14 @@
 package org.onosoft.mes.tool.mock.domain.tool.entity;
 
+import lombok.Getter;
+import lombok.experimental.SuperBuilder;
 import org.onosoft.mes.tool.mock.domain.provided.Part;
+import org.onosoft.mes.tool.mock.domain.provided.value.PartId;
 import org.onosoft.mes.tool.mock.domain.provided.value.PartStatus;
 
+@Getter
+@SuperBuilder
 public class DefaultPart extends Part {
-
-    public DefaultPart(String id) {
-        super(id, PartStatus.UNPROCESSED);
-    }
-
-    public DefaultPart(String id, PartStatus status) {
-        super(id, status);
-    }
 
     @Override
     public PartStatus processSuccessful() {
