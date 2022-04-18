@@ -1,6 +1,7 @@
 package org.onosoft.mes.tool.mock.domain.tool;
 
 import org.onosoft.ddd.annotations.AggregateRoot;
+import org.onosoft.mes.tool.mock.adapters.in.web.service.ToolRepositoryDefault;
 import org.onosoft.mes.tool.mock.domain.event.DomainEvent;
 import org.onosoft.mes.tool.mock.domain.event.ToolCreatedEvent;
 import org.onosoft.mes.tool.mock.domain.event.ToolDeletedEvent;
@@ -15,9 +16,15 @@ import org.onosoft.mes.tool.mock.domain.tool.entity.LoadPort;
 import org.onosoft.mes.tool.mock.domain.tool.entity.Process;
 import org.onosoft.mes.tool.mock.domain.tool.state.StateVarUtil;
 import org.onosoft.mes.tool.mock.domain.tool.state.ToolEvents;
+import org.onosoft.mes.tool.mock.domain.tool.state.action.*;
+import org.onosoft.mes.tool.mock.domain.tool.state.guard.FlowIsFreeGuard;
+import org.onosoft.mes.tool.mock.domain.tool.state.guard.InportEmptyGuard;
+import org.onosoft.mes.tool.mock.domain.tool.state.guard.InportNotFullGuard;
+import org.onosoft.mes.tool.mock.domain.tool.state.guard.OutportFullGuard;
 import org.onosoft.mes.tool.mock.domain.value.DomainResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.statemachine.StateMachine;
+import org.springframework.statemachine.config.StateMachineBuilder;
 import org.springframework.statemachine.state.State;
 
 import java.util.ArrayList;
@@ -35,18 +42,19 @@ public class DefaultTool implements Tool {
     protected final LoadPort inport;
     protected final Process process;
 
-    @Autowired
-    StateMachine<ToolStates, ToolEvents> stateMachine;
-
-    @Autowired
-    ToolRepository toolRepository;
+    protected StateMachine<ToolStates, ToolEvents> stateMachine;
+    protected ToolRepository toolRepository;
 
     protected DefaultTool(
         ToolId id,
         String name,
         String description,
         LoadPort inport,
-        LoadPort outport) {
+        LoadPort outport,
+        ToolRepository toolRepository) throws Exception {
+
+        this.stateMachine = this.buildStateMachine();
+        this.stateMachine.start();
 
         this.id = id;
         this.name = name;
@@ -54,10 +62,111 @@ public class DefaultTool implements Tool {
         this.inport = inport;
         this.outport = outport;
         this.process = new Process();
+        this.toolRepository = toolRepository;
     }
 
+    protected StateMachine<ToolStates, ToolEvents> buildStateMachine() throws Exception {
 
-    public static Tool prototype(ToolId id, ToolDefinition definition) {
+        StateMachineBuilder.Builder<ToolStates, ToolEvents> builder = StateMachineBuilder.builder();
+
+        builder.configureStates().withStates()
+            .initial(ToolStates.UP)
+            .state(ToolStates.UP, new ToolUpEventAction(), null)
+            .state(ToolStates.DOWN)
+            .and()
+            .withStates()
+            .parent(ToolStates.UP)
+            .initial(ToolStates.STOPPED)
+            .state(ToolStates.STOPPED,new ToolStoppedEventAction(), null )
+            .state(ToolStates.IDLE)
+            .state(
+                ToolStates.PROCESSING,
+                new ToolBeginProcessingPartAction(),
+                new ToolDoneProcessingPartAction());
+
+        builder.configureTransitions()
+            .withExternal()
+                .source(ToolStates.UP)
+                .target(ToolStates.DOWN)
+                .event(ToolEvents.FAULT)
+                .and()
+            .withExternal()
+                .source(ToolStates.DOWN)
+                .target(ToolStates.UP)
+                .event(ToolEvents.FAULT_CLEARED)
+                .and()
+            .withExternal()
+                .source(ToolStates.STOPPED)
+                .target(ToolStates.IDLE)
+                .event(ToolEvents.START)
+                .guard(new InportEmptyGuard())
+                .action(new ToolIdleEventUpstreamAction())
+                .and()
+            .withExternal()
+                .source(ToolStates.STOPPED)
+                .target(ToolStates.IDLE)
+                .event(ToolEvents.START)
+                .guard(new OutportFullGuard())
+                .action(new ToolIdleEventDownStreamAction())
+                .and()
+            .withExternal()
+                .source(ToolStates.STOPPED)
+                .target(ToolStates.PROCESSING)
+                .event(ToolEvents.START)
+                .guard(new FlowIsFreeGuard())
+                .and()
+            .withExternal()
+                .source(ToolStates.IDLE)
+                .target(ToolStates.STOPPED)
+                .event(ToolEvents.STOP)
+                .and()
+            .withExternal()
+                .source(ToolStates.IDLE)
+                .target(ToolStates.PROCESSING)
+                .guard(new FlowIsFreeGuard())
+                .and()
+            .withExternal()
+                .source(ToolStates.PROCESSING)
+                .target(ToolStates.IDLE)
+                .event(ToolEvents.FINISHED)
+                .guard(new InportEmptyGuard())
+                .action(new ToolIdleEventUpstreamAction())
+                .and()
+            .withExternal()
+                .source(ToolStates.PROCESSING)
+                .target(ToolStates.IDLE)
+                .event(ToolEvents.FINISHED)
+                .guard(new OutportFullGuard())
+                .action(new ToolIdleEventDownStreamAction())
+                .and()
+            .withInternal()
+                .source(ToolStates.UP)
+                .event(ToolEvents.PART_LOADING)
+                //.guard(new InportNotFullGuard())
+                .action(new LoadPartAction())
+                .and()
+            .withInternal()
+                .source(ToolStates.UP)
+                .event(ToolEvents.PART_UNLOADING)
+                //.guard(new OutportNotEmptyGuard())
+                .action(new UnloadPartAction())
+                .and()
+            .withInternal()
+                .source(ToolStates.PROCESSING)
+                .timer(DefaultTool.CYCLE_TIME)
+                .guard(new InportNotFullGuard())
+                .action(new LoadPartAction());
+
+        return builder.build();
+    }
+
+    public static Tool prototype(
+        ToolId id,
+        ToolDefinition definition,
+        ToolRepository repo)
+
+        throws Exception
+    {
 
         LoadPort inport = new LoadPort(
             id,
@@ -74,7 +183,8 @@ public class DefaultTool implements Tool {
             definition.getName(),
             definition.getDescription(),
             inport,
-            outport);
+            outport,
+            repo);
         return tool;
     }
 

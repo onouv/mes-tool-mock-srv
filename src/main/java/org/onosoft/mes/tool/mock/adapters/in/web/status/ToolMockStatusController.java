@@ -35,7 +35,7 @@ public class ToolMockStatusController {
 	)
 	public ResponseEntity<ToolDto> createTool(
 			@PathVariable("tool-id") String toolId,
-			@RequestBody ToolDefinitionDto body) throws ToolPreExistingException {
+			@RequestBody ToolDefinitionDto body) throws ToolPreExistingException, Exception {
 
 		logger.info(String.format(
 				"mes-toolmock-srv: processing POST /mes/tool/%s/mock with body %s",

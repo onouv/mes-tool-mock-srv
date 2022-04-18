@@ -11,7 +11,7 @@ import java.time.format.DateTimeFormatter;
 public class TimeInstant {
 	
 	private final String utcInstant;
-	private final String pattern = "YYYY-MM-DDTHH.mm.ss.SSSZ";
+	private final String pattern = "YYYY-MM-DDHH.mm.ss.SSSZ";
 
 	public TimeInstant() {
 		DateTimeFormatter formatter = DateTimeFormatter

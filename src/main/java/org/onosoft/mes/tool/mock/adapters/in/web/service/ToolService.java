@@ -1,10 +1,10 @@
 package org.onosoft.mes.tool.mock.adapters.in.web.service;
 
 import org.onosoft.ddd.annotations.DomainService;
-import org.onosoft.mes.tool.mock.adapters.in.web.status.dto.ToolDefinitionDto;
 import org.onosoft.mes.tool.mock.adapters.in.web.status.dto.ToolDto;
 import org.onosoft.mes.tool.mock.domain.exception.ToolPreExistingException;
 import org.onosoft.mes.tool.mock.domain.provided.value.ToolDefinition;
+import org.onosoft.mes.tool.mock.domain.required.ToolRepository;
 import org.onosoft.mes.tool.mock.domain.tool.DefaultTool;
 import org.onosoft.mes.tool.mock.domain.value.DomainResult;
 import org.onosoft.mes.tool.mock.domain.exception.ApplicationException;
@@ -25,11 +25,13 @@ import java.util.NoSuchElementException;
 public class ToolService  {
 
   @Autowired
-  ToolRepositoryDefault toolRepository;
+  protected ToolRepository toolRepository;
 
-  public ToolDto setupNewTool(ToolId toolId, ToolDefinition definition) throws ToolPreExistingException {
+  public ToolDto setupNewTool(
+      ToolId toolId,
+      ToolDefinition definition) throws ToolPreExistingException, Exception {
 
-    Tool candidate = DefaultTool.prototype(toolId, definition);
+    Tool candidate = DefaultTool.prototype(toolId, definition, this.toolRepository);
     DomainResult result = candidate.create();
     this.postDomainEvents(result);
     return this.buildResponseDto(candidate);
