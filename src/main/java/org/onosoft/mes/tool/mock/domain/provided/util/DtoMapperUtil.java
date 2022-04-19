@@ -1,4 +1,4 @@
-package org.onosoft.mes.tool.mock.adapters.in.web.service;
+package org.onosoft.mes.tool.mock.domain.provided.util;
 
 import org.onosoft.mes.tool.mock.adapters.in.web.parts.dto.PartDto;
 import org.onosoft.mes.tool.mock.adapters.in.web.status.dto.LoadportDto;
@@ -9,6 +9,7 @@ import org.onosoft.mes.tool.mock.domain.provided.Part;
 import org.onosoft.mes.tool.mock.domain.provided.Tool;
 import org.onosoft.mes.tool.mock.domain.provided.value.LoadportDefinition;
 import org.onosoft.mes.tool.mock.domain.provided.value.LoadportId;
+import org.onosoft.mes.tool.mock.domain.provided.value.PartId;
 import org.onosoft.mes.tool.mock.domain.provided.value.ToolDefinition;
 import org.onosoft.mes.tool.mock.domain.tool.entity.LoadPort;
 import org.springframework.stereotype.Service;
@@ -18,15 +19,27 @@ import java.util.Iterator;
 import java.util.List;
 
 @Service
-public class DtoMapper {
+public class DtoMapperUtil {
+
+  protected static List<String> map(List<PartId> partIds) {
+    List<String> result = new ArrayList<>();
+    Iterator<PartId> iter = partIds.iterator();
+    while(iter.hasNext()) {
+      result.add(iter.next().toString());
+    }
+    return result;
+  }
+
   public static ToolDto map(Tool tool) {
     ToolDto dto = ToolDto.builder()
         .id(tool.getId().toString())
         .name(tool.getName())
         .description(tool.getDescription())
         .status(tool.getStatus().toString())
+        .inport(DtoMapperUtil.map(tool.getInport()))
+        .outport(DtoMapperUtil.map(tool.getOutport()))
+        .partsInProcess(map(tool.getPartsInProcess()))
         .build();
-
     return dto;
   }
 
@@ -64,8 +77,8 @@ public class DtoMapper {
     return ToolDefinition.builder()
         .name(dto.getName())
         .description(dto.getDescription())
-        .inport(DtoMapper.map(dto.getInport()))
-        .outport(DtoMapper.map(dto.getOutport()))
+        .inport(DtoMapperUtil.map(dto.getInport()))
+        .outport(DtoMapperUtil.map(dto.getOutport()))
         .build();
   }
 

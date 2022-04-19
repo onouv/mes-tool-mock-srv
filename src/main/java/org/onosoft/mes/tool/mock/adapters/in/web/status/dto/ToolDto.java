@@ -12,7 +12,7 @@ public class ToolDto {
   protected final String name;
   protected final String description;
   protected final String status;
-  protected final LoadportDto inportId;
-  protected final LoadportDto outportId;
+  protected final LoadportDto inport;
+  protected final LoadportDto outport;
   protected final List<String> partsInProcess;
 }

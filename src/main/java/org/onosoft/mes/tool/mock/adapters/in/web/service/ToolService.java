@@ -2,6 +2,7 @@ package org.onosoft.mes.tool.mock.adapters.in.web.service;
 
 import org.onosoft.ddd.annotations.DomainService;
 import org.onosoft.mes.tool.mock.adapters.in.web.status.dto.ToolDto;
+import org.onosoft.mes.tool.mock.domain.provided.util.DtoMapperUtil;
 import org.onosoft.mes.tool.mock.domain.exception.ToolPreExistingException;
 import org.onosoft.mes.tool.mock.domain.provided.value.ToolDefinition;
 import org.onosoft.mes.tool.mock.domain.required.ToolRepository;
@@ -12,7 +13,6 @@ import org.onosoft.mes.tool.mock.domain.exception.LoadportFullException;
 import org.onosoft.mes.tool.mock.domain.exception.NoPartAvailableException;
 import org.onosoft.mes.tool.mock.domain.provided.Part;
 import org.onosoft.mes.tool.mock.domain.provided.Tool;
-import org.onosoft.mes.tool.mock.domain.provided.value.IdleReason;
 import org.onosoft.mes.tool.mock.domain.provided.value.LoadportId;
 import org.onosoft.mes.tool.mock.domain.provided.value.ToolId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,9 +45,9 @@ public class ToolService  {
     return this.buildResponseDto(tool);
   }
 
-  public ToolDto stop(ToolId toolId, IdleReason reason) throws NoSuchElementException {
+  public ToolDto stop(ToolId toolId) throws NoSuchElementException {
     Tool tool = this.validateTool(toolId);
-    DomainResult result = tool.stop(reason);
+    DomainResult result = tool.stop();
     this.postDomainEvents(result);
     return this.buildResponseDto(tool);
   }
@@ -80,14 +80,14 @@ public class ToolService  {
     return this.buildResponseDto(tool);
   }
 
-  public ToolDto breakDown(ToolId toolId) {
+  public ToolDto faultTool(ToolId toolId) {
     Tool tool = this.validateTool(toolId);
     DomainResult result = tool.breakDown();
     this.postDomainEvents(result);
     return this.buildResponseDto(tool);
   }
 
-  public ToolDto repair(ToolId toolId) {
+  public ToolDto clearFault(ToolId toolId) {
     Tool tool = this.validateTool(toolId);
     DomainResult result = tool.repair();
     this.postDomainEvents(result);
@@ -108,13 +108,7 @@ public class ToolService  {
   }
 
   protected ToolDto buildResponseDto(Tool tool) {
-    ToolDto dto = ToolDto.builder()
-        .id(tool.getId().toString())
-        .name(tool.getName())
-        .description(tool.getDescription())
-        .status(tool.getStatus().toString())
-        .build();
-
+    ToolDto dto = DtoMapperUtil.map(tool);
     return dto;
   }
 

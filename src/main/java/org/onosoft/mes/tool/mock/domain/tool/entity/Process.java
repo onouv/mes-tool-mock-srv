@@ -13,7 +13,6 @@ public class Process {
     }
 
     public void run(Part part) {
-        System.out.println("processing part" + part.toString());
         this.processedPart = part;
     }
 }

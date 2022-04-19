@@ -11,7 +11,6 @@ public class ToolDownEvent extends ToolEvent {
 	public ToolDownEvent(
 			@JsonProperty("toolId") ToolId toolId) {
 		super(toolId);
-
 	}
 	
 	public String toString() {

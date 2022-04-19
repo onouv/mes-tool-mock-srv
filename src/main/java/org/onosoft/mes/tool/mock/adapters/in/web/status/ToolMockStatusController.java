@@ -1,11 +1,9 @@
 package org.onosoft.mes.tool.mock.adapters.in.web.status;
 
-import org.onosoft.mes.tool.mock.adapters.in.web.service.DtoMapper;
+import org.onosoft.mes.tool.mock.domain.provided.util.DtoMapperUtil;
 import org.onosoft.mes.tool.mock.adapters.in.web.status.dto.ToolDefinitionDto;
 import org.onosoft.mes.tool.mock.adapters.in.web.status.dto.ToolDto;
 import org.onosoft.mes.tool.mock.adapters.in.web.service.ToolService;
-import org.onosoft.mes.tool.mock.domain.event.ToolUpEvent;
-import org.onosoft.mes.tool.mock.domain.event.ToolDownEvent;
 
 import org.onosoft.mes.tool.mock.domain.exception.ToolPreExistingException;
 import org.onosoft.mes.tool.mock.domain.provided.value.ToolId;
@@ -43,7 +41,7 @@ public class ToolMockStatusController {
 				body.toString()));
 
 		ToolDto response = this.domainService.setupNewTool(
-				new ToolId(toolId), DtoMapper.map(body));
+				new ToolId(toolId), DtoMapperUtil.map(body));
 
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
@@ -52,13 +50,11 @@ public class ToolMockStatusController {
 			value={"/mes/tool/{tool-id}/mock/status/start"},
 			method=RequestMethod.PUT)
 	public ResponseEntity<ToolDto> startTool(
-			@PathVariable("tool-id") String toolId,
-			@RequestBody ToolUpEvent body) {
+			@PathVariable("tool-id") String toolId) {
 		
 		logger.info(String.format(
 				"mes-toolmock-srv: processing PUT /mes/tool/%s/mock/status/up with body %s",
-				toolId,
-				body.toString()));
+				toolId));
 
 		ToolDto response = this.domainService.start(new ToolId(toolId));
 		return new ResponseEntity<>(response, HttpStatus.OK);
@@ -67,17 +63,46 @@ public class ToolMockStatusController {
 	@RequestMapping(
 			value= {"/mes/tool/{tool-id}/mock/status/stop"},
 			method=RequestMethod.PUT)
-	public ResponseEntity<Void> stopTool(
-			@PathVariable("tool-id") String toolId,
-			@RequestBody ToolDownEvent body) {
+	public ResponseEntity<ToolDto> stopTool(
+			@PathVariable("tool-id") String toolId) {
 		
 		logger.info(String.format(
-				"mes-toolmock-srv: processing PUT /mes/tool/%s/mock/status/down with body %s",
-				toolId, 
-				body.toString()));
+				"mes-toolmock-srv: processing PUT /mes/tool/%s/mock/status/stop",
+				toolId));
+
+		ToolDto response = this.domainService.stop(new ToolId(toolId));
+		return new ResponseEntity<>(response, HttpStatus.OK);
 		
-		return new ResponseEntity<>(HttpStatus.OK);
-		
+	}
+
+	@RequestMapping(
+			value= {"/mes/tool/{tool-id}/mock/status/fault"},
+			method=RequestMethod.PUT)
+	public ResponseEntity<ToolDto> faultTool(
+			@PathVariable("tool-id") String toolId) {
+
+		logger.info(String.format(
+				"mes-toolmock-srv: processing PUT /mes/tool/%s/mock/status/breakdown",
+				toolId));
+
+		ToolDto response = this.domainService.faultTool(new ToolId(toolId));
+		return new ResponseEntity<>(response, HttpStatus.OK);
+
+	}
+
+	@RequestMapping(
+			value= {"/mes/tool/{tool-id}/mock/status/fault"},
+			method=RequestMethod.DELETE)
+	public ResponseEntity<ToolDto> clearFaultTool(
+			@PathVariable("tool-id") String toolId) {
+
+		logger.info(String.format(
+				"mes-toolmock-srv: processing PUT /mes/tool/%s/mock/status/breakdown",
+				toolId));
+
+		ToolDto response = this.domainService.clearFault(new ToolId(toolId));
+		return new ResponseEntity<>(response, HttpStatus.OK);
+
 	}
 }
 

@@ -53,9 +53,6 @@ public class DefaultTool implements Tool {
         LoadPort outport,
         ToolRepository toolRepository) throws Exception {
 
-        this.stateMachine = this.buildStateMachine();
-        this.stateMachine.start();
-
         this.id = id;
         this.name = name;
         this.description = description;
@@ -63,6 +60,10 @@ public class DefaultTool implements Tool {
         this.outport = outport;
         this.process = new Process();
         this.toolRepository = toolRepository;
+
+        this.stateMachine = this.buildStateMachine();
+        StateVarUtil.setToolId(this.stateMachine, this.id);
+        this.stateMachine.start();
     }
 
     protected StateMachine<ToolStates, ToolEvents> buildStateMachine() throws Exception {
@@ -71,18 +72,18 @@ public class DefaultTool implements Tool {
 
         builder.configureStates().withStates()
             .initial(ToolStates.UP)
-            .state(ToolStates.UP, new ToolUpEventAction(), null)
-            .state(ToolStates.DOWN)
-            .and()
+                .state(ToolStates.UP, new ToolUpEventAction(), null)
+                .state(ToolStates.DOWN)
+                .and()
             .withStates()
-            .parent(ToolStates.UP)
-            .initial(ToolStates.STOPPED)
-            .state(ToolStates.STOPPED,new ToolStoppedEventAction(), null )
-            .state(ToolStates.IDLE)
-            .state(
-                ToolStates.PROCESSING,
-                new ToolBeginProcessingPartAction(),
-                new ToolDoneProcessingPartAction());
+                .parent(ToolStates.UP)
+                .initial(ToolStates.STOPPED)
+                .state(ToolStates.STOPPED,new ToolStoppedEventAction(), null )
+                .state(ToolStates.IDLE)
+                .state(
+                    ToolStates.PROCESSING,
+                    new ToolBeginProcessingPartAction(),
+                    new ToolDoneProcessingPartAction());
 
         builder.configureTransitions()
             .withExternal()
@@ -228,7 +229,7 @@ public class DefaultTool implements Tool {
     }
 
     @Override
-    public DomainResult stop(IdleReason reason) {
+    public DomainResult stop() {
         this.stateMachine.sendEvent(ToolEvents.STOP);
         return this.domainResult();
     }
@@ -277,7 +278,9 @@ public class DefaultTool implements Tool {
     @Override
     public List<PartId> getPartsInProcess() {
         List<PartId> partsInProcess = new ArrayList<>();
-        partsInProcess.add(this.process.getProcessedPart().getId());
+        Part partInProc = this.process.getProcessedPart();
+        if(partInProc != null)
+            partsInProcess.add(partInProc.getId());
         return partsInProcess;
     }
 

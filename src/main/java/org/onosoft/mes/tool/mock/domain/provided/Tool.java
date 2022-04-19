@@ -15,7 +15,7 @@ public interface Tool {
     DomainResult create() throws ToolPreExistingException;
     DomainResult delete();
     DomainResult start();
-    DomainResult stop(IdleReason reason);
+    DomainResult stop();
     DomainResult loadPart(Part part, LoadportId portId);
     DomainResult unloadPart(LoadportId portId) throws NoPartAvailableException;
     DomainResult breakDown();
