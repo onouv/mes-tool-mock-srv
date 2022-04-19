@@ -1,0 +1,25 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+autoactivate on
+
+WebClient -> @Controller: POST /tools/123/start
+
+@Controller -> @Service: startTool(123)
+
+@Service -> Tool: start()
+Tool -> StateMachine: sendEvent(START)
+StateMachine -> StateMachine: checkGuards
+return
+StateMachine -> StateMachine: transition
+return
+return
+
+@Service <-- Tool
+@Controller <-- @Service
+WebClient <- @Controller: 200 {ToolStateDto}
+
+WebClient -> WebClient: render UI
+
+@enduml

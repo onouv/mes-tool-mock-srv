@@ -1,0 +1,81 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+package domain {
+
+class Tool <<DomainAggregateRoot>>{
+
+    id
+    ToolStatus status
+    DowntimeReason downtimeReason
+
+    +start()
+    +stop()
+    +loadPart(Part)
+    +unloadPart()
+    +break()
+    +repair()
+
+    #process(Part)
+}
+
+class Part <<DomainEntity>> {
+    id
+    PartStatus status
+}
+
+class Process <<DomainEntity>> {
+    id
+    name
+    +run(Part)
+
+}
+
+class ToolDownEvent <<DomainEvent>> {
+    DownTimeReason reason
+}
+
+class ToolUpEvent <<DomainEvent>> {
+}
+
+class PartLoadedEvent <<DomainEvent>> {
+    partId
+}
+
+class PartUnloadedEvent <<DomainEvent>> {
+    partId
+}
+
+Enum DowntimeReason {
+    UNKNOWN,
+    OPERATOR,
+    MATERIAL_MISSING,
+    AUXILIARY_MISSING,
+    PROCESS,
+    TOOL
+}
+
+Enum ToolStatus {
+    UP,
+    DOWN
+}
+
+Enum PartStatus {
+    UNPROCESSED,
+    PROCESSED_GOOD,
+    PROCESSED_BAD
+}
+
+Tool "1" o-- "*" Part
+Tool "1" *-- "1 #process" Process
+Tool ...> ToolStatus
+Tool ...> DowntimeReason
+Part ...> PartStatus
+Process "1" --> "1" Part: processes
+Tool --> ToolDownEvent: "issues"
+Tool --> ToolUpEvent: "issues"
+Tool --> PartLoadedEvent: "issues"
+Tool --> PartUnloadedEvent: "issues"
+
+}
+@enduml
