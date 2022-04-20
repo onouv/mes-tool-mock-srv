@@ -28,6 +28,8 @@ import org.springframework.statemachine.config.StateMachineBuilder;
 import org.springframework.statemachine.state.State;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 @AggregateRoot
@@ -179,14 +181,13 @@ public class DefaultTool implements Tool {
             definition.getOutport().getId(),
             definition.getOutport().getCapacity()
         );
-        DefaultTool tool = new DefaultTool(
+        return new DefaultTool(
             id,
             definition.getName(),
             definition.getDescription(),
             inport,
             outport,
             repo);
-        return tool;
     }
 
     @Override
@@ -198,29 +199,26 @@ public class DefaultTool implements Tool {
         this.toolRepository.insertTool(this);
 
         ToolCreatedEvent event = new ToolCreatedEvent(id);
-        List<DomainEvent> events = new ArrayList<DomainEvent>();
+        List<DomainEvent> events = new ArrayList<>();
         events.add(event);
 
         List<DomainEvent> fsmEvents = StateVarUtil.getDomainEvents(this.stateMachine);
         events.addAll(fsmEvents);
 
-        DomainResult result = DomainResult.builder()
+        return DomainResult.builder()
             .tool(this)
             .events(events)
             .build();
-
-        return result;
     }
 
     public DomainResult delete() {
         ToolDeletedEvent event = new ToolDeletedEvent(this.id);
-        List<DomainEvent> events = new ArrayList<DomainEvent>();
-        DomainResult result = DomainResult.builder()
+        List<DomainEvent> events = new ArrayList<>();
+
+        return DomainResult.builder()
             .tool(this)
             .events(events)
             .build();
-
-        return result;
     }
     @Override
     public DomainResult start() {
@@ -246,7 +244,7 @@ public class DefaultTool implements Tool {
     }
 
     @Override
-    public DomainResult unloadPart(LoadportId port) throws NoPartAvailableException {
+    public DomainResult unloadPart(LoadportId port) {
         StateVarUtil.setToolId(this.stateMachine, this.id);
         // TODO: lookup requested port by id, verify it's an outport
         StateVarUtil.setOutport(this.stateMachine, this.outport);
@@ -298,19 +296,27 @@ public class DefaultTool implements Tool {
     }
 
     @Override
-    public ToolStates getStatus() {
-        return this.stateMachine.getState().getId();
+    public List<ToolStates> getStates() {
+        List<ToolStates> result = new ArrayList<>();
+        Collection<State<ToolStates, ToolEvents>> states = this.stateMachine.getState().getStates();
+        for (State<ToolStates, ToolEvents> candidate : states) {
+            if (!candidate.isSimple()) {
+                Collection<ToolStates> ids = candidate.getIds();
+                result.addAll(ids);
+            }
+        }
+        return result;
     }
+
     protected DomainResult domainResult() {
         List<DomainEvent> events = StateVarUtil.getDomainEvents(this.stateMachine);
         ApplicationException exception = StateVarUtil.getApplicationException(this.stateMachine);
         State<ToolStates, ToolEvents> toolState = this.stateMachine.getState();
 
-        DomainResult result = DomainResult.builder()
+        return DomainResult.builder()
             .tool(this)
             .events(events)
             .applicationException(exception)
             .build();
-        return result;
     }
 }

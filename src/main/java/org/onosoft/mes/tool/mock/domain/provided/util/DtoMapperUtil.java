@@ -23,40 +23,35 @@ public class DtoMapperUtil {
 
   protected static List<String> map(List<PartId> partIds) {
     List<String> result = new ArrayList<>();
-    Iterator<PartId> iter = partIds.iterator();
-    while(iter.hasNext()) {
-      result.add(iter.next().toString());
+    for (PartId partId : partIds) {
+      result.add(partId.toString());
     }
     return result;
   }
 
   public static ToolDto map(Tool tool) {
-    ToolDto dto = ToolDto.builder()
+    return ToolDto.builder()
         .id(tool.getId().toString())
         .name(tool.getName())
         .description(tool.getDescription())
-        .status(tool.getStatus().toString())
+        .states(tool.getStates())
         .inport(DtoMapperUtil.map(tool.getInport()))
         .outport(DtoMapperUtil.map(tool.getOutport()))
         .partsInProcess(map(tool.getPartsInProcess()))
         .build();
-    return dto;
   }
 
   public static LoadportDto map(LoadPort port) {
     List<String> partIds = new ArrayList<>();
-    Iterator<Part> iter = port.getParts().iterator();
-    while(iter.hasNext()) {
-      partIds.add(iter.next().getId().toString());
+    for (Part part : port.getParts()) {
+      partIds.add(part.getId().toString());
     }
 
-    LoadportDto dto = LoadportDto.builder()
+    return LoadportDto.builder()
         .capacity(port.capacity())
         .id(port.getId().toString())
         .partIds(partIds)
         .build();
-
-    return dto;
   }
 
   public static LoadportDefinitionDto map(LoadportDefinition definition) {
