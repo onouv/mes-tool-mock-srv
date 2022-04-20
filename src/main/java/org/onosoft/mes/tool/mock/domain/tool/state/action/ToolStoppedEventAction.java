@@ -1,6 +1,6 @@
 package org.onosoft.mes.tool.mock.domain.tool.state.action;
 
-import org.onosoft.mes.tool.mock.domain.event.ToolDownEvent;
+import org.onosoft.mes.tool.mock.domain.event.ToolStoppedEvent;
 import org.onosoft.mes.tool.mock.domain.provided.value.ToolId;
 import org.onosoft.mes.tool.mock.domain.tool.state.StateVarUtil;
 import org.onosoft.mes.tool.mock.domain.tool.state.ToolEvents;
@@ -12,7 +12,7 @@ public class ToolStoppedEventAction extends ToolAction implements Action<ToolSta
   @Override
   public void execute(StateContext<ToolStates, ToolEvents> stateContext) {
     ToolId toolId = StateVarUtil.getToolId(stateContext);
-    this.events.add(new ToolDownEvent(toolId));
+    this.events.add(new ToolStoppedEvent(toolId));
     StateVarUtil.setDomainEvents(stateContext, this.events);
   }
 }

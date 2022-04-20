@@ -9,7 +9,7 @@ public class ToolDownEvent extends ToolEvent {
 
 	@JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
 	public ToolDownEvent(
-			@JsonProperty("toolId") ToolId toolId) {
+		@JsonProperty("toolId") ToolId toolId) {
 		super(toolId);
 	}
 	

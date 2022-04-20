@@ -198,12 +198,10 @@ public class DefaultTool implements Tool {
 
         this.toolRepository.insertTool(this);
 
-        ToolCreatedEvent event = new ToolCreatedEvent(id);
-        List<DomainEvent> events = new ArrayList<>();
-        events.add(event);
-
         List<DomainEvent> fsmEvents = StateVarUtil.getDomainEvents(this.stateMachine);
-        events.addAll(fsmEvents);
+        List<DomainEvent> events = new ArrayList<>(fsmEvents);
+        ToolCreatedEvent createdEvent = new ToolCreatedEvent(id);
+        events.add(createdEvent);
 
         return DomainResult.builder()
             .tool(this)
