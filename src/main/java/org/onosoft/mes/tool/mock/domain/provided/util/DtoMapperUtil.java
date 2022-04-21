@@ -51,6 +51,7 @@ public class DtoMapperUtil {
         .capacity(port.capacity())
         .id(port.getId().toString())
         .partIds(partIds)
+        .type(port.getType().toString())
         .build();
   }
 

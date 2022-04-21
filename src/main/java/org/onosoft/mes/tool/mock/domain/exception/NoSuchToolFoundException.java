@@ -5,11 +5,9 @@ import lombok.Getter;
 import org.onosoft.mes.tool.mock.domain.provided.value.ToolId;
 
 @Getter
-public class NoSuchToolFoundException extends Exception {
-  protected ToolId toolId;
+public class NoSuchToolFoundException extends ApplicationException {
 
   public NoSuchToolFoundException(ToolId toolId) {
-    super();
-    this.toolId = toolId;
+    super(toolId);
   }
 }
