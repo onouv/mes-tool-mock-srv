@@ -1,0 +1,46 @@
+@startuml
+'https://plantuml.com/state-diagram
+
+scale 350 width
+
+hide empty description
+state DOWN : entry/ issue ToolDownEvent
+
+[*] --> UP
+UP --> DOWN: FAULT
+DOWN --> UP: FAULT_CLEAR
+state UP {
+    state UP: entry/ ToolUpEvt
+    state UP: PART_LOAD(Part) / input.add(part); PartLoadEvt(tool, part)
+    state UP: PART_UNLOAD() / part=output.unload(); PartUnloadEvt(tool, part)
+    state STOPPED: entry/ ToolStoppedEvt
+    state IDLE
+    state PROCESSING: entry/ part=inport.next();ToolProcessingEvt(tool, part); process(part)
+    state PROCESSING: tool.process.run(Part) returns part/ FINISHED(part); output.add(part)
+
+    state PROCESSING: exit/ PartProcessedEvt(tool, part)
+
+    [*] --> STOPPED
+    STOPPED --> IDLE: START [InportEmpty] / \nToolIdleEvt(tool, UPSTREAM)
+    STOPPED --> IDLE: START [OutportFull] / \nToolIdleEvt(tool, DOWNSTREAM)
+
+    STOPPED --> PROCESSING: START [FlowIsFree]
+    PROCESSING --> PROCESSING: FINISHED(part) [FlowFree]
+    PROCESSING --> IDLE: FINISHED(part) [InportEmpty]/ \nToolIdleEvt(tool, UPSTREAM)
+    PROCESSING --> IDLE: FINISHED(part) [OutportFull]/ \nToolIdleEvt(tool, DOWNSTREAM)
+    IDLE --> PROCESSING: [FlowIsFree]
+
+
+    IDLE --> STOPPED: STOP
+    PROCESSING --> STOPPED: STOP
+
+    STOPPED --> [*]
+    IDLE --> [*]
+    PROCESSING --> [*]
+
+    note as T
+        FlowIsFree: (!InportEmpty && !OutportFull)
+    end note
+
+}
+@enduml

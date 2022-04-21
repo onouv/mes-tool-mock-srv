@@ -1,0 +1,30 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+autoactivate on
+WebClient -> @Controller: POST /tools/123/part {part1}
+
+@Controller -> @Service: loadPart(123, part1)
+@Service -> Tool: loadPart(part1)
+    Tool -> Tool: check Inport
+    alt InportEmpty
+        Tool -> StateMachine: sendEvent(LOAD_PART(part1))
+            StateMachine -> StateMachine: checkGuards
+                StateMachine -> StateMachine: doTransitions
+                    StateMachine -> PartLoadAction: execute()
+                    return
+                return
+            return
+        return
+    return
+return
+WebClient <- @Controller: 200
+    else !InportEmpty
+        @Service <- Tool: throw LoadPortFullException
+        @ControllerAdvice <- @Service: throw LoadPortFullException
+        WebClient <- @ControllerAdvice: 500 {"Loadport Full"}
+    end
+
+
+@enduml
