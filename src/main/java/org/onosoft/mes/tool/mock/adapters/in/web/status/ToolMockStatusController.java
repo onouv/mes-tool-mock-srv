@@ -81,7 +81,7 @@ public class ToolMockStatusController {
 			@PathVariable("tool-id") String toolId) throws NoSuchToolFoundException {
 		
 		logger.info(String.format(
-				"processing PUT /mes/tool/%s/mock/status/up with body",
+				"processing PUT /mes/tool/%s/mock/status/start",
 				toolId));
 
 		ToolDto response = this.domainService.start(new ToolId(toolId));

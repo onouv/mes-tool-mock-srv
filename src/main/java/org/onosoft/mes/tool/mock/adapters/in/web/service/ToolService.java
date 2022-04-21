@@ -100,14 +100,14 @@ public class ToolService  {
 
   public ToolDto faultTool(ToolId toolId) throws  NoSuchToolFoundException {
     Tool tool = this.validateTool(toolId);
-    DomainResult result = tool.breakDown();
+    DomainResult result = tool.fault();
     this.postDomainEvents(result);
     return this.buildResponseDto(tool);
   }
 
   public ToolDto clearFault(ToolId toolId) throws  NoSuchToolFoundException {
     Tool tool = this.validateTool(toolId);
-    DomainResult result = tool.repair();
+    DomainResult result = tool.clearFault();
     this.postDomainEvents(result);
     return this.buildResponseDto(tool);
   }

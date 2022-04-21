@@ -221,12 +221,14 @@ public class DefaultTool implements Tool {
     }
     @Override
     public DomainResult start() {
+        this.externalizeToolState();
         this.stateMachine.sendEvent(ToolEvents.START);
         return this.domainResult();
     }
 
     @Override
     public DomainResult stop() {
+        this.externalizeToolState();
         this.stateMachine.sendEvent(ToolEvents.STOP);
         return this.domainResult();
     }
@@ -238,9 +240,7 @@ public class DefaultTool implements Tool {
         if( ! this.inport.getId().equals(portId))
             throw new IllegalLoadportTypeException(this.id, portId);
 
-        StateVarUtil.setToolId(this.stateMachine, this.id);
-        StateVarUtil.setPart(this.stateMachine, part);
-        StateVarUtil.setInport(this.stateMachine, this.inport);
+        this.externalizeToolState();
         this.stateMachine.sendEvent(ToolEvents.PART_LOADING);
         return this.domainResult();
     }
@@ -252,20 +252,21 @@ public class DefaultTool implements Tool {
         if( ! this.outport.getId().equals(portId))
             throw new IllegalLoadportTypeException(this.id, portId);
 
-        StateVarUtil.setToolId(this.stateMachine, this.id);
-        StateVarUtil.setOutport(this.stateMachine, this.outport);
+        this.externalizeToolState();
         this.stateMachine.sendEvent(ToolEvents.PART_UNLOADING);
         return this.domainResult();
     }
 
     @Override
-    public DomainResult breakDown() {
+    public DomainResult fault() {
+        this.externalizeToolState();
         this.stateMachine.sendEvent(ToolEvents.FAULT);
         return this.domainResult();
     }
 
     @Override
-    public DomainResult repair() {
+    public DomainResult clearFault() {
+        StateVarUtil.setToolId(this.stateMachine, this.id);
         this.stateMachine.sendEvent(ToolEvents.FAULT_CLEARED);
         return this.domainResult();
     }
@@ -324,5 +325,12 @@ public class DefaultTool implements Tool {
             .events(events)
             .applicationException(exception)
             .build();
+    }
+
+    protected void externalizeToolState() {
+        StateVarUtil.setToolId(this.stateMachine, this.id);
+        StateVarUtil.setInport(this.stateMachine, this.inport);
+        StateVarUtil.setProcess(this.stateMachine, this.process);
+        StateVarUtil.setOutport(this.stateMachine, this.outport);
     }
 }
