@@ -6,6 +6,7 @@ import org.onosoft.mes.tool.mock.domain.event.DomainEvent;
 import org.onosoft.mes.tool.mock.domain.event.ToolCreatedEvent;
 import org.onosoft.mes.tool.mock.domain.event.ToolDeletedEvent;
 import org.onosoft.mes.tool.mock.domain.exception.ApplicationException;
+import org.onosoft.mes.tool.mock.domain.exception.IllegalLoadportTypeException;
 import org.onosoft.mes.tool.mock.domain.exception.NoPartAvailableException;
 import org.onosoft.mes.tool.mock.domain.exception.ToolPreExistingException;
 import org.onosoft.mes.tool.mock.domain.provided.Part;
@@ -174,11 +175,13 @@ public class DefaultTool implements Tool {
         LoadPort inport = new LoadPort(
             id,
             definition.getInport().getId(),
+            LoadportType.INPORT,
             definition.getInport().getCapacity()
         );
         LoadPort outport = new LoadPort(
             id,
             definition.getOutport().getId(),
+            LoadportType.OUTPORT,
             definition.getOutport().getCapacity()
         );
         return new DefaultTool(
@@ -229,20 +232,27 @@ public class DefaultTool implements Tool {
     }
 
     @Override
-    public DomainResult loadPart(Part part, LoadportId portId) {
+    public DomainResult loadPart(Part part, LoadportId portId)
+        throws IllegalLoadportTypeException {
+
+        if( ! this.inport.getId().equals(portId))
+            throw new IllegalLoadportTypeException(this.id, portId);
+
         StateVarUtil.setToolId(this.stateMachine, this.id);
         StateVarUtil.setPart(this.stateMachine, part);
-
-        // TODO: lookup requested port by id, verify it's an inport
         StateVarUtil.setInport(this.stateMachine, this.inport);
         this.stateMachine.sendEvent(ToolEvents.PART_LOADING);
         return this.domainResult();
     }
 
     @Override
-    public DomainResult unloadPart(LoadportId port) {
+    public DomainResult unloadPart(LoadportId portId)
+        throws IllegalLoadportTypeException {
+
+        if( ! this.outport.getId().equals(portId))
+            throw new IllegalLoadportTypeException(this.id, portId);
+
         StateVarUtil.setToolId(this.stateMachine, this.id);
-        // TODO: lookup requested port by id, verify it's an outport
         StateVarUtil.setOutport(this.stateMachine, this.outport);
         this.stateMachine.sendEvent(ToolEvents.PART_UNLOADING);
         return this.domainResult();

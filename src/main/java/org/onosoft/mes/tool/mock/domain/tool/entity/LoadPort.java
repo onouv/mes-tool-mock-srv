@@ -5,6 +5,7 @@ import org.onosoft.mes.tool.mock.domain.exception.NoPartAvailableException;
 import org.onosoft.mes.tool.mock.domain.provided.Part;
 import org.onosoft.mes.tool.mock.domain.provided.value.Identifier;
 import org.onosoft.mes.tool.mock.domain.provided.value.LoadportId;
+import org.onosoft.mes.tool.mock.domain.provided.value.LoadportType;
 import org.onosoft.mes.tool.mock.domain.provided.value.ToolId;
 import org.onosoft.mes.tool.mock.domain.tool.state.guard.PortStatus;
 
@@ -19,23 +20,25 @@ public class LoadPort implements PortStatus {
     protected final LinkedBlockingQueue<Part> buffer;
     protected final ToolId toolId;
     protected final LoadportId id;
+    protected final LoadportType type;
     protected final int capacity;
 
-    public LoadPort(ToolId toolId, LoadportId portId, int capacity) throws IllegalArgumentException {
+    public LoadPort(ToolId toolId, LoadportId portId, LoadportType type, int capacity) throws IllegalArgumentException {
         if(capacity <= 0)
             throw new IllegalArgumentException(String
-                .format("capacity must be null or positive, but was given as %i", capacity));
+                .format("capacity must be null or positive, but was given as %d", capacity));
         this.toolId = toolId;
         this.id = portId;
         this.buffer = new LinkedBlockingQueue<>(capacity);
         this.capacity = capacity;
+        this.type = type;
     }
 
     public void load(Part part) throws IllegalArgumentException, LoadportFullException {
         if(part == null)
             throw new IllegalArgumentException("parameter part must not be null");
 
-        if(this.buffer.offer(part) == false)
+        if( ! this.buffer.offer(part))
             throw new LoadportFullException(this.toolId, this.id, part);
     }
 
@@ -51,6 +54,7 @@ public class LoadPort implements PortStatus {
     public Identifier getId() {
         return this.id;
     }
+    public LoadportType getType() { return this.type; }
 
     @Override
     public boolean isEmpty() {
@@ -68,12 +72,7 @@ public class LoadPort implements PortStatus {
     }
 
     public List<Part> getParts() {
-        List<Part> parts = new ArrayList<>();
-        Iterator<Part> iter = this.buffer.iterator();
-        while(iter.hasNext()) {
-            parts.add(iter.next());
-        }
-        return parts;
+        return new ArrayList<>(this.buffer);
     }
 
 }

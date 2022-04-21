@@ -1,8 +1,5 @@
 package org.onosoft.mes.tool.mock.domain.provided.value;
 
-import org.onosoft.ddd.annotations.ValueObject;
-
-@ValueObject
 public enum IdleReason {
 	UPSTREAM("UPSTREAM"),
 	DOWNSTREAM("DOWNSTREAM");

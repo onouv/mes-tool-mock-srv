@@ -2,6 +2,7 @@ package org.onosoft.mes.tool.mock.adapters.in.web.exception;
 
 import org.onosoft.mes.tool.mock.adapters.in.web.dto.ApiError;
 import org.onosoft.mes.tool.mock.domain.exception.ApplicationException;
+import org.onosoft.mes.tool.mock.domain.exception.IllegalLoadportTypeException;
 import org.onosoft.mes.tool.mock.domain.exception.NoSuchToolFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,11 +20,6 @@ public class ToolMockExceptionHandler extends ResponseEntityExceptionHandler {
     return this.respondWithCONFLICT(ex);
   }
 
-  @ExceptionHandler(NoSuchElementException.class)
-  protected ResponseEntity<Object> handleNoSuchElement(NoSuchElementException ex) {
-    return this.respondWithCONFLICT(ex);
-  }
-
   @ExceptionHandler(NoSuchToolFoundException.class)
   protected ResponseEntity<Object> handleNoSuchToolFound(NoSuchToolFoundException ex) {
     ApiError err = new ApiError(
@@ -31,6 +27,17 @@ public class ToolMockExceptionHandler extends ResponseEntityExceptionHandler {
         String.format("cannot find tool with id = %s", ex.getToolId()),
         ex);
     return new ResponseEntity<>(err, HttpStatus.NOT_FOUND);
+  }
+
+  @ExceptionHandler(IllegalLoadportTypeException.class)
+  protected ResponseEntity<Object> handleIllegalLoadportTyp(IllegalLoadportTypeException ex) {
+    ApiError err = new ApiError(
+        HttpStatus.CONFLICT,
+        String.format("Loadport configured under ID = %s in tool with ID = %s  is of wrong type.",
+            ex.getToolId(),
+            ex.getLoadportId()),
+        ex);
+    return new ResponseEntity<>(err, HttpStatus.CONFLICT);
   }
 
   @ExceptionHandler(Exception.class)

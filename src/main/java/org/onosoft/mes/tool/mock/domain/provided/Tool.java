@@ -1,5 +1,6 @@
 package org.onosoft.mes.tool.mock.domain.provided;
 
+import org.onosoft.mes.tool.mock.domain.exception.IllegalLoadportTypeException;
 import org.onosoft.mes.tool.mock.domain.exception.NoPartAvailableException;
 import org.onosoft.mes.tool.mock.domain.exception.ToolPreExistingException;
 import org.onosoft.mes.tool.mock.domain.provided.value.*;
@@ -14,8 +15,10 @@ public interface Tool {
     DomainResult delete();
     DomainResult start();
     DomainResult stop();
-    DomainResult loadPart(Part part, LoadportId portId);
-    DomainResult unloadPart(LoadportId portId);
+    DomainResult loadPart(Part part, LoadportId portId)
+        throws IllegalLoadportTypeException;
+    DomainResult unloadPart(LoadportId portId)
+        throws IllegalLoadportTypeException;
     DomainResult breakDown();
     DomainResult repair();
 

@@ -7,7 +7,6 @@ import org.onosoft.mes.tool.mock.adapters.in.web.status.dto.ToolDefinitionDto;
 import org.onosoft.mes.tool.mock.adapters.in.web.status.dto.ToolDto;
 import org.onosoft.mes.tool.mock.adapters.in.web.service.ToolService;
 
-import org.onosoft.mes.tool.mock.domain.exception.ToolPreExistingException;
 import org.onosoft.mes.tool.mock.domain.provided.value.ToolId;
 import org.onosoft.mes.tool.mock.domain.required.ToolRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +20,6 @@ import org.springframework.http.ResponseEntity;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.NoSuchElementException;
 
 @RestController
 public class ToolMockStatusController {
@@ -81,7 +78,7 @@ public class ToolMockStatusController {
 			value={"/mes/tool/{tool-id}/mock/status/start"},
 			method=RequestMethod.PUT)
 	public ResponseEntity<ToolDto> startTool(
-			@PathVariable("tool-id") String toolId) {
+			@PathVariable("tool-id") String toolId) throws NoSuchToolFoundException {
 		
 		logger.info(String.format(
 				"processing PUT /mes/tool/%s/mock/status/up with body",
@@ -95,7 +92,7 @@ public class ToolMockStatusController {
 			value= {"/mes/tool/{tool-id}/mock/status/stop"},
 			method=RequestMethod.PUT)
 	public ResponseEntity<ToolDto> stopTool(
-			@PathVariable("tool-id") String toolId) {
+			@PathVariable("tool-id") String toolId) throws NoSuchToolFoundException {
 		
 		logger.info(String.format(
 				"processing PUT /mes/tool/%s/mock/status/stop",
@@ -109,7 +106,7 @@ public class ToolMockStatusController {
 			value= {"/mes/tool/{tool-id}/mock/status/fault"},
 			method=RequestMethod.PUT)
 	public ResponseEntity<ToolDto> faultTool(
-			@PathVariable("tool-id") String toolId) {
+			@PathVariable("tool-id") String toolId) throws  NoSuchToolFoundException {
 
 		logger.info(String.format(
 				"processing PUT /mes/tool/%s/mock/status/fault",
@@ -123,7 +120,7 @@ public class ToolMockStatusController {
 			value= {"/mes/tool/{tool-id}/mock/status/fault"},
 			method=RequestMethod.DELETE)
 	public ResponseEntity<ToolDto> clearFaultTool(
-			@PathVariable("tool-id") String toolId) {
+			@PathVariable("tool-id") String toolId) throws  NoSuchToolFoundException {
 
 		logger.info(String.format(
 				"processing DELETE /mes/tool/%s/mock/status/fault",

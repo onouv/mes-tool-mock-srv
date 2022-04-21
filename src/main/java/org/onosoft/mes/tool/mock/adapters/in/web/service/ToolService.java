@@ -19,7 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Service
 @DomainService
@@ -51,25 +50,29 @@ public class ToolService  {
     this.postDomainEvents(result);
   }
 
-  public ToolDto start(ToolId toolId) throws NoSuchElementException {
+  public ToolDto start(ToolId toolId) throws NoSuchToolFoundException {
     Tool tool = this.validateTool(toolId);
     DomainResult result = tool.start();
     this.postDomainEvents(result);
     return this.buildResponseDto(tool);
   }
 
-  public ToolDto stop(ToolId toolId) throws NoSuchElementException {
+  public ToolDto stop(ToolId toolId) throws NoSuchToolFoundException {
     Tool tool = this.validateTool(toolId);
     DomainResult result = tool.stop();
     this.postDomainEvents(result);
     return this.buildResponseDto(tool);
   }
 
-  public ToolDto loadPart(ToolId toolId, LoadportId portId, Part part) throws NoSuchElementException, LoadportFullException {
+  public ToolDto loadPart(ToolId toolId, LoadportId portId, Part part)
+      throws  NoSuchToolFoundException,
+              IllegalLoadportTypeException,
+              LoadportFullException {
+
     Tool tool = this.validateTool(toolId);
     DomainResult result = tool.loadPart(part, portId);
 
-    // expose application-level exceptions to our clients
+    // expose application-level exceptions from transition
     ApplicationException e = result.getApplicationException();
     if(e instanceof LoadportFullException)
       throw (LoadportFullException) e;
@@ -79,12 +82,14 @@ public class ToolService  {
   }
 
   public ToolDto unloadPart(ToolId toolId, LoadportId portId)
-      throws NoSuchElementException, NoPartAvailableException {
+      throws  NoSuchToolFoundException,
+              IllegalLoadportTypeException,
+              NoPartAvailableException {
 
     Tool tool = this.validateTool(toolId);
     DomainResult result = tool.unloadPart(portId);
 
-    // expose application-level exceptions to our clients
+    // expose application-level exceptions from transition
     Exception e = result.getApplicationException();
     if(e instanceof NoPartAvailableException)
       throw (NoPartAvailableException) e;
@@ -93,24 +98,24 @@ public class ToolService  {
     return this.buildResponseDto(tool);
   }
 
-  public ToolDto faultTool(ToolId toolId) {
+  public ToolDto faultTool(ToolId toolId) throws  NoSuchToolFoundException {
     Tool tool = this.validateTool(toolId);
     DomainResult result = tool.breakDown();
     this.postDomainEvents(result);
     return this.buildResponseDto(tool);
   }
 
-  public ToolDto clearFault(ToolId toolId) {
+  public ToolDto clearFault(ToolId toolId) throws  NoSuchToolFoundException {
     Tool tool = this.validateTool(toolId);
     DomainResult result = tool.repair();
     this.postDomainEvents(result);
     return this.buildResponseDto(tool);
   }
 
-  protected Tool validateTool(ToolId toolId) throws NoSuchElementException {
+  protected Tool validateTool(ToolId toolId) throws NoSuchToolFoundException {
     Tool tool = toolRepository.findTool(toolId);
     if(tool == null)
-      throw new NoSuchElementException(String.format("no tool with identifier %s found", toolId));
+      throw new NoSuchToolFoundException(toolId);
 
     return tool;
   }
