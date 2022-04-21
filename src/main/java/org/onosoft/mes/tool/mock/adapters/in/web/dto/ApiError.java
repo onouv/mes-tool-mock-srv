@@ -23,14 +23,16 @@ public class ApiError {
   }
 
   public ApiError(HttpStatus status, Throwable exception) {
+    this();
     this.httpStatus = status;
     this.applicationMessage = "Unknown Error.";
-    this.debugMessage = exception.getLocalizedMessage();
+    this.debugMessage = exception.toString();
   }
 
   public ApiError(HttpStatus status, String applicationMessage, Throwable exception) {
+    this();
     this.httpStatus = status;
     this.applicationMessage = applicationMessage;
-    this.debugMessage = exception.getLocalizedMessage();
+    this.debugMessage = exception.toString();
   }
 }

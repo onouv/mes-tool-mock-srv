@@ -8,6 +8,7 @@ import java.util.List;
 @Getter
 @Builder
 public class LoadportDto {
+  // TODO: add type (IN | OUT) to allow for checking in loading/unloading operations
   String id;
   int capacity;
   List<String> partIds;

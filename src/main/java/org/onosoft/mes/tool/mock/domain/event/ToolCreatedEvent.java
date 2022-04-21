@@ -11,7 +11,7 @@ public class ToolCreatedEvent extends ToolEvent {
 
   @Override
   public String toString() {
-    return String.format("Tool id=%s created @ %s",
+    return String.format("Tool id=%s CREATED @ %s",
         this.toolId.toString(),
         super.timeStamp);
   }

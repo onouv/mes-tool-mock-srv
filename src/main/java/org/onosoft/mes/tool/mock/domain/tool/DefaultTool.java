@@ -198,8 +198,7 @@ public class DefaultTool implements Tool {
 
         this.toolRepository.insertTool(this);
 
-        List<DomainEvent> fsmEvents = StateVarUtil.getDomainEvents(this.stateMachine);
-        List<DomainEvent> events = new ArrayList<>(fsmEvents);
+        List<DomainEvent> events = StateVarUtil.getDomainEvents(this.stateMachine);
         ToolCreatedEvent createdEvent = new ToolCreatedEvent(id);
         events.add(createdEvent);
 
@@ -210,13 +209,12 @@ public class DefaultTool implements Tool {
     }
 
     public DomainResult delete() {
-        ToolDeletedEvent event = new ToolDeletedEvent(this.id);
-        List<DomainEvent> events = new ArrayList<>();
+        this.stateMachine.sendEvent(ToolEvents.STOP);
+        DomainResult result = this.domainResult();
 
-        return DomainResult.builder()
-            .tool(this)
-            .events(events)
-            .build();
+        ToolDeletedEvent deletedEvent = new ToolDeletedEvent(this.id);
+        result.getEvents().add(deletedEvent);
+        return result;
     }
     @Override
     public DomainResult start() {

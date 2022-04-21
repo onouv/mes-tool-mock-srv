@@ -3,15 +3,12 @@ package org.onosoft.mes.tool.mock.adapters.in.web.service;
 import org.onosoft.mes.tool.mock.domain.event.DomainEvent;
 import org.onosoft.ddd.annotations.DomainService;
 import org.onosoft.mes.tool.mock.adapters.in.web.status.dto.ToolDto;
+import org.onosoft.mes.tool.mock.domain.exception.*;
 import org.onosoft.mes.tool.mock.domain.provided.util.DtoMapperUtil;
-import org.onosoft.mes.tool.mock.domain.exception.ToolPreExistingException;
 import org.onosoft.mes.tool.mock.domain.provided.value.ToolDefinition;
 import org.onosoft.mes.tool.mock.domain.required.ToolRepository;
 import org.onosoft.mes.tool.mock.domain.tool.DefaultTool;
 import org.onosoft.mes.tool.mock.domain.value.DomainResult;
-import org.onosoft.mes.tool.mock.domain.exception.ApplicationException;
-import org.onosoft.mes.tool.mock.domain.exception.LoadportFullException;
-import org.onosoft.mes.tool.mock.domain.exception.NoPartAvailableException;
 import org.onosoft.mes.tool.mock.domain.provided.Part;
 import org.onosoft.mes.tool.mock.domain.provided.Tool;
 import org.onosoft.mes.tool.mock.domain.provided.value.LoadportId;
@@ -36,7 +33,7 @@ public class ToolService  {
 
   public ToolDto setupNewTool(
       ToolId toolId,
-      ToolDefinition definition) throws ToolPreExistingException, Exception {
+      ToolDefinition definition) throws Exception {
 
     Tool candidate = DefaultTool.prototype(toolId, definition, this.toolRepository);
     DomainResult result = candidate.create();
@@ -44,11 +41,20 @@ public class ToolService  {
     return this.buildResponseDto(candidate);
   }
 
+  public void destroyTool(ToolId toolId) throws NoSuchToolFoundException {
+    Tool candidate = this.toolRepository.findTool(toolId);
+    if(candidate == null)
+      throw new NoSuchToolFoundException(toolId);
+
+    DomainResult result = candidate.delete();
+    this.toolRepository.removeTool(toolId);
+    this.postDomainEvents(result);
+  }
+
   public ToolDto start(ToolId toolId) throws NoSuchElementException {
     Tool tool = this.validateTool(toolId);
     DomainResult result = tool.start();
     this.postDomainEvents(result);
-
     return this.buildResponseDto(tool);
   }
 
