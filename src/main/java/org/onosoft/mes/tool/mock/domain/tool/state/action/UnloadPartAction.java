@@ -6,7 +6,8 @@ import org.onosoft.mes.tool.mock.domain.exception.NoPartAvailableException;
 import org.onosoft.mes.tool.mock.domain.provided.Part;
 import org.onosoft.mes.tool.mock.domain.provided.value.ToolId;
 import org.onosoft.mes.tool.mock.domain.tool.entity.LoadPort;
-import org.onosoft.mes.tool.mock.domain.tool.state.StateVarUtil;
+import org.onosoft.mes.tool.mock.domain.tool.state.util.StateContextVariableUtil;
+import org.onosoft.mes.tool.mock.domain.tool.state.util.StateMachineVariableUtil;
 import org.onosoft.mes.tool.mock.domain.tool.state.ToolEvents;
 import org.onosoft.mes.tool.mock.domain.provided.value.ToolStates;
 import org.springframework.statemachine.StateContext;
@@ -23,18 +24,19 @@ public class UnloadPartAction
   public void execute(final StateContext<ToolStates, ToolEvents> context) {
     System.out.println("Tool issues ToolIdleEvent with DOWNSTREAM reason...");
 
-    LoadPort outport = StateVarUtil.getOutport(context);
-    ToolId toolId = StateVarUtil.getToolId(context);
+    LoadPort outport = StateContextVariableUtil.getOutport(context);
+    ToolId toolId = StateContextVariableUtil.getToolId(context);
 
     try {
       Part unloaded = outport.next();
       PartUnloadedEvent event = new PartUnloadedEvent(unloaded);
 
+      List<DomainEvent> events = new ArrayList<>();
       events.add(event);
-      StateVarUtil.setDomainEvents(context, events);
+      StateContextVariableUtil.setDomainEvents(context, events);
     }
     catch(NoPartAvailableException e) {
-      StateVarUtil.setApplicationException(context, e);
+      StateContextVariableUtil.setApplicationException(context, e);
     }
   }
 }

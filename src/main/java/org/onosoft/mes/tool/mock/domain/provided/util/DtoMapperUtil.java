@@ -15,7 +15,6 @@ import org.onosoft.mes.tool.mock.domain.tool.entity.LoadPort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 @Service
@@ -34,7 +33,7 @@ public class DtoMapperUtil {
         .id(tool.getId().toString())
         .name(tool.getName())
         .description(tool.getDescription())
-        .states(tool.getStates())
+        .states(tool.getCurrentStates())
         .inport(DtoMapperUtil.map(tool.getInport()))
         .outport(DtoMapperUtil.map(tool.getOutport()))
         .partsInProcess(map(tool.getPartsInProcess()))

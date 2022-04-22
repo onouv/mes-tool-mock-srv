@@ -1,12 +1,17 @@
 package org.onosoft.mes.tool.mock.domain.tool.state.action;
 
+import org.onosoft.mes.tool.mock.domain.event.DomainEvent;
 import org.onosoft.mes.tool.mock.domain.event.ToolUpEvent;
 import org.onosoft.mes.tool.mock.domain.provided.value.ToolId;
-import org.onosoft.mes.tool.mock.domain.tool.state.StateVarUtil;
+
+import org.onosoft.mes.tool.mock.domain.tool.state.util.StateContextVariableUtil;
 import org.onosoft.mes.tool.mock.domain.tool.state.ToolEvents;
 import org.onosoft.mes.tool.mock.domain.provided.value.ToolStates;
 import org.springframework.statemachine.StateContext;
 import org.springframework.statemachine.action.Action;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ToolUpEventAction
     extends ToolAction
@@ -14,8 +19,9 @@ public class ToolUpEventAction
   @Override
   public void execute(StateContext<ToolStates, ToolEvents> stateContext) {
 
-    ToolId toolId = StateVarUtil.getToolId(stateContext);
-    this.events.add(new ToolUpEvent(toolId));
-    StateVarUtil.setDomainEvents(stateContext, this.events);
+    ToolId toolId = StateContextVariableUtil.getToolId(stateContext);
+    List<DomainEvent> events = new ArrayList<>();
+    events.add(new ToolUpEvent(toolId));
+    StateContextVariableUtil.setDomainEvents(stateContext, events);
   }
 }
