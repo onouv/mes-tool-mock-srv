@@ -24,7 +24,7 @@ public interface Tool {
     ToolId getId();
     String getName();
     String getDescription();
-    List<ToolStates> getStates();
+    List<ToolStates> getCurrentStates();
 
     LoadPort getInport();
     LoadPort getOutport();

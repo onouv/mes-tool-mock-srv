@@ -9,7 +9,7 @@ public class ToolDeletedEvent extends ToolEvent {
 
   @Override
   public String toString() {
-    return String.format("Tool %s deleted @ %s",
+    return String.format("Tool %s DELETED @ %s",
         this.toolId.toString(),
         super.timeStamp);
   }
