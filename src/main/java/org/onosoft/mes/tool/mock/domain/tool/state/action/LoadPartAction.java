@@ -3,7 +3,7 @@ package org.onosoft.mes.tool.mock.domain.tool.state.action;
 import org.onosoft.mes.tool.mock.domain.event.DomainEvent;
 import org.onosoft.mes.tool.mock.domain.event.PartLoadedEvent;
 import org.onosoft.mes.tool.mock.domain.exception.LoadportFullException;
-import org.onosoft.mes.tool.mock.domain.provided.Part;
+import org.onosoft.mes.tool.mock.domain.tool.entity.Part;
 import org.onosoft.mes.tool.mock.domain.tool.entity.LoadPort;
 import org.onosoft.mes.tool.mock.domain.tool.state.util.StateContextVariableUtil;
 import org.onosoft.mes.tool.mock.domain.tool.state.ToolEvents;

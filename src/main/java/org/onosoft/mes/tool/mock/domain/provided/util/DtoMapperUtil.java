@@ -5,7 +5,7 @@ import org.onosoft.mes.tool.mock.adapters.in.web.status.dto.LoadportDto;
 import org.onosoft.mes.tool.mock.adapters.in.web.status.dto.LoadportDefinitionDto;
 import org.onosoft.mes.tool.mock.adapters.in.web.status.dto.ToolDefinitionDto;
 import org.onosoft.mes.tool.mock.adapters.in.web.status.dto.ToolDto;
-import org.onosoft.mes.tool.mock.domain.provided.Part;
+import org.onosoft.mes.tool.mock.domain.tool.entity.Part;
 import org.onosoft.mes.tool.mock.domain.provided.Tool;
 import org.onosoft.mes.tool.mock.domain.provided.value.LoadportDefinition;
 import org.onosoft.mes.tool.mock.domain.provided.value.LoadportId;
@@ -79,8 +79,15 @@ public class DtoMapperUtil {
 
   public static PartDto map(Part part) {
     return PartDto.builder()
-        .id(part.getId())
+        .id(part.getId().toString())
         .type(part.getType())
+        .build();
+  }
+
+  public static Part map(PartDto dto) {
+    return Part.builder()
+        .id(new PartId(dto.getId()))
+        .type(dto.getType())
         .build();
   }
 

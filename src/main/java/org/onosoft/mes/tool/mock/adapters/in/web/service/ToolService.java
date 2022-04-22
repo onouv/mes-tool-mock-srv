@@ -9,7 +9,7 @@ import org.onosoft.mes.tool.mock.domain.provided.value.ToolDefinition;
 import org.onosoft.mes.tool.mock.domain.required.ToolRepository;
 import org.onosoft.mes.tool.mock.domain.tool.DefaultTool;
 import org.onosoft.mes.tool.mock.domain.value.DomainResult;
-import org.onosoft.mes.tool.mock.domain.provided.Part;
+import org.onosoft.mes.tool.mock.domain.tool.entity.Part;
 import org.onosoft.mes.tool.mock.domain.provided.Tool;
 import org.onosoft.mes.tool.mock.domain.provided.value.LoadportId;
 import org.onosoft.mes.tool.mock.domain.provided.value.ToolId;

@@ -1,7 +1,7 @@
 package org.onosoft.mes.tool.mock.domain.exception;
 
 import lombok.Getter;
-import org.onosoft.mes.tool.mock.domain.provided.Part;
+import org.onosoft.mes.tool.mock.domain.tool.entity.Part;
 import org.onosoft.mes.tool.mock.domain.provided.value.LoadportId;
 import org.onosoft.mes.tool.mock.domain.provided.value.ToolId;
 

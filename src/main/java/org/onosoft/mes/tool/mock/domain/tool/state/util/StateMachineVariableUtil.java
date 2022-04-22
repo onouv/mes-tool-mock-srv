@@ -2,7 +2,7 @@ package org.onosoft.mes.tool.mock.domain.tool.state.util;
 
 import org.onosoft.mes.tool.mock.domain.event.DomainEvent;
 import org.onosoft.mes.tool.mock.domain.exception.ApplicationException;
-import org.onosoft.mes.tool.mock.domain.provided.Part;
+import org.onosoft.mes.tool.mock.domain.tool.entity.Part;
 import org.onosoft.mes.tool.mock.domain.provided.value.ToolId;
 import org.onosoft.mes.tool.mock.domain.provided.value.ToolStates;
 import org.onosoft.mes.tool.mock.domain.tool.entity.LoadPort;

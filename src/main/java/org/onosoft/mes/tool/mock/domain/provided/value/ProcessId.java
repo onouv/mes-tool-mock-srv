@@ -1,7 +1,7 @@
 package org.onosoft.mes.tool.mock.domain.provided.value;
 
-public class PartId extends Identifier {
-  public PartId(String id) {
+public class ProcessId extends Identifier {
+  public ProcessId(String id) {
     super(id);
   }
 }

@@ -7,7 +7,7 @@ import org.onosoft.mes.tool.mock.domain.event.ToolDeletedEvent;
 import org.onosoft.mes.tool.mock.domain.exception.ApplicationException;
 import org.onosoft.mes.tool.mock.domain.exception.IllegalLoadportTypeException;
 import org.onosoft.mes.tool.mock.domain.exception.ToolPreExistingException;
-import org.onosoft.mes.tool.mock.domain.provided.Part;
+import org.onosoft.mes.tool.mock.domain.tool.entity.Part;
 import org.onosoft.mes.tool.mock.domain.provided.Tool;
 import org.onosoft.mes.tool.mock.domain.provided.value.*;
 import org.onosoft.mes.tool.mock.domain.required.ToolRepository;
@@ -61,20 +61,21 @@ public class DefaultTool implements Tool {
 
             StateMachineBuilder.Builder<ToolStates, ToolEvents> builder = StateMachineBuilder.builder();
 
-            builder.configureStates().withStates()
-                .initial(ToolStates.UP)
-                .state(ToolStates.UP, new ToolUpEventAction(), null)
-                .state(ToolStates.DOWN)
-                .and()
+            builder.configureStates()
                 .withStates()
-                .parent(ToolStates.UP)
-                .initial(ToolStates.STOPPED)
-                .state(ToolStates.STOPPED, new ToolStoppedEventAction(), null)
-                .state(ToolStates.IDLE)
-                .state(
-                    ToolStates.PROCESSING,
-                    new ToolBeginProcessingPartAction(),
-                    new ToolDoneProcessingPartAction());
+                    .initial(ToolStates.UP)
+                    .state(ToolStates.UP, new ToolUpEventAction(), null)
+                    .state(ToolStates.DOWN)
+                    .and()
+                .withStates()
+                    .parent(ToolStates.UP)
+                    .initial(ToolStates.STOPPED)
+                    .state(ToolStates.STOPPED, new ToolStoppedEventAction(), null)
+                    .state(ToolStates.IDLE)
+                    .state(
+                        ToolStates.PROCESSING,
+                        new ProcessPartAction(),
+                        null);
 
             builder.configureTransitions()
                 .withExternal()
@@ -134,24 +135,35 @@ public class DefaultTool implements Tool {
                 .withInternal()
                     .source(ToolStates.UP)
                     .event(ToolEvents.PART_LOADING)
-                    //.guard(new InportNotFullGuard())
                     .action(new LoadPartAction())
                     .and()
                 .withInternal()
                     .source(ToolStates.UP)
                     .event(ToolEvents.PART_UNLOADING)
-                    //.guard(new OutportNotEmptyGuard())
                     .action(new UnloadPartAction())
                     .and()
-                .withInternal()
+                .withExternal() // TODO: look at DC Player example, state PLAYING internal transition
+                .source(ToolStates.PROCESSING)
+                .target(ToolStates.IDLE)
+                .timer(DefaultTool.CYCLE_TIME)
+                .guard(new InportEmptyGuard())
+                .action(new ToolIdleEventUpstreamAction())
+                .and()
+                .withExternal()
+                .source(ToolStates.PROCESSING)
+                .target(ToolStates.PROCESSING)
+                .timer(DefaultTool.CYCLE_TIME)
+                .guard(new FlowIsFreeGuard())
+
+                .action(new ToolIdleEventUpstreamAction())
+                .and()
+                .withInternal() // TODO: withExternal(). ... .timer().guard(
                     .source(ToolStates.PROCESSING)
                     .timer(DefaultTool.CYCLE_TIME)
-                    .guard(new InportNotFullGuard())
-                    .action(new LoadPartAction());
+                    .guard(new InportNotFullGuard()) // TODO ???
+                    .action(new ProcessPartAction());
 
             return builder.build();
-
-
         }
 
         void send(ToolEvents event) {
@@ -160,7 +172,8 @@ public class DefaultTool implements Tool {
 
         List<ToolStates> getCurrentStates() {
             List<ToolStates> result = new ArrayList<>();
-            Collection<org.springframework.statemachine.state.State<ToolStates, ToolEvents>> states = this.stateMachine.getState().getStates();
+            Collection<org.springframework.statemachine.state.State<ToolStates, ToolEvents>> states =
+                this.stateMachine.getState().getStates();
             for (org.springframework.statemachine.state.State<ToolStates, ToolEvents> candidate : states) {
                 if (!candidate.isSimple()) {
                     Collection<ToolStates> ids = candidate.getIds();
@@ -330,7 +343,7 @@ public class DefaultTool implements Tool {
     @Override
     public List<PartId> getPartsInProcess() {
         List<PartId> partsInProcess = new ArrayList<>();
-        Part partInProc = this.process.getProcessedPart();
+        Part partInProc = this.process.getProcessingPart();
         if(partInProc != null)
             partsInProcess.add(partInProc.getId());
         return partsInProcess;
