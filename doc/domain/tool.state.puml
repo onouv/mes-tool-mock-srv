@@ -11,27 +11,25 @@ UP --> DOWN: FAULT
 DOWN --> UP: FAULT_CLEAR
 state UP {
     state UP: entry/ ToolUpEvt
-    state UP: PART_LOAD(Part) [!InPortFull] / input.add(part); PartLoadEvt(tool, part)
+    state UP: PART_LOAD(Part) [!InPortFull] / input.add(part); --> PartLoadEvt(tool, part)
     state UP: PART_LOAD(Part) [InportFull] / return LoadPortFullException
-    state UP: PART_UNLOAD() [!OutportEmpty] / part=output.unload(); PartUnloadEvt(tool, part)
+    state UP: PART_UNLOAD() [!OutportEmpty] / part=output.unload(); --> PartUnloadEvt(tool, part)
     state UP: PART_UNLOAD() [OutportEmpty] / return NoPartAvailableException
-    state STOPPED: entry/ ToolStoppedEvt
+    state STOPPED: entry/ --> ToolStoppedEvt
     state IDLE
-    state PROCESSING: entry/ newPart=inport.next();PartInProcessEvent(tool, newPart)
-    state PROCESSING: timer(CYCLE_TIME)/ FINISHED(part)
-    state PROCESSING: exit/ finishedPart=process.getPart();PartProcessedEvt(tool, part);outport.load(finishedPart)
+    state PROCESSING: entry/ ProcessNewPartAction --> PartInProcessEvent(tool, newPart)
+    state PROCESSING: timer(CYCLE_TIME)/ --> stateMachine.sendEvent(FINISHED)
+    state PROCESSING: exit/ EjectFinishedPartAction --> PartProcessedEvt(tool, part)
 
     [*] --> STOPPED
     STOPPED --> IDLE: START [InportEmpty] / \nToolIdleEvt(tool, UPSTREAM)
     STOPPED --> IDLE: START [OutportFull] / \nToolIdleEvt(tool, DOWNSTREAM)
 
     STOPPED --> PROCESSING: START [FlowIsFree]
-    PROCESSING --> PROCESSING: FINISHED(part) [FlowFree]
-    PROCESSING --> IDLE: FINISHED(part) [InportEmpty]/ \nToolIdleEvt(tool, UPSTREAM)
-    PROCESSING --> IDLE: FINISHED(part) [OutportFull]/ \nToolIdleEvt(tool, DOWNSTREAM)
+    PROCESSING --> PROCESSING: FINISHED [FlowFree]
+    PROCESSING --> IDLE: FINISHED [InportEmpty]/ \nToolIdleEvt(tool, UPSTREAM)
+    PROCESSING --> IDLE: FINISHED [OutportFull]/ \nToolIdleEvt(tool, DOWNSTREAM)
     IDLE --> PROCESSING: [FlowIsFree]
-
-
     IDLE --> STOPPED: STOP
     PROCESSING --> STOPPED: STOP
 
@@ -39,9 +37,10 @@ state UP {
     IDLE --> [*]
     PROCESSING --> [*]
 
-    note as T
+    note as N1
         FlowIsFree: (!InportEmpty && !OutportFull)
     end note
+
 
 }
 

@@ -18,60 +18,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Take finished part from process,
- *    issue PartProcessedEvent for it,
- *    load it to outport.
  *
  * Take next part from inport,
- *    issue PartInProcessEvent for it,
- *    load it to process.
+ *    publish PartInProcessEvent for it directly to message bus
+ *    load it to process - issue NoPartAvailableExcepyion to domain, if applicable
  *
  */
-public class ProcessPartAction implements Action<ToolStates, ToolEvents> {
-
-  protected StateContext<ToolStates, ToolEvents> context;
-  protected LoadPort inport;
-  protected LoadPort outport;
-  protected Process process;
-  protected List<DomainEvent> events;
+public class ProcessNewPartAction extends ToolAction{
 
   @Override
   public void execute(final StateContext<ToolStates, ToolEvents> context){
 
-    this.inport = StateContextVariableUtil.getInport(context);
-    this.outport = StateContextVariableUtil.getOutport(context);
-    this.process = StateContextVariableUtil.getProcess(context);
-    this.events = new ArrayList<>();
+    this.init(context);
 
-    this.handleFinishedPart();
-    this.handleNewPart();
-
-    StateContextVariableUtil.setDomainEvents(context, events);
-  }
-
-  protected void handleFinishedPart() {
-    Part finishedPart = this.process.eject();
-    PartProcessedEvent processedEvent = new PartProcessedEvent(
-        finishedPart,
-        this.process.getId());
-    this.events.add(processedEvent);
-    try {
-      this.outport.load(finishedPart);
-    } catch (LoadportFullException e) {
-      StateContextVariableUtil.setApplicationException(context, e);
-    }
-  }
-
-  protected void handleNewPart() {
     try {
       Part newPart = this.inport.next();
       PartInProcessEvent inProcessEvent = new PartInProcessEvent(
           newPart,
           this.process.getId());
-      this.events.add(inProcessEvent);
+      StateContextVariableUtil.publish(context, inProcessEvent);
 
     } catch (NoPartAvailableException e) {
       StateContextVariableUtil.setApplicationException(this.context, e);
     }
   }
+
 }
