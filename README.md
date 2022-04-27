@@ -48,7 +48,7 @@ Please note this is **work in progress** - see [current status notes](doc/status
 			- drift direction of yield: higher lower
 
 ## Overall Architecture
-![Overall Architecture](doc/domain/deployment.puml)
+![Overall Architecture](doc/mes-deploy.png)
 
 
 
