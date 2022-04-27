@@ -140,6 +140,8 @@ public class DefaultTool implements Tool {
         if( ! this.inport.getId().equals(portId))
             throw new IllegalLoadportTypeException(this.id, portId);
 
+        this.state.setPart(part);
+
         this.state.send(ToolEvents.PART_LOADING);
         return this.domainResult();
     }
@@ -150,6 +152,8 @@ public class DefaultTool implements Tool {
 
         if( ! this.outport.getId().equals(portId))
             throw new IllegalLoadportTypeException(this.id, portId);
+
+
 
         this.state.send(ToolEvents.PART_UNLOADING);
         return this.domainResult();

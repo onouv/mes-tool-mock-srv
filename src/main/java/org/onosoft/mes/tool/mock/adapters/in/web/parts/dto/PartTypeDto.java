@@ -7,7 +7,8 @@ import lombok.Getter;
 @Getter
 @Builder
 @AllArgsConstructor
-public class PartDto {
-  protected final String id;
-  protected final PartTypeDto type;
+public class PartTypeDto {
+  protected String id;
+  protected String description;
+  protected String parentId;
 }

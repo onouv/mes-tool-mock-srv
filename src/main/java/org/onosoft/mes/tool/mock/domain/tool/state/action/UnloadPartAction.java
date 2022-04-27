@@ -21,8 +21,6 @@ public class UnloadPartAction
 
   @Override
   public void execute(final StateContext<ToolStates, ToolEvents> context) {
-    System.out.println("Tool issues ToolIdleEvent with DOWNSTREAM reason...");
-
     LoadPort outport = StateContextVariableUtil.getOutport(context);
     ToolId toolId = StateContextVariableUtil.getToolId(context);
 

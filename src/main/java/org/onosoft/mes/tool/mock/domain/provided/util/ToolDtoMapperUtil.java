@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class DtoMapperUtil {
+public class ToolDtoMapperUtil {
 
   protected static List<String> map(List<PartId> partIds) {
     List<String> result = new ArrayList<>();
@@ -34,8 +34,8 @@ public class DtoMapperUtil {
         .name(tool.getName())
         .description(tool.getDescription())
         .states(tool.getCurrentStates())
-        .inport(DtoMapperUtil.map(tool.getInport()))
-        .outport(DtoMapperUtil.map(tool.getOutport()))
+        .inport(ToolDtoMapperUtil.map(tool.getInport()))
+        .outport(ToolDtoMapperUtil.map(tool.getOutport()))
         .partsInProcess(map(tool.getPartsInProcess()))
         .build();
   }
@@ -72,23 +72,11 @@ public class DtoMapperUtil {
     return ToolDefinition.builder()
         .name(dto.getName())
         .description(dto.getDescription())
-        .inport(DtoMapperUtil.map(dto.getInport()))
-        .outport(DtoMapperUtil.map(dto.getOutport()))
+        .inport(ToolDtoMapperUtil.map(dto.getInport()))
+        .outport(ToolDtoMapperUtil.map(dto.getOutport()))
         .build();
   }
 
-  public static PartDto map(Part part) {
-    return PartDto.builder()
-        .id(part.getId().toString())
-        .type(part.getType())
-        .build();
-  }
 
-  public static Part map(PartDto dto) {
-    return Part.builder()
-        .id(new PartId(dto.getId()))
-        .type(dto.getType())
-        .build();
-  }
 
 }

@@ -47,7 +47,8 @@ Please note this is **work in progress** - see [current status notes](doc/status
 			- drift rate of yield: float as percent/hour
 			- drift direction of yield: higher lower
 
-## Fit into Overall Architecture
-![Fit into overall Architecture](doc/mes-tool-mock-srv.png)
+## Overall Architecture
+![Overall Architecture](doc/domain/deployment.puml)
+
 
 

@@ -7,8 +7,8 @@ import org.onosoft.mes.tool.mock.domain.exception.IllegalLoadportTypeException;
 import org.onosoft.mes.tool.mock.domain.exception.LoadportFullException;
 import org.onosoft.mes.tool.mock.domain.exception.NoPartAvailableException;
 import org.onosoft.mes.tool.mock.domain.exception.NoSuchToolFoundException;
+import org.onosoft.mes.tool.mock.domain.provided.util.PartDtoMapperUtil;
 import org.onosoft.mes.tool.mock.domain.tool.entity.Part;
-import org.onosoft.mes.tool.mock.domain.provided.util.DtoMapperUtil;
 import org.onosoft.mes.tool.mock.domain.provided.value.LoadportId;
 import org.onosoft.mes.tool.mock.domain.provided.value.ToolId;
 import org.slf4j.Logger;
@@ -43,7 +43,7 @@ public class ToolMockPartsController {
         "processing POST /mes/tool/%s/mock/parts/load/%s",
         toolId, portId));
 
-    Part part = DtoMapperUtil.map(partDto);
+    Part part = PartDtoMapperUtil.map(partDto);
     ToolDto response = this.domainService.loadPart(
         new ToolId(toolId),
         new LoadportId(portId),
@@ -54,7 +54,7 @@ public class ToolMockPartsController {
   }
 
   @RequestMapping(
-      value = "/mes/tool/{tool-id}/mock/parts/unload/{port-d}",
+      value = "/mes/tool/{tool-id}/mock/parts/unload/{port-id}",
       method = RequestMethod.GET
   )
   ResponseEntity<ToolDto> unloadPart(

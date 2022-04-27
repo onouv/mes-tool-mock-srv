@@ -1,13 +1,11 @@
 package org.onosoft.mes.tool.mock.adapters.in.web.service;
 
 import org.onosoft.mes.tool.mock.adapters.out.messaging.DomainEventPublisherDefault;
-import org.onosoft.mes.tool.mock.domain.event.DomainEvent;
 import org.onosoft.ddd.annotations.DomainService;
 import org.onosoft.mes.tool.mock.adapters.in.web.status.dto.ToolDto;
 import org.onosoft.mes.tool.mock.domain.exception.*;
-import org.onosoft.mes.tool.mock.domain.provided.util.DtoMapperUtil;
+import org.onosoft.mes.tool.mock.domain.provided.util.ToolDtoMapperUtil;
 import org.onosoft.mes.tool.mock.domain.provided.value.ToolDefinition;
-import org.onosoft.mes.tool.mock.domain.required.DomainEventPublisher;
 import org.onosoft.mes.tool.mock.domain.required.ToolRepository;
 import org.onosoft.mes.tool.mock.domain.tool.DefaultTool;
 import org.onosoft.mes.tool.mock.domain.value.DomainResult;
@@ -19,8 +17,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @DomainService
@@ -130,6 +126,6 @@ public class ToolService  {
   }
 
   protected ToolDto buildResponseDto(Tool tool) {
-    return DtoMapperUtil.map(tool);
+    return ToolDtoMapperUtil.map(tool);
   }
 }

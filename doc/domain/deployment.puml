@@ -1,0 +1,93 @@
+@startuml
+left to right direction
+
+artifact "mes-mock-ui" {
+    component ToolMockUI <<Frontend>>
+    interface REST as rest1
+}
+
+artifact "mes-mock-srv" {
+    component ToolMockServer
+    interface REST as rest2
+    ToolMockServer -- rest2
+}
+actor YourBrowser
+
+queue ToolStatusTopic <<EventTopic>>
+queue PartsTopic <<EventTopic>>
+queue UptimeTopic <<ValueTopic>>
+queue YieldTopic <<ValueTopic>>
+
+artifact "mes-tool-status-srv" {
+    component ToolStatusService
+}
+
+artifact "mes-tool-product-srv" {
+    component ToolProductService
+}
+
+artifact "mes-tool-kpi-srv" {
+    component ToolKpiService
+}
+
+artifact "mes-dashboard-service" {
+    component DashboardService
+    interface REST as rest3
+    DashboardService -- rest3
+}
+
+artifact "mes-dashboard-ui" {
+    component DashboardUI <<Frontend>>
+    interface REST as rest4
+    DashboardUI -- rest4
+}
+
+actor YourOtherBrowser
+
+queue AvailabilityTopic <<ValueTopic>>
+queue ActualCycleTimeTopic <<ValueTopic>>
+queue TheoreticalCycleTimeTopic <<ValueTopic>>
+queue PerformanceEfficiencyTopic <<ValueTopic>>
+queue OverallEquipmentEfficiencyTopic <<ValueTopic>>
+queue TotalEffectiveEquipmentPerformanceTopic <<ValueTopic>>
+queue UtilizationTopic <<ValueTopic>>
+queue QualityRateTopic <<ValueTopic>>
+
+YourBrowser --> rest1
+ToolMockUI -u- rest1
+ToolMockUI --> rest2
+
+ToolMockServer --> ToolStatusTopic: publish
+ToolMockServer --> PartsTopic: publish
+
+ToolProductService --> YieldTopic: publish
+PartsTopic --> ToolProductService: subscribe
+
+ToolStatusService --> UptimeTopic: publish
+ToolStatusTopic --> ToolStatusService: subscribe
+
+UptimeTopic --> ToolKpiService
+YieldTopic --> ToolKpiService
+
+ToolKpiService --> AvailabilityTopic
+ToolKpiService --> ActualCycleTimeTopic
+ToolKpiService --> TheoreticalCycleTimeTopic
+ToolKpiService --> PerformanceEfficiencyTopic
+ToolKpiService --> OverallEquipmentEfficiencyTopic
+ToolKpiService --> TotalEffectiveEquipmentPerformanceTopic
+ToolKpiService --> UtilizationTopic
+ToolKpiService --> QualityRateTopic
+
+AvailabilityTopic --> DashboardService
+ActualCycleTimeTopic --> DashboardService
+TheoreticalCycleTimeTopic --> DashboardService
+PerformanceEfficiencyTopic --> DashboardService
+OverallEquipmentEfficiencyTopic --> DashboardService
+TotalEffectiveEquipmentPerformanceTopic --> DashboardService
+UtilizationTopic --> DashboardService
+QualityRateTopic --> DashboardService
+
+DashboardUI --> rest3
+YourOtherBrowser --> rest4
+
+@enduml
