@@ -1,8 +1,6 @@
 # mes-tool-mock-srv
 
-backend service to mock a tool. This service exposes a client-facing APIfor users to trigger tool events which the service then publishes to associated topics in the **mes-bus**.
-
-To allow for convenient mocking of multiple tools, the service may maintain persistent state of tool id and series definitions in a database.
+backend service to mock a tool (i.e. a simple virtual machine producing parts), so that the mes data system can be manually tested. This service exposes a client-facing API for users to "operate" a virtual tool, which the service then publishes to associated topics in the **mes-bus**. 
 
 Please note this is **work in progress** 
 
