@@ -1,53 +1,41 @@
 # mes-tool-mock-srv
 
-backend service to mock a tool. This service exposes a [client-facing API](doc/client-facing-api.md) for users to trigger tool events which the service then publishes to associated topics in the **mes-bus**.
+backend service to mock a tool. This service exposes a client-facing APIfor users to trigger tool events which the service then publishes to associated topics in the **mes-bus**.
 
 To allow for convenient mocking of multiple tools, the service may maintain persistent state of tool id and series definitions in a database.
 
-Please note this is **work in progress** - see [current status notes](doc/status.md).
- 
+Please note this is **work in progress** 
 
 ## Functional Description
 
-	1. Tool Id
-		- Create tool with id
-		- Delete tool with id
-		- Change id of tool with given id
+	1. Configure Tool
+       - Create tool with id and definition
+       - Delete tool with id
+       - CHANGE a Tools cycle time (1s upwards in 1s steps)
+       - CHANGE a Tools yield (0% to 100% in 1% steps, default is 100%). 
+         The tool will process products with that yield over the average of the next 20 parts, downwards rounding.
 		
 	2. Change Tool Status
-		- Issue tool UP event
-		- Issue tool DOWN event
-			- operator intervention
-			- missing material
-			- missing auxiliary
-			- process fault
-			- equipment fault
-			- unknown
-		- Setup a Series: will interchange UP and DOWN
-			- UP time interval (nominal value): number in seconds
-			- deviation limits of UP time interval: percent of nominal value
-			- drift rate of UP time interval: seconds per hour
-			- drift direction of UP time interval: higher lower
-			- DOWN time interval (nominal value): number in seconds
-			- deviation limits of DOWN time interval: percent of nominal value
-			- drift rate of DOWN time interval: seconds/hour
-			- drift direction of DOWN time interval: higher lower
+       - START a Tool with given id. 
+         - As long as parts are in the inport and there is still space in the outport, the tool will process parts (PROCESSING state). 
+         - Otherwise it will be assuming IDLE state, awaiting correcting material handling (Loading or Unloading of parts)
+       - STOP a tool with given id. Tool will assume STOPPED state
+       - FAULT a Tool with given id. TOOL will assume DOWN state
+       - CLEAR FAULT at a Tool with given id. Tool will resume to STOPPED state
+
 			
 	3. Mock Part Production
-		- Issue Part In Event
-		- Issue Part Out Event
-		- Setup a Series
-			- No of parts: number
-			- cycle time (nominal value): seconds
-			- deviation limits of cycle time: percent of nominal value
-			- drift rate of cycle time: seconds/hour
-			- drift direction of cycle time: higher lower
-			- yield (nominal value): percent
-			- deviation limits of of yield: float as percent of nominal value
-			- drift rate of yield: float as percent/hour
-			- drift direction of yield: higher lower
+       - LOAD PART with given id to a Loadport with given id of Tool with given id 
+         - returns CONFLICT if requested loadport was already full or is not an inport
+       - UNLOAD PART from Tool
+         - returns CONFLICT if requested Loadport was empty or is not an outport
+		
+This results in state machine like shown below. Note that various DomainEvents for tool and part are issued to the mes-bus : 
 
-## Overall Architecture
+![](doc/tool-fsm.png)
+
+
+## Fit Into Overall Architecture
 ![Overall Architecture](doc/mes-deploy.png)
 
 
