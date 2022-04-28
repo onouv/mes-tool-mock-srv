@@ -1,8 +1,7 @@
 package org.onosoft.mes.tool.mock.domain.event;
 
 import lombok.Getter;
-import org.onosoft.mes.tool.mock.domain.provided.Part;
-import org.onosoft.mes.tool.mock.domain.provided.value.PartId;
+import org.onosoft.mes.tool.mock.domain.tool.entity.Part;
 
 @Getter
 public class PartUnloadedEvent extends PartEvent {

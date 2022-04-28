@@ -7,5 +7,6 @@ public enum StateVariableKeys {
   process,
   part,
   domainEvents,
+  partDomainEventPublisher,
   exception
 }

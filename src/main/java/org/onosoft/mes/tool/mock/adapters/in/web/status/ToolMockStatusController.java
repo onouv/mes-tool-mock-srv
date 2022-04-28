@@ -2,7 +2,7 @@ package org.onosoft.mes.tool.mock.adapters.in.web.status;
 
 import org.onosoft.mes.tool.mock.domain.exception.NoSuchToolFoundException;
 import org.onosoft.mes.tool.mock.domain.provided.Tool;
-import org.onosoft.mes.tool.mock.domain.provided.util.DtoMapperUtil;
+import org.onosoft.mes.tool.mock.domain.provided.util.ToolDtoMapperUtil;
 import org.onosoft.mes.tool.mock.adapters.in.web.status.dto.ToolDefinitionDto;
 import org.onosoft.mes.tool.mock.adapters.in.web.status.dto.ToolDto;
 import org.onosoft.mes.tool.mock.adapters.in.web.service.ToolService;
@@ -46,7 +46,7 @@ public class ToolMockStatusController {
 				body.toString()));
 
 		ToolDto response = this.domainService.setupNewTool(
-				new ToolId(toolId), DtoMapperUtil.map(body));
+				new ToolId(toolId), ToolDtoMapperUtil.map(body));
 
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
@@ -59,7 +59,7 @@ public class ToolMockStatusController {
 		if(tool == null)
 			throw new NoSuchToolFoundException(id);
 
-		return new ResponseEntity<>(DtoMapperUtil.map(tool), HttpStatus.OK);
+		return new ResponseEntity<>(ToolDtoMapperUtil.map(tool), HttpStatus.OK);
 	}
 
 	@RequestMapping(

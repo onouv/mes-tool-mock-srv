@@ -9,6 +9,11 @@ public class PartType {
   protected final String id;
   protected final String description;
   protected final String parentid;
+
+  public String toString() {
+    return String.format("{id = %s description = %s, parentId = %s}",
+        id, description, parentid);
+  }
 /*
   protected PartType(Builder b) {
     this.id = b.id;
