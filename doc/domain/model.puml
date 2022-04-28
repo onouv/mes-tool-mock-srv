@@ -3,20 +3,20 @@
 
 package domain {
 
-class Tool <<DomainAggregateRoot>>{
+class DefaultTool <<DomainAggregateRoot>>{
 
     id
     ToolStatus status
     DowntimeReason downtimeReason
 
-    +start()
-    +stop()
-    +loadPart(Part)
-    +unloadPart()
-    +break()
-    +repair()
+    +prototype(ToolDecsription): Tool
+    +start(ToolId): DomainResult
+    +stop(ToolId): DomainResult
+    +loadPart(ToolId, LoadportId, Part): DomainResult
+    +unloadPart(ToolId, LoadportId): DomainResult
+    +fault(ToolId): DomainResult
+    +clearFault(ToolId): DomainResult
 
-    #process(Part)
 }
 
 class Part <<DomainEntity>> {
@@ -31,32 +31,56 @@ class Process <<DomainEntity>> {
 
 }
 
-class ToolDownEvent <<DomainEvent>> {
-    DownTimeReason reason
-}
+class ToolDownEvent <<DomainEvent>>
 
-class ToolUpEvent <<DomainEvent>> {
-}
+class ToolUpEvent <<DomainEvent>>
+
+class ToolStoppedEvent
+
+class ToolIdleEvent
+
+class ToolProcessingEvent
 
 class PartLoadedEvent <<DomainEvent>> {
-    partId
+    Partid
+    ToolId
+    LoadportId
+
 }
 
 class PartUnloadedEvent <<DomainEvent>> {
-    partId
+    PartId
+    ToolId
+    LoadPortId
 }
 
-Enum DowntimeReason {
-    UNKNOWN,
-    OPERATOR,
-    MATERIAL_MISSING,
-    AUXILIARY_MISSING,
-    PROCESS,
-    TOOL
+class DomainEvent {
+    TimeInstant
 }
+class ToolEvent {
+    ToolId
+}
+
+class PartEvent {
+    LoadportId
+    PartId
+}
+
+ToolEvent --|> DomainEvent
+PartEvent --|> ToolEvent
+ToolIdleEvent --|> ToolEvent
+ToolDownEvent --|> ToolEvent
+ToolUpEvent --|> ToolEvent
+ToolStoppedEvent --|> ToolEvent
+ToolProcessingEvent --|> ToolEvent
+PartLoadedEvent --|> PartEvent
+PartUnloadedEvent --|> PartEvent
 
 Enum ToolStatus {
     UP,
+    STOPPED,
+    IDLE,
+    PROCESSING,
     DOWN
 }
 
@@ -66,16 +90,18 @@ Enum PartStatus {
     PROCESSED_BAD
 }
 
-Tool "1" o-- "*" Part
-Tool "1" *-- "1 #process" Process
-Tool ...> ToolStatus
-Tool ...> DowntimeReason
-Part ...> PartStatus
+DefaultTool "1" o-- "*" Part
+DefaultTool "1" *-- "1 #process" Process
+DefaultTool ...> ToolStatus
+Part *--> PartStatus
 Process "1" --> "1" Part: processes
-Tool --> ToolDownEvent: "issues"
-Tool --> ToolUpEvent: "issues"
-Tool --> PartLoadedEvent: "issues"
-Tool --> PartUnloadedEvent: "issues"
+DefaultTool --> ToolDownEvent: "issues"
+DefaultTool --> ToolUpEvent: "issues"
+DefaultTool --> PartLoadedEvent: "issues"
+DefaultTool --> PartUnloadedEvent: "issues"
+DefaultTool --> ToolIdleEvent
+DefaultTool --> ToolStoppedEvent
+DefaultTool --> ToolProcessingEvent
 
 }
 @enduml

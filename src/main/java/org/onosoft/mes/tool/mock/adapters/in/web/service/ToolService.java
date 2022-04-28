@@ -1,15 +1,15 @@
 package org.onosoft.mes.tool.mock.adapters.in.web.service;
 
-import org.onosoft.mes.tool.mock.domain.event.DomainEvent;
+import org.onosoft.mes.tool.mock.adapters.out.messaging.DomainEventPublisherDefault;
 import org.onosoft.ddd.annotations.DomainService;
 import org.onosoft.mes.tool.mock.adapters.in.web.status.dto.ToolDto;
 import org.onosoft.mes.tool.mock.domain.exception.*;
-import org.onosoft.mes.tool.mock.domain.provided.util.DtoMapperUtil;
+import org.onosoft.mes.tool.mock.domain.provided.util.ToolDtoMapperUtil;
 import org.onosoft.mes.tool.mock.domain.provided.value.ToolDefinition;
 import org.onosoft.mes.tool.mock.domain.required.ToolRepository;
 import org.onosoft.mes.tool.mock.domain.tool.DefaultTool;
 import org.onosoft.mes.tool.mock.domain.value.DomainResult;
-import org.onosoft.mes.tool.mock.domain.provided.Part;
+import org.onosoft.mes.tool.mock.domain.tool.entity.Part;
 import org.onosoft.mes.tool.mock.domain.provided.Tool;
 import org.onosoft.mes.tool.mock.domain.provided.value.LoadportId;
 import org.onosoft.mes.tool.mock.domain.provided.value.ToolId;
@@ -17,8 +17,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @DomainService
@@ -30,11 +28,14 @@ public class ToolService  {
   @Autowired
   protected ToolRepository toolRepository;
 
+  @Autowired
+  protected DomainEventPublisherDefault publisher;
+
   public ToolDto setupNewTool(
       ToolId toolId,
       ToolDefinition definition) throws Exception {
 
-    Tool candidate = DefaultTool.prototype(toolId, definition, this.toolRepository);
+    Tool candidate = DefaultTool.prototype(toolId, definition, this.toolRepository, this.publisher);
     DomainResult result = candidate.create();
     this.postDomainEvents(result);
     return this.buildResponseDto(candidate);
@@ -121,21 +122,10 @@ public class ToolService  {
   }
 
   protected void postDomainEvents(DomainResult domainResult) {
-    logger.info(String.format("Posting domain events: %s",this.logEvents(domainResult.getEvents())));
-    // TODO: actually post domainResult.events to MesBus
+    this.publisher.publish(domainResult.getEvents());
   }
 
   protected ToolDto buildResponseDto(Tool tool) {
-    return DtoMapperUtil.map(tool);
-  }
-
-  protected String logEvents(List<DomainEvent> events) {
-    StringBuilder b = new StringBuilder();
-    for (org.onosoft.mes.tool.mock.domain.event.DomainEvent e : events) {
-      b.append("[");
-      b.append(e.toString());
-      b.append("] ");
-    }
-    return b.toString();
+    return ToolDtoMapperUtil.map(tool);
   }
 }

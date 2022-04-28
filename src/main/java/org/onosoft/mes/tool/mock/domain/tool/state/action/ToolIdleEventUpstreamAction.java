@@ -5,7 +5,6 @@ import org.onosoft.mes.tool.mock.domain.event.ToolIdleEvent;
 import org.onosoft.mes.tool.mock.domain.provided.value.IdleReason;
 import org.onosoft.mes.tool.mock.domain.provided.value.ToolId;
 import org.onosoft.mes.tool.mock.domain.tool.state.util.StateContextVariableUtil;
-import org.onosoft.mes.tool.mock.domain.tool.state.util.StateMachineVariableUtil;
 import org.onosoft.mes.tool.mock.domain.tool.state.ToolEvents;
 import org.onosoft.mes.tool.mock.domain.provided.value.ToolStates;
 import org.springframework.statemachine.StateContext;

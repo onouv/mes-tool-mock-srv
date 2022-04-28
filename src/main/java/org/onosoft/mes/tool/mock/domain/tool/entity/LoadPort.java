@@ -2,7 +2,6 @@ package org.onosoft.mes.tool.mock.domain.tool.entity;
 
 import org.onosoft.mes.tool.mock.domain.exception.LoadportFullException;
 import org.onosoft.mes.tool.mock.domain.exception.NoPartAvailableException;
-import org.onosoft.mes.tool.mock.domain.provided.Part;
 import org.onosoft.mes.tool.mock.domain.provided.value.Identifier;
 import org.onosoft.mes.tool.mock.domain.provided.value.LoadportId;
 import org.onosoft.mes.tool.mock.domain.provided.value.LoadportType;
@@ -10,9 +9,7 @@ import org.onosoft.mes.tool.mock.domain.provided.value.ToolId;
 import org.onosoft.mes.tool.mock.domain.tool.state.guard.PortStatus;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class LoadPort implements PortStatus {

@@ -1,6 +1,6 @@
 package org.onosoft.mes.tool.mock.domain.event;
 
-import org.onosoft.mes.tool.mock.domain.provided.Part;
+import org.onosoft.mes.tool.mock.domain.tool.entity.Part;
 
 public class PartLoadedEvent extends PartEvent {
 

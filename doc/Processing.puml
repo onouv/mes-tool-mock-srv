@@ -1,0 +1,155 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+
+
+
+package adpater {
+    package in.web {
+        class ToolStatusController
+
+        class PartsController
+
+
+        class ToolService {
+            + ToolDto startTool(ToolId)
+            + ToolDto stopTool(ToolId)
+            + ToolDto loadPart(ToolId, LoadportId, Part)
+            + ToolDto unloadPart(ToolId, LoadportId)
+        }
+
+    }
+
+    package out.messaging {
+
+        class DomainEventPublisherDefault
+    }
+}
+
+package domain {
+    package tool {
+        class DefaultTool {
+            + start(): DomainResult
+            + stop(): DomainResult
+            + loadPart(Part, LoadportId): DomainResult
+            + unloadPart(Part, LoadportId): DomainResult
+            + fault(): DomainResult
+            + clearFault(): DomainResult
+        }
+
+        package state {
+
+            package actions {
+                class ToolAction {
+                    # inport: Loadport
+                    # outport: Loadport
+                    # process: Process
+                    # events: List<DomainEvent>
+                    # exception: ApplicationException
+
+                }
+
+                class CycleTimeElapsedAction
+
+                class PartAction {
+                    # getDomainEventPublisher(StateContext<S,E>): DomainEventPublisher
+                }
+
+                class EjectFinishedPartAction
+
+                class ProcessNewPartAction
+            }
+
+            package util {
+                class StateMachineActionsUtil {
+                    + setDomainEvents(List<DomainEvent>)
+                    + setException(ApplicationException)
+                    + getInport(): Loadport
+                    + getOutPort(): Loadport
+                    + getProcess(): Process
+                }
+
+                class StateMachineClientUtil {
+                    + sendEvent(ToolEvents)
+                    + setInport(Loadport)
+                    + setOutPort(Loadport)
+                    + setPart(Part)
+                    + setDomainEventPublisher(DomainEventPublisher)
+                    + getDomainEvents(): List<DomainEvent>
+                    + getException(): ApplicationException
+
+                }
+
+            }
+
+        }
+    }
+    package provided {
+        interface DomainEventPublisher {
+            publish(DomainEvent e)
+        }
+    }
+}
+
+package springframework.statemachine {
+    class StateMachine<S, E> {
+        +sendEvent((ToolEvents)
+        +getExtendedContext():ExtendedContext<ToolStates, ToolEvents>
+    }
+
+    class ExtendedContext<S, E> {
+        +getVariables: Map<Object, Object>
+    }
+
+    class Map<Object, Object> {
+        events: List<DomainEvent>
+        toolId: ToolId
+        inport: Loadport
+        outport: Loadport
+        exception: ApplicationException
+    }
+
+    interface Action<S,E> {
+        + execute(StateContext<S,E> context)
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+DomainEventPublisherDefault ..|> DomainEventPublisher
+
+ToolStatusController --> ToolService
+PartsController --> ToolService
+ToolService --> DefaultTool
+ToolAction ...|> Action
+ToolAction *-> StateMachineActionsUtil
+PartAction -|> ToolAction
+EjectFinishedPartAction -|> PartAction
+ProcessNewPartAction -|> PartAction
+DefaultTool *--> StateMachineClientUtil: state
+StateMachineClientUtil *--> StateMachine
+StateMachine *--> ExtendedContext
+StateMachine o-> Action
+StateMachineActionsUtil --> ExtendedContext
+ExtendedContext *--> Map
+StateMachineClientUtil --> Map
+
+ToolService --> DomainEventPublisher
+ProcessNewPartAction --> DomainEventPublisher
+EjectFinishedPartAction --> DomainEventPublisher
+ToolService *--> DomainEventPublisherDefault
+@enduml

@@ -1,16 +1,19 @@
 package org.onosoft.mes.tool.mock.domain.tool.state.util;
 
 import org.onosoft.mes.tool.mock.domain.event.DomainEvent;
+import org.onosoft.mes.tool.mock.domain.event.PartInProcessEvent;
+import org.onosoft.mes.tool.mock.domain.event.PartProcessedEvent;
 import org.onosoft.mes.tool.mock.domain.exception.ApplicationException;
-import org.onosoft.mes.tool.mock.domain.provided.Part;
+import org.onosoft.mes.tool.mock.domain.required.DomainEventPublisher;
+import org.onosoft.mes.tool.mock.domain.tool.entity.Part;
 import org.onosoft.mes.tool.mock.domain.provided.value.ToolId;
 import org.onosoft.mes.tool.mock.domain.provided.value.ToolStates;
 import org.onosoft.mes.tool.mock.domain.tool.entity.LoadPort;
 import org.onosoft.mes.tool.mock.domain.tool.entity.Process;
 import org.onosoft.mes.tool.mock.domain.tool.state.ToolEvents;
 import org.springframework.statemachine.StateContext;
-import org.springframework.statemachine.StateMachine;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class StateContextVariableUtil {
@@ -32,6 +35,20 @@ public class StateContextVariableUtil {
 
   public static Part getPart(StateContext<ToolStates, ToolEvents> context) {
     return (Part) context.getExtendedState().getVariables().get(StateVariableKeys.part);
+  }
+
+  public static boolean publish(
+      StateContext<ToolStates, ToolEvents> context,
+      DomainEvent event) {
+
+    DomainEventPublisher publisher = (DomainEventPublisher) context.getExtendedState()
+        .getVariables()
+        .get(StateVariableKeys.partDomainEventPublisher);
+
+    ArrayList<DomainEvent> el = new ArrayList<>();
+    el.add(event);
+    return publisher.publish(el);
+
   }
 
   public static void setPart(StateContext<ToolStates, ToolEvents> context, Part part) {
