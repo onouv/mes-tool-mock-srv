@@ -36,7 +36,7 @@ This results in state machine like shown below. Note that various DomainEvents f
 ## Fit Into Overall Architecture
 ![Overall Architecture](doc/mes-deploy.png)
 
-* ![mes-tol-status-srv](https://github.com/onouv/mes-tool-status-srv)
+* ![mes-tool-status-srv](https://github.com/onouv/mes-tool-status-srv)
 * ![mes-tool-product-srv](https://github.com/onouv/mes-tool-product-srv)
 * ![mes-tool-kpi-srv](https://github.com/onouv/mes-tool-kpi-srv)
 * ![mes-tool-dashboard-srv](https://github.com/onouv/mes-tool-dashboard-srv)
