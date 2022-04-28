@@ -1,17 +1,18 @@
 @startuml
 left to right direction
 
-artifact "mes-mock-ui" {
-    component ToolMockUI <<Frontend>>
-    interface REST as rest1
+artifact "mes-tool-mock-ui" {
+    component ToolMockUI <<SPA Frontend>>
+
 }
 
-artifact "mes-mock-srv" {
+artifact "mes-tool-mock-srv" {
     component ToolMockServer
     interface REST as rest2
     ToolMockServer -- rest2
 }
-actor YourBrowser
+
+actor MockUser
 
 queue ToolStatusTopic <<EventTopic>>
 queue PartsTopic <<EventTopic>>
@@ -32,17 +33,16 @@ artifact "mes-tool-kpi-srv" {
 
 artifact "mes-dashboard-service" {
     component DashboardService
+
     interface REST as rest3
     DashboardService -- rest3
 }
 
 artifact "mes-dashboard-ui" {
-    component DashboardUI <<Frontend>>
-    interface REST as rest4
-    DashboardUI -- rest4
+    component DashboardUI <<SPA Frontend>>
 }
 
-actor YourOtherBrowser
+actor MonitoringUser
 
 queue AvailabilityTopic <<ValueTopic>>
 queue ActualCycleTimeTopic <<ValueTopic>>
@@ -53,8 +53,7 @@ queue TotalEffectiveEquipmentPerformanceTopic <<ValueTopic>>
 queue UtilizationTopic <<ValueTopic>>
 queue QualityRateTopic <<ValueTopic>>
 
-YourBrowser --> rest1
-ToolMockUI -u- rest1
+MockUser --> ToolMockUI
 ToolMockUI --> rest2
 
 ToolMockServer --> ToolStatusTopic: publish
@@ -69,25 +68,25 @@ ToolStatusTopic --> ToolStatusService: subscribe
 UptimeTopic --> ToolKpiService
 YieldTopic --> ToolKpiService
 
-ToolKpiService --> AvailabilityTopic
-ToolKpiService --> ActualCycleTimeTopic
-ToolKpiService --> TheoreticalCycleTimeTopic
-ToolKpiService --> PerformanceEfficiencyTopic
-ToolKpiService --> OverallEquipmentEfficiencyTopic
-ToolKpiService --> TotalEffectiveEquipmentPerformanceTopic
-ToolKpiService --> UtilizationTopic
-ToolKpiService --> QualityRateTopic
+ToolKpiService --> AvailabilityTopic: subscribe
+ToolKpiService --> ActualCycleTimeTopic: subscribe
+ToolKpiService --> TheoreticalCycleTimeTopic: subscribe
+ToolKpiService --> PerformanceEfficiencyTopic: subscribe
+ToolKpiService --> OverallEquipmentEfficiencyTopic: subscribe
+ToolKpiService --> TotalEffectiveEquipmentPerformanceTopic: subscribe
+ToolKpiService --> UtilizationTopic: subscribe
+ToolKpiService --> QualityRateTopic: subscribe
 
-AvailabilityTopic --> DashboardService
-ActualCycleTimeTopic --> DashboardService
-TheoreticalCycleTimeTopic --> DashboardService
-PerformanceEfficiencyTopic --> DashboardService
-OverallEquipmentEfficiencyTopic --> DashboardService
-TotalEffectiveEquipmentPerformanceTopic --> DashboardService
-UtilizationTopic --> DashboardService
-QualityRateTopic --> DashboardService
+AvailabilityTopic --> DashboardService: publish
+ActualCycleTimeTopic --> DashboardService: publish
+TheoreticalCycleTimeTopic --> DashboardService: publish
+PerformanceEfficiencyTopic --> DashboardService: publish
+OverallEquipmentEfficiencyTopic --> DashboardService: publish
+TotalEffectiveEquipmentPerformanceTopic --> DashboardService: publish
+UtilizationTopic --> DashboardService: publish
+QualityRateTopic --> DashboardService: publish
 
 DashboardUI --> rest3
-YourOtherBrowser --> rest4
+MonitoringUser --> DashboardUI
 
 @enduml
