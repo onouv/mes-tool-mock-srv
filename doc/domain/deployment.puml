@@ -7,9 +7,9 @@ artifact "mes-tool-mock-ui" {
 }
 
 artifact "mes-tool-mock-srv" {
-    component ToolMockServer
+    component ToolMockService
     interface REST as rest2
-    ToolMockServer -- rest2
+    ToolMockService -- rest2
 }
 
 actor MockUser
@@ -31,14 +31,14 @@ artifact "mes-tool-kpi-srv" {
     component ToolKpiService
 }
 
-artifact "mes-dashboard-service" {
+artifact "mes-tool-dashboard-service" {
     component DashboardService
 
     interface REST as rest3
     DashboardService -- rest3
 }
 
-artifact "mes-dashboard-ui" {
+artifact "mes-tool-dashboard-ui" {
     component DashboardUI <<SPA Frontend>>
 }
 
@@ -56,8 +56,8 @@ queue QualityRateTopic <<ValueTopic>>
 MockUser --> ToolMockUI
 ToolMockUI --> rest2
 
-ToolMockServer --> ToolStatusTopic: publish
-ToolMockServer --> PartsTopic: publish
+ToolMockService --> ToolStatusTopic: publish
+ToolMockService --> PartsTopic: publish
 
 ToolProductService --> YieldTopic: publish
 PartsTopic --> ToolProductService: subscribe
