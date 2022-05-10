@@ -1,10 +1,6 @@
-package org.onosoft.mes.tool.mock.domain.provided.util;
+package org.onosoft.mes.tool.mock.adapters.in.web.util;
 
-import org.onosoft.mes.tool.mock.adapters.in.web.parts.dto.PartDto;
-import org.onosoft.mes.tool.mock.adapters.in.web.status.dto.LoadportDto;
-import org.onosoft.mes.tool.mock.adapters.in.web.status.dto.LoadportDefinitionDto;
-import org.onosoft.mes.tool.mock.adapters.in.web.status.dto.ToolDefinitionDto;
-import org.onosoft.mes.tool.mock.adapters.in.web.status.dto.ToolDto;
+import org.onosoft.mes.tool.mock.adapters.in.web.status.dto.*;
 import org.onosoft.mes.tool.mock.domain.tool.entity.Part;
 import org.onosoft.mes.tool.mock.domain.provided.Tool;
 import org.onosoft.mes.tool.mock.domain.provided.value.LoadportDefinition;
@@ -27,6 +23,16 @@ public class ToolDtoMapperUtil {
     }
     return result;
   }
+
+  public static ToolDescriptorDto from(Tool tool) {
+    return ToolDescriptorDto.builder()
+        .id(tool.getId().toString())
+        .name(tool.getName())
+        .description(tool.getDescription())
+        .states(tool.getCurrentStates())
+        .build();
+  }
+
 
   public static ToolDto map(Tool tool) {
     return ToolDto.builder()

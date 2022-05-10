@@ -1,6 +1,5 @@
 package org.onosoft.mes.tool.mock.adapters.out.messaging;
 
-import org.onosoft.mes.tool.mock.adapters.in.web.service.ToolService;
 import org.onosoft.mes.tool.mock.domain.event.DomainEvent;
 
 import org.onosoft.mes.tool.mock.domain.required.DomainEventPublisher;

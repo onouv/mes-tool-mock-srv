@@ -1,4 +1,4 @@
-package org.onosoft.mes.tool.mock.domain.provided.util;
+package org.onosoft.mes.tool.mock.adapters.in.web.util;
 
 import org.onosoft.mes.tool.mock.adapters.in.web.parts.dto.PartDto;
 import org.onosoft.mes.tool.mock.adapters.in.web.parts.dto.PartTypeDto;

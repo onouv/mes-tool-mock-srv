@@ -1,13 +1,15 @@
 package org.onosoft.mes.tool.mock.adapters.in.web.parts;
 
 import org.onosoft.mes.tool.mock.adapters.in.web.parts.dto.PartDto;
-import org.onosoft.mes.tool.mock.adapters.in.web.service.ToolService;
+import org.onosoft.mes.tool.mock.adapters.in.web.util.ToolDtoMapperUtil;
+import org.onosoft.mes.tool.mock.domain.provided.Tool;
+import org.onosoft.mes.tool.mock.domain.tool.ToolService;
 import org.onosoft.mes.tool.mock.adapters.in.web.status.dto.ToolDto;
 import org.onosoft.mes.tool.mock.domain.exception.IllegalLoadportTypeException;
 import org.onosoft.mes.tool.mock.domain.exception.LoadportFullException;
 import org.onosoft.mes.tool.mock.domain.exception.NoPartAvailableException;
 import org.onosoft.mes.tool.mock.domain.exception.NoSuchToolFoundException;
-import org.onosoft.mes.tool.mock.domain.provided.util.PartDtoMapperUtil;
+import org.onosoft.mes.tool.mock.adapters.in.web.util.PartDtoMapperUtil;
 import org.onosoft.mes.tool.mock.domain.tool.entity.Part;
 import org.onosoft.mes.tool.mock.domain.provided.value.LoadportId;
 import org.onosoft.mes.tool.mock.domain.provided.value.ToolId;
@@ -44,12 +46,12 @@ public class ToolMockPartsController {
         toolId, portId));
 
     Part part = PartDtoMapperUtil.map(partDto);
-    ToolDto response = this.domainService.loadPart(
+    Tool tool = this.domainService.loadPart(
         new ToolId(toolId),
         new LoadportId(portId),
         part);
 
-    return new ResponseEntity<>(response, HttpStatus.OK);
+    return new ResponseEntity<>(ToolDtoMapperUtil.map(tool), HttpStatus.OK);
 
   }
 
@@ -68,10 +70,10 @@ public class ToolMockPartsController {
         "processing GET /mes/tool/%s/mock/parts/unload/%s",
         toolId, portId));
 
-    ToolDto response = this.domainService.unloadPart(
+    Tool tool = this.domainService.unloadPart(
         new ToolId(toolId),
         new LoadportId(portId));
 
-    return new ResponseEntity<>(response, HttpStatus.OK);
+    return new ResponseEntity<>(ToolDtoMapperUtil.map(tool), HttpStatus.OK);
   }
 }

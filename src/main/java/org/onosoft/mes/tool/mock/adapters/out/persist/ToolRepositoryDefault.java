@@ -1,4 +1,4 @@
-package org.onosoft.mes.tool.mock.adapters.in.web.service;
+package org.onosoft.mes.tool.mock.adapters.out.persist;
 
 import org.onosoft.mes.tool.mock.domain.provided.Tool;
 import org.onosoft.mes.tool.mock.domain.provided.value.ToolId;
@@ -22,11 +22,15 @@ public class ToolRepositoryDefault implements ToolRepository {
   }
   @Override
   public Tool findTool(ToolId id) {
-    Tool tool = tools.stream()
+    return tools.stream()
         .filter(t -> id.equals(t.getId()))
         .findAny()
         .orElse(null);
-    return tool;
+  }
+
+  @Override
+  public List<Tool> findAll() {
+    return this.tools;
   }
 
   @Override

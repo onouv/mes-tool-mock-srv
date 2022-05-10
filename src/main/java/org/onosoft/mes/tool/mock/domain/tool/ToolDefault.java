@@ -25,7 +25,7 @@ import java.util.List;
 
 @AggregateRoot
 @Getter
-public class DefaultTool implements Tool {
+public class ToolDefault implements Tool {
 
     public static final int CYCLE_TIME = 2000;  // ms
     protected ToolId id;
@@ -41,7 +41,7 @@ public class DefaultTool implements Tool {
     @Getter(AccessLevel.NONE)
     protected ToolRepository toolRepository;
 
-    protected DefaultTool(
+    protected ToolDefault(
         ToolId id,
         String name,
         String description,
@@ -83,7 +83,7 @@ public class DefaultTool implements Tool {
             LoadportType.OUTPORT,
             definition.getOutport().getCapacity()
         );
-        return new DefaultTool(
+        return new ToolDefault(
             id,
             definition.getName(),
             definition.getDescription(),
