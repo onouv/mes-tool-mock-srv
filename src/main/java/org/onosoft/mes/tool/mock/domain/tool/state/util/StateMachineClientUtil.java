@@ -155,11 +155,14 @@ public class StateMachineClientUtil {
       Collection<State<ToolStates, ToolEvents>> states =
           this.stateMachine.getState().getStates();
       for (State<ToolStates, ToolEvents> candidate : states) {
-
-        // TODO: this results in error (skipping of DOWN) - maybe need to switch/case on the actual ids ?
-        if (!candidate.isSimple()) {
-          Collection<ToolStates> ids = candidate.getIds();
-          result.addAll(ids);
+        ToolStates current = candidate.getId();
+        switch(current) {
+          case DOWN:
+            result.add(current);
+            break;
+          case UP:
+            result.addAll(candidate.getIds());
+            break;
         }
       }
       return result;
