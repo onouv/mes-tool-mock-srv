@@ -33,6 +33,7 @@ public class ProcessNewPartAction extends ToolAction{
 
     try {
       Part newPart = this.inport.next();
+      this.process.run(newPart);
       PartInProcessEvent inProcessEvent = new PartInProcessEvent(
           newPart,
           this.process.getId());

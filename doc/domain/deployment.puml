@@ -65,26 +65,26 @@ PartsTopic --> ToolProductService: subscribe
 ToolStatusService --> UptimeTopic: publish
 ToolStatusTopic --> ToolStatusService: subscribe
 
-UptimeTopic --> ToolKpiService
-YieldTopic --> ToolKpiService
+UptimeTopic --> ToolKpiService: subscribe
+YieldTopic --> ToolKpiService: subscribe
 
-ToolKpiService --> AvailabilityTopic: subscribe
-ToolKpiService --> ActualCycleTimeTopic: subscribe
-ToolKpiService --> TheoreticalCycleTimeTopic: subscribe
-ToolKpiService --> PerformanceEfficiencyTopic: subscribe
-ToolKpiService --> OverallEquipmentEfficiencyTopic: subscribe
-ToolKpiService --> TotalEffectiveEquipmentPerformanceTopic: subscribe
-ToolKpiService --> UtilizationTopic: subscribe
-ToolKpiService --> QualityRateTopic: subscribe
+ToolKpiService --> AvailabilityTopic: publish
+ToolKpiService --> ActualCycleTimeTopic: publish
+ToolKpiService --> TheoreticalCycleTimeTopic: publish
+ToolKpiService --> PerformanceEfficiencyTopic: publish
+ToolKpiService --> OverallEquipmentEfficiencyTopic: publish
+ToolKpiService --> TotalEffectiveEquipmentPerformanceTopic: publish
+ToolKpiService --> UtilizationTopic: publish
+ToolKpiService --> QualityRateTopic: publish
 
-AvailabilityTopic --> DashboardService: publish
-ActualCycleTimeTopic --> DashboardService: publish
-TheoreticalCycleTimeTopic --> DashboardService: publish
-PerformanceEfficiencyTopic --> DashboardService: publish
-OverallEquipmentEfficiencyTopic --> DashboardService: publish
-TotalEffectiveEquipmentPerformanceTopic --> DashboardService: publish
-UtilizationTopic --> DashboardService: publish
-QualityRateTopic --> DashboardService: publish
+AvailabilityTopic --> DashboardService: subscribe
+ActualCycleTimeTopic --> DashboardService: subscribe
+TheoreticalCycleTimeTopic --> DashboardService: subscribe
+PerformanceEfficiencyTopic --> DashboardService: subscribe
+OverallEquipmentEfficiencyTopic --> DashboardService: subscribe
+TotalEffectiveEquipmentPerformanceTopic --> DashboardService: subscribe
+UtilizationTopic --> DashboardService: subscribe
+QualityRateTopic --> DashboardService: subscribe
 
 DashboardUI --> rest3
 MonitoringUser --> DashboardUI

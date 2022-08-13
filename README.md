@@ -30,11 +30,11 @@ Please note this is **work in progress**
 		
 This results in state machine like shown below. Note that various DomainEvents for tool and part are issued to the mes-bus : 
 
-![](doc/tool-fsm.png)
+![](doc/tool-fsm.svg)
 
 
 ## Fit Into Overall Architecture
-![Overall Architecture](doc/mes-deploy.png)
+![Overall Architecture](doc/mes-deploy.svg)
 
 * ![mes-tool-status-srv](https://github.com/onouv/mes-tool-status-srv)
 * ![mes-tool-product-srv](https://github.com/onouv/mes-tool-product-srv)

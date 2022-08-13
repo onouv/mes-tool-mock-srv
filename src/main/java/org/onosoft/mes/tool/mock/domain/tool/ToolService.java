@@ -1,13 +1,10 @@
-package org.onosoft.mes.tool.mock.adapters.in.web.service;
+package org.onosoft.mes.tool.mock.domain.tool;
 
 import org.onosoft.mes.tool.mock.adapters.out.messaging.DomainEventPublisherDefault;
 import org.onosoft.ddd.annotations.DomainService;
-import org.onosoft.mes.tool.mock.adapters.in.web.status.dto.ToolDto;
 import org.onosoft.mes.tool.mock.domain.exception.*;
-import org.onosoft.mes.tool.mock.domain.provided.util.ToolDtoMapperUtil;
 import org.onosoft.mes.tool.mock.domain.provided.value.ToolDefinition;
 import org.onosoft.mes.tool.mock.domain.required.ToolRepository;
-import org.onosoft.mes.tool.mock.domain.tool.DefaultTool;
 import org.onosoft.mes.tool.mock.domain.value.DomainResult;
 import org.onosoft.mes.tool.mock.domain.tool.entity.Part;
 import org.onosoft.mes.tool.mock.domain.provided.Tool;
@@ -31,14 +28,14 @@ public class ToolService  {
   @Autowired
   protected DomainEventPublisherDefault publisher;
 
-  public ToolDto setupNewTool(
+  public Tool setupNewTool(
       ToolId toolId,
       ToolDefinition definition) throws Exception {
 
-    Tool candidate = DefaultTool.prototype(toolId, definition, this.toolRepository, this.publisher);
+    Tool candidate = ToolDefault.prototype(toolId, definition, this.toolRepository, this.publisher);
     DomainResult result = candidate.create();
     this.postDomainEvents(result);
-    return this.buildResponseDto(candidate);
+    return candidate;
   }
 
   public void destroyTool(ToolId toolId) throws NoSuchToolFoundException {
@@ -51,21 +48,21 @@ public class ToolService  {
     this.postDomainEvents(result);
   }
 
-  public ToolDto start(ToolId toolId) throws NoSuchToolFoundException {
+  public Tool start(ToolId toolId) throws NoSuchToolFoundException {
     Tool tool = this.validateTool(toolId);
     DomainResult result = tool.start();
     this.postDomainEvents(result);
-    return this.buildResponseDto(tool);
+    return tool;
   }
 
-  public ToolDto stop(ToolId toolId) throws NoSuchToolFoundException {
+  public Tool stop(ToolId toolId) throws NoSuchToolFoundException {
     Tool tool = this.validateTool(toolId);
     DomainResult result = tool.stop();
     this.postDomainEvents(result);
-    return this.buildResponseDto(tool);
+    return tool;
   }
 
-  public ToolDto loadPart(ToolId toolId, LoadportId portId, Part part)
+  public Tool loadPart(ToolId toolId, LoadportId portId, Part part)
       throws  NoSuchToolFoundException,
               IllegalLoadportTypeException,
               LoadportFullException {
@@ -79,10 +76,10 @@ public class ToolService  {
       throw (LoadportFullException) e;
 
     this.postDomainEvents(result);
-    return this.buildResponseDto(tool);
+    return tool;
   }
 
-  public ToolDto unloadPart(ToolId toolId, LoadportId portId)
+  public Tool unloadPart(ToolId toolId, LoadportId portId)
       throws  NoSuchToolFoundException,
               IllegalLoadportTypeException,
               NoPartAvailableException {
@@ -96,21 +93,21 @@ public class ToolService  {
       throw (NoPartAvailableException) e;
 
     this.postDomainEvents(result);
-    return this.buildResponseDto(tool);
+    return tool;
   }
 
-  public ToolDto faultTool(ToolId toolId) throws  NoSuchToolFoundException {
+  public Tool faultTool(ToolId toolId) throws  NoSuchToolFoundException {
     Tool tool = this.validateTool(toolId);
     DomainResult result = tool.fault();
     this.postDomainEvents(result);
-    return this.buildResponseDto(tool);
+    return tool;
   }
 
-  public ToolDto clearFault(ToolId toolId) throws  NoSuchToolFoundException {
+  public Tool clearFault(ToolId toolId) throws  NoSuchToolFoundException {
     Tool tool = this.validateTool(toolId);
     DomainResult result = tool.clearFault();
     this.postDomainEvents(result);
-    return this.buildResponseDto(tool);
+    return tool;
   }
 
   protected Tool validateTool(ToolId toolId) throws NoSuchToolFoundException {
@@ -125,7 +122,4 @@ public class ToolService  {
     this.publisher.publish(domainResult.getEvents());
   }
 
-  protected ToolDto buildResponseDto(Tool tool) {
-    return ToolDtoMapperUtil.map(tool);
-  }
 }

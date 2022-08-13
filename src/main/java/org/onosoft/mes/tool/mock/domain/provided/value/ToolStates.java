@@ -3,9 +3,12 @@ package org.onosoft.mes.tool.mock.domain.provided.value;
 public enum ToolStates {
     DOWN("DOWN"),
     UP("UP"),
-    STOPPED("STOPPED"),
-    IDLE("IDLE"),
-    PROCESSING("PROCESSING");
+    UP_STOPPED("UP_STOPPED"),
+    UP_IDLE("UP_IDLE"),
+    UP_PROCESSING("UP_PROCESSING"),
+    UP_PROCESSING_LOADING_PART("UP_PROCESSING_LOADING_PART"),
+    UP_PROCESSING_PROCESSING_PART("UP_PROCESSING_PROCESSING_PART"),
+    UP_PROCESSING_UNLOADING_PART("UP_PROCESSING_UNLOADING_PART");
 
     public final String value;
 

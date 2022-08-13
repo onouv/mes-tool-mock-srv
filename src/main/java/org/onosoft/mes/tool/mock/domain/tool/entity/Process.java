@@ -23,4 +23,8 @@ public class Process {
         this.processingPart = null;
         return p;
     }
+
+    public boolean isEmpty() {
+        return processingPart == null;
+    }
 }

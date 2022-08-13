@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="452.0548px" preserveAspectRatio="none" style="width:350px;height:452px;background:#FFFFFF;" version="1.1" viewBox="0 0 350 452" width="350.2283px" zoomAndPan="magnify"><defs><filter height="300%" id="fxso1qb9pyfu2" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="0.91324200913242"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="1.82648401826484" dy="1.82648401826484" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><ellipse cx="173.9726" cy="7.3059" fill="#000000" filter="url(#fxso1qb9pyfu2)" rx="4.5662" ry="4.5662" style="stroke:none;stroke-width:0.45662100456621;"/><g id="DOWN"><rect fill="#FEFECE" filter="url(#fxso1qb9pyfu2)" height="22.9523" rx="5.7078" ry="5.7078" style="stroke:#A80036;stroke-width:0.684931506849315;" width="85.3881" x="131.2785" y="422.8311"/><line style="stroke:#A80036;stroke-width:0.684931506849315;" x1="131.2785" x2="216.6667" y1="434.8388" y2="434.8388"/><text fill="#000000" font-family="sans-serif" font-size="6.3927" lengthAdjust="spacing" textLength="21.0046" x="163.4703" y="431.048">DOWN</text><text fill="#000000" font-family="sans-serif" font-size="5.4795" lengthAdjust="spacing" textLength="76.2557" x="133.5616" y="442.208">entry/ issue ToolDownEvent</text></g><rect fill="#FEFECE" filter="url(#fxso1qb9pyfu2)" height="347.7169" rx="5.7078" ry="5.7078" style="stroke:#A80036;stroke-width:0.684931506849315;" width="341.7808" x="3.1963" y="39.726"/><rect fill="#FFFFFF" height="311.5511" rx="5.7078" ry="5.7078" style="stroke:#FFFFFF;stroke-width:0.45662100456621;" width="339.0411" x="4.5662" y="74.522"/><line style="stroke:#A80036;stroke-width:0.684931506849315;" x1="3.1963" x2="344.9772" y1="73.1521" y2="73.1521"/><line style="stroke:#A80036;stroke-width:0.684931506849315;" x1="3.1963" x2="344.9772" y1="51.7337" y2="51.7337"/><text fill="#000000" font-family="sans-serif" font-size="6.3927" lengthAdjust="spacing" textLength="8.2192" x="169.9772" y="47.943">UP</text><text fill="#000000" font-family="sans-serif" font-size="5.4795" lengthAdjust="spacing" textLength="155.2511" x="5.4795" y="56.8199">entry/ ToolUpEventAction.execute() -- ToolUpEvent(tool)</text><text fill="#000000" font-family="sans-serif" font-size="5.4795" lengthAdjust="spacing" textLength="189.4977" x="5.4795" y="63.1983">PART_LOADING / LoadPartAction.execute -- PartLoadedEvt(tool, part)</text><text fill="#000000" font-family="sans-serif" font-size="5.4795" lengthAdjust="spacing" textLength="214.1553" x="5.4795" y="69.5767">PART_UNLOADING / UnloadPartAction.execute() -- PartUnloadedEvt(tool, part)</text><g id="UP.UP_STOPPED"><rect fill="#FEFECE" filter="url(#fxso1qb9pyfu2)" height="22.9523" rx="5.7078" ry="5.7078" style="stroke:#A80036;stroke-width:0.684931506849315;" width="94.0639" x="186.5297" y="104.2023"/><line style="stroke:#A80036;stroke-width:0.684931506849315;" x1="186.5297" x2="280.5936" y1="116.21" y2="116.21"/><text fill="#000000" font-family="sans-serif" font-size="6.3927" lengthAdjust="spacing" textLength="41.0959" x="213.0137" y="112.4193">UP_STOPPED</text><text fill="#000000" font-family="sans-serif" font-size="5.4795" lengthAdjust="spacing" textLength="84.9315" x="188.8128" y="123.5793">entry / ToolStoppedEvent(tool)</text></g><g id="UP.UP_IDLE"><rect fill="#FEFECE" filter="url(#fxso1qb9pyfu2)" height="22.8311" rx="5.7078" ry="5.7078" style="stroke:#A80036;stroke-width:0.684931506849315;" width="35.1598" x="78.0822" y="158.0836"/><line style="stroke:#A80036;stroke-width:0.684931506849315;" x1="78.0822" x2="113.242" y1="170.0913" y2="170.0913"/><text fill="#000000" font-family="sans-serif" font-size="6.3927" lengthAdjust="spacing" textLength="26.0274" x="82.6484" y="166.3006">UP_IDLE</text></g><ellipse cx="233.5616" cy="82.7412" fill="#000000" filter="url(#fxso1qb9pyfu2)" rx="4.5662" ry="4.5662" style="stroke:none;stroke-width:0.45662100456621;"/><rect fill="#FEFECE" filter="url(#fxso1qb9pyfu2)" height="168.1721" rx="5.7078" ry="5.7078" style="stroke:#A80036;stroke-width:0.684931506849315;" width="298.1735" x="8.6758" y="211.9649"/><rect fill="#FFFFFF" height="153.4247" rx="5.7078" ry="5.7078" style="stroke:#FFFFFF;stroke-width:0.45662100456621;" width="295.4338" x="10.0457" y="225.3425"/><line style="stroke:#A80036;stroke-width:0.684931506849315;" x1="8.6758" x2="306.8493" y1="223.9726" y2="223.9726"/><text fill="#000000" font-family="sans-serif" font-size="6.3927" lengthAdjust="spacing" textLength="52.968" x="131.2785" y="220.1818">UP_PROCESSING</text><g id="UP.UP_PROCESSING.UP_PROCESSING_PROCESSING_PART"><rect fill="#FEFECE" filter="url(#fxso1qb9pyfu2)" height="22.9523" rx="5.7078" ry="5.7078" style="stroke:#A80036;stroke-width:0.684931506849315;" width="126.9406" x="14.1553" y="255.0228"/><line style="stroke:#A80036;stroke-width:0.684931506849315;" x1="14.1553" x2="141.0959" y1="267.0305" y2="267.0305"/><text fill="#000000" font-family="sans-serif" font-size="6.3927" lengthAdjust="spacing" textLength="117.8082" x="18.7215" y="263.2398">UP_PROCESSING_PROCESSING_PART</text><text fill="#000000" font-family="sans-serif" font-size="5.4795" lengthAdjust="spacing" textLength="99.5434" x="16.4384" y="274.3998">exit / PartProcessedEvent(tool, part)</text></g><g id="UP.UP_PROCESSING.UP_PROCESSING_LOADING_PART"><rect fill="#FEFECE" filter="url(#fxso1qb9pyfu2)" height="22.8311" rx="5.7078" ry="5.7078" style="stroke:#A80036;stroke-width:0.684931506849315;" width="115.0685" x="20.0913" y="349.0868"/><line style="stroke:#A80036;stroke-width:0.684931506849315;" x1="20.0913" x2="135.1598" y1="361.0945" y2="361.0945"/><text fill="#000000" font-family="sans-serif" font-size="6.3927" lengthAdjust="spacing" textLength="105.9361" x="24.6575" y="357.3037">UP_PROCESSING_LOADING_PART</text></g><g id="UP.UP_PROCESSING.UP_PROCESSING_UNLOADING_PART"><rect fill="#FEFECE" filter="url(#fxso1qb9pyfu2)" height="22.8311" rx="5.7078" ry="5.7078" style="stroke:#A80036;stroke-width:0.684931506849315;" width="124.2009" x="175.3425" y="302.0548"/><line style="stroke:#A80036;stroke-width:0.684931506849315;" x1="175.3425" x2="299.5434" y1="314.0625" y2="314.0625"/><text fill="#000000" font-family="sans-serif" font-size="6.3927" lengthAdjust="spacing" textLength="115.0685" x="179.9087" y="310.2717">UP_PROCESSING_UNLOADING_PART</text></g><ellipse cx="77.6256" cy="233.5616" fill="#000000" filter="url(#fxso1qb9pyfu2)" rx="4.5662" ry="4.5662" style="stroke:none;stroke-width:0.45662100456621;"/><ellipse cx="237.4429" cy="360.5023" fill="none" filter="url(#fxso1qb9pyfu2)" rx="4.5662" ry="4.5662" style="stroke:#000000;stroke-width:0.45662100456621;"/><ellipse cx="237.6712" cy="360.7306" fill="#000000" rx="2.7397" ry="2.7397" style="stroke:none;stroke-width:0.45662100456621;"/><!--MD5=[087c35902a315e5096bd26bb41515fd4]
+link *start*UP_PROCESSING to UP_PROCESSING_PROCESSING_PART--><path d="M77.6256,238.1963 C77.6256,241.8676 77.6256,247.411 77.6256,252.5799 " fill="none" id="*start*UP_PROCESSING-to-UP_PROCESSING_PROCESSING_PART" style="stroke:#A80036;stroke-width:0.45662100456621;"/><polygon fill="#A80036" points="77.6256,254.9224,79.4521,250.8128,77.6256,252.6393,75.7991,250.8128,77.6256,254.9224" style="stroke:#A80036;stroke-width:0.45662100456621;"/><!--MD5=[aea02f99e02bb5650d90dfe26b8196c8]
+link UP_PROCESSING_PROCESSING_PART to UP_PROCESSING_LOADING_PART--><path d="M47.6164,277.895 C36.9635,283.4201 26.1324,291.2831 20.0913,302.0548 C15.1279,310.9041 15.1279,316.0365 20.0913,324.8858 C25.7306,334.9406 35.5479,342.4658 45.4932,347.9132 " fill="none" id="UP_PROCESSING_PROCESSING_PART-to-UP_PROCESSING_LOADING_PART" style="stroke:#A80036;stroke-width:0.45662100456621;"/><polygon fill="#A80036" points="47.6164,349.0457,44.8564,345.495,45.6039,347.9675,43.1314,348.715,47.6164,349.0457" style="stroke:#A80036;stroke-width:0.45662100456621;"/><text fill="#000000" font-family="sans-serif" font-size="5.9361" lengthAdjust="spacing" textLength="46.5753" x="20.5479" y="315.5557">[ProcessEmpty]</text><!--MD5=[a9f71770e0af4652555ae76c75d35145]
+link UP_PROCESSING_LOADING_PART to UP_PROCESSING_PROCESSING_PART--><path d="M77.6256,349.0091 C77.6256,331.8584 77.6256,298.8676 77.6256,280.3516 " fill="none" id="UP_PROCESSING_LOADING_PART-to-UP_PROCESSING_PROCESSING_PART" style="stroke:#A80036;stroke-width:0.45662100456621;"/><polygon fill="#A80036" points="77.6256,277.9452,75.7991,282.0548,77.6256,280.2283,79.4521,282.0548,77.6256,277.9452" style="stroke:#A80036;stroke-width:0.45662100456621;"/><text fill="#000000" font-family="sans-serif" font-size="5.9361" lengthAdjust="spacing" textLength="88.5845" x="78.0822" y="315.5557">PartInProcessEvent(tool, part)</text><!--MD5=[eace10fd9ef775e2c8bbaf2018c87f8e]
+link UP_PROCESSING_PROCESSING_PART to UP_PROCESSING_UNLOADING_PART--><path d="M115.7032,277.8813 C140.2603,284.968 172.1553,294.1735 197.137,301.3836 " fill="none" id="UP_PROCESSING_PROCESSING_PART-to-UP_PROCESSING_UNLOADING_PART" style="stroke:#A80036;stroke-width:0.45662100456621;"/><polygon fill="#A80036" points="199.379,302.032,195.9452,299.1279,197.1872,301.3927,194.9224,302.6347,199.379,302.032" style="stroke:#A80036;stroke-width:0.45662100456621;"/><text fill="#000000" font-family="sans-serif" font-size="5.9361" lengthAdjust="spacing" textLength="94.0639" x="167.1233" y="292.0397">[cycle time elapsed] / FINISHED</text><!--MD5=[90230feef1a5fb174ae9062a2ac98e8f]
+link UP_PROCESSING_UNLOADING_PART to UP_PROCESSING_LOADING_PART--><path d="M199.3653,324.9132 C174.8082,332 142.9132,341.2055 117.9315,348.4155 " fill="none" id="UP_PROCESSING_UNLOADING_PART-to-UP_PROCESSING_LOADING_PART" style="stroke:#A80036;stroke-width:0.45662100456621;"/><polygon fill="#A80036" points="115.6895,349.0639,120.1461,349.6667,117.8813,348.4247,119.1233,346.1598,115.6895,349.0639" style="stroke:#A80036;stroke-width:0.45662100456621;"/><text fill="#000000" font-family="sans-serif" font-size="5.9361" lengthAdjust="spacing" textLength="38.3562" x="167.1233" y="339.0716">[FlowIsFree]]</text><!--MD5=[46e5122a5fa87cf64b32cf47ac7b0ed2]
+link UP_PROCESSING_UNLOADING_PART to *end*UP_PROCESSING--><path d="M237.4429,324.9726 C237.4429,333.8813 237.4429,346.105 237.4429,353.516 " fill="none" id="UP_PROCESSING_UNLOADING_PART-to-*end*UP_PROCESSING" style="stroke:#A80036;stroke-width:0.45662100456621;"/><polygon fill="#A80036" points="237.4429,355.8356,239.2694,351.726,237.4429,353.5525,235.6164,351.726,237.4429,355.8356" style="stroke:#A80036;stroke-width:0.45662100456621;"/><text fill="#000000" font-family="sans-serif" font-size="5.9361" lengthAdjust="spacing" textLength="46.5753" x="237.8995" y="339.0716">[FlowIsNotFree]</text><!--MD5=[320f42ce0ceab860b0ba6876efb4210d]
+link *start*UP to UP_STOPPED--><path d="M233.5616,87.3759 C233.5616,91.0471 233.5616,96.5905 233.5616,101.7594 " fill="none" id="*start*UP-to-UP_STOPPED" style="stroke:#A80036;stroke-width:0.45662100456621;"/><polygon fill="#A80036" points="233.5616,104.1019,235.3881,99.9923,233.5616,101.8188,231.7352,99.9923,233.5616,104.1019" style="stroke:#A80036;stroke-width:0.45662100456621;"/><!--MD5=[07fe2ba635bb589e110f4d007dadea3a]
+link UP_STOPPED to UP_PROCESSING--><path d="M245.2968,127.1749 C247.2237,129.6361 248.9361,132.3713 250,135.2526 C254.4429,147.2663 265.2694,166.2297 249.5434,203.7457 C248.6941,205.7686 247.7808,207.7686 246.8037,209.7457 " fill="none" id="UP_STOPPED-to-UP_PROCESSING" style="stroke:#A80036;stroke-width:0.45662100456621;"/><polygon fill="#A80036" points="245.7169,211.8873,249.203,209.0462,246.7484,209.8504,245.9441,207.3958,245.7169,211.8873" style="stroke:#A80036;stroke-width:0.45662100456621;"/><text fill="#000000" font-family="sans-serif" font-size="5.9361" lengthAdjust="spacing" textLength="57.0776" x="258.6758" y="171.5845">START [FlowIsFree]</text><!--MD5=[76392215e6ec3a507ee6ec93f7053608]
+link UP_STOPPED to UP_IDLE--><path d="M186.516,117.2115 C129.411,119.0836 39.3973,123.8279 28.9954,135.2526 C13.6347,152.1201 50.8219,161.7594 75.621,166.1384 " fill="none" id="UP_STOPPED-to-UP_IDLE" style="stroke:#A80036;stroke-width:0.45662100456621;"/><polygon fill="#A80036" points="77.9817,166.5494,74.2459,164.0458,75.7324,166.1582,73.62,167.6447,77.9817,166.5494" style="stroke:#A80036;stroke-width:0.45662100456621;"/><text fill="#000000" font-family="sans-serif" font-size="5.9361" lengthAdjust="spacing" textLength="65.7534" x="38.3562" y="141.2192">START [InportEmpty] /</text><text fill="#000000" font-family="sans-serif" font-size="5.9361" lengthAdjust="spacing" textLength="85.3881" x="29.4521" y="148.1291">ToolIdleEvt(tool, UPSTREAM)</text><!--MD5=[76392215e6ec3a507ee6ec93f7053608]
+link UP_STOPPED to UP_IDLE--><path d="M186.3973,120.9329 C162.2968,124.111 135.9498,128.8599 125.7991,135.2526 C119.032,139.5128 120.5114,143.8005 115.2968,149.8644 C113.4521,152.0106 111.4064,154.1932 109.3516,156.2754 " fill="none" id="UP_STOPPED-to-UP_IDLE-1" style="stroke:#A80036;stroke-width:0.45662100456621;"/><polygon fill="#A80036" points="107.6301,158.006,111.8243,156.3831,109.2413,156.3883,109.2361,153.8053,107.6301,158.006" style="stroke:#A80036;stroke-width:0.45662100456621;"/><text fill="#000000" font-family="sans-serif" font-size="5.9361" lengthAdjust="spacing" textLength="62.1005" x="142.6941" y="141.2192">START [OutportFull] /</text><text fill="#000000" font-family="sans-serif" font-size="5.9361" lengthAdjust="spacing" textLength="96.8037" x="126.2557" y="148.1291">ToolIdleEvt(tool, DOWNSTREAM)</text><!--MD5=[10f700bae7cff586a2f65f4409723021]
+link UP_PROCESSING to UP_STOPPED--><path d="M296.4247,211.9238 C304.8858,202.4261 312.2877,192.0928 318.0365,180.9147 C322.6758,171.8918 323.379,166.7092 318.0365,158.0836 C309.2374,143.8827 294.0457,134.3302 278.9452,127.974 " fill="none" id="UP_PROCESSING-to-UP_STOPPED" style="stroke:#A80036;stroke-width:0.45662100456621;"/><polygon fill="#A80036" points="276.7215,127.0608,279.8296,130.311,278.8335,127.9278,281.2168,126.9317,276.7215,127.0608" style="stroke:#A80036;stroke-width:0.45662100456621;"/><text fill="#000000" font-family="sans-serif" font-size="5.9361" lengthAdjust="spacing" textLength="15.5251" x="322.6027" y="171.5845">STOP</text><!--MD5=[18365573a9d671d4a1f1bba7afe17d67]
+link UP_PROCESSING to UP_IDLE--><path d="M70.6484,211.869 C69.2831,209.2023 68.0228,206.4946 66.895,203.7457 C64.4247,197.7412 63.8311,194.8599 66.895,189.1338 C69,185.2023 72.3014,181.9421 75.9315,179.2891 " fill="none" id="UP_PROCESSING-to-UP_IDLE" style="stroke:#A80036;stroke-width:0.45662100456621;"/><polygon fill="#A80036" points="77.9772,177.8781,73.5579,178.7116,76.0988,179.176,75.6345,181.717,77.9772,177.8781" style="stroke:#A80036;stroke-width:0.45662100456621;"/><text fill="#000000" font-family="sans-serif" font-size="5.9361" lengthAdjust="spacing" textLength="72.1461" x="70.3196" y="195.1005">FINISHED [InportEmpty /</text><text fill="#000000" font-family="sans-serif" font-size="5.9361" lengthAdjust="spacing" textLength="79.9087" x="67.3516" y="202.0104">ToolIdleEvent(UPSTREAM)]</text><!--MD5=[18365573a9d671d4a1f1bba7afe17d67]
+link UP_PROCESSING to UP_IDLE--><path d="M159.0822,211.8599 C156.5799,203.6635 152.9224,195.8964 147.7169,189.1338 C140.1233,179.2663 126.9178,174.4717 115.7123,172.1475 " fill="none" id="UP_PROCESSING-to-UP_IDLE-1" style="stroke:#A80036;stroke-width:0.45662100456621;"/><polygon fill="#A80036" points="113.3516,171.6864,117.0362,174.2648,115.5926,172.1228,117.7346,170.6792,113.3516,171.6864" style="stroke:#A80036;stroke-width:0.45662100456621;"/><text fill="#000000" font-family="sans-serif" font-size="5.9361" lengthAdjust="spacing" textLength="68.4932" x="166.4384" y="195.1005">FINISHED [OutportFull /</text><text fill="#000000" font-family="sans-serif" font-size="5.9361" lengthAdjust="spacing" textLength="91.3242" x="155.9361" y="202.0104">ToolIdleEvent(DOWNSTREAM)]</text><!--MD5=[f53305dcc3d2cd8bffd712a71a513ac3]
+link UP_IDLE to UP_PROCESSING--><path d="M77.9543,172.3941 C59.5297,175.3302 32.5023,180.9284 26.2557,189.1338 C22.3242,194.3028 23.2511,197.9877 26.2557,203.7457 C27.3425,205.8279 28.4977,207.8736 29.7215,209.8827 " fill="none" id="UP_IDLE-to-UP_PROCESSING" style="stroke:#A80036;stroke-width:0.45662100456621;"/><polygon fill="#A80036" points="30.968,211.8781,30.3456,207.4242,29.7609,209.9402,27.2449,209.3556,30.968,211.8781" style="stroke:#A80036;stroke-width:0.45662100456621;"/><text fill="#000000" font-family="sans-serif" font-size="5.9361" lengthAdjust="spacing" textLength="36.0731" x="26.7123" y="198.5251">[FlowIsFree]</text><!--MD5=[bf322d15bda94f09ef641d6d58a993f5]
+link UP_IDLE to UP_STOPPED--><path d="M113.3196,168.6727 C144.4612,167.659 207.379,163.8873 223.516,149.8644 C229.3288,144.8142 231.8539,136.5722 232.9178,129.49 " fill="none" id="UP_IDLE-to-UP_STOPPED" style="stroke:#A80036;stroke-width:0.45662100456621;"/><polygon fill="#A80036" points="233.2283,127.1384,230.8776,130.9723,232.9283,129.4017,234.4989,131.4524,233.2283,127.1384" style="stroke:#A80036;stroke-width:0.45662100456621;"/><text fill="#000000" font-family="sans-serif" font-size="5.9361" lengthAdjust="spacing" textLength="15.5251" x="232.1918" y="144.6438">STOP</text><!--MD5=[1484cf804706c17b6caeb7077b9bb997]
+link *start to UP--><path d="M173.9726,12.0548 C173.9726,17 173.9726,25.9315 173.9726,37.3836 " fill="none" id="*start-to-UP" style="stroke:#A80036;stroke-width:0.45662100456621;"/><polygon fill="#A80036" points="173.9726,39.7032,175.7991,35.5936,173.9726,37.4201,172.1461,35.5936,173.9726,39.7032" style="stroke:#A80036;stroke-width:0.45662100456621;"/><!--MD5=[ecac89f1cb9a834dd3beff1ef5c67012]
+link UP to DOWN--><path d="M154.6941,387.7489 C154.3927,392.3333 154.1233,396.8813 153.8813,401.3699 C153.6986,404.8128 152.726,405.8813 153.8813,409.1324 C155.379,413.347 157.9406,417.3607 160.7443,420.8813 " fill="none" id="UP-to-DOWN" style="stroke:#A80036;stroke-width:0.45662100456621;"/><polygon fill="#A80036" points="162.3196,422.7854,161.103,418.4559,160.8625,421.0277,158.2907,420.7873,162.3196,422.7854" style="stroke:#A80036;stroke-width:0.45662100456621;"/><text fill="#000000" font-family="sans-serif" font-size="5.9361" lengthAdjust="spacing" textLength="18.7215" x="154.3379" y="407.3365">FAULT</text><!--MD5=[1ce488963331178650d08126837d26c2]
+link DOWN to UP--><path d="M174.7169,422.7489 C174.968,418.4932 175.2192,413.589 175.3425,409.1324 C175.4384,405.6849 175.3562,404.8219 175.3425,401.3699 C175.3288,397.6347 175.3151,393.8584 175.2968,390.0502 " fill="none" id="DOWN-to-UP" style="stroke:#A80036;stroke-width:0.45662100456621;"/><polygon fill="#A80036" points="175.2877,387.6758,173.4847,391.7958,175.3007,389.9589,177.1376,391.7749,175.2877,387.6758" style="stroke:#A80036;stroke-width:0.45662100456621;"/><text fill="#000000" font-family="sans-serif" font-size="5.9361" lengthAdjust="spacing" textLength="41.0959" x="175.7991" y="407.3365">FAULT_CLEAR</text><!--MD5=[00b85f706f4356298515846e7fabfb48]
+@startuml
+'https://plantuml.com/state-diagram
+
+scale 350 width
+
+[*] - -> UP
+state DOWN : entry/ issue ToolDownEvent
+
+state UP {
+    state UP: entry/ ToolUpEventAction.execute() - - ToolUpEvent(tool)
+    state UP: PART_LOADING / LoadPartAction.execute - - PartLoadedEvt(tool, part)
+    state UP: PART_UNLOADING / UnloadPartAction.execute() - - PartUnloadedEvt(tool, part)
+
+    state UP_STOPPED
+    UP_STOPPED: entry / ToolStoppedEvent(tool)
+    state UP_IDLE
+    state UP_PROCESSING {
+        state UP_PROCESSING_PROCESSING_PART
+        state UP_PROCESSING_LOADING_PART
+        state UP_PROCESSING_UNLOADING_PART
+
+        UP_PROCESSING_PROCESSING_PART: exit / PartProcessedEvent(tool, part)
+
+        [*] - -> UP_PROCESSING_PROCESSING_PART
+        UP_PROCESSING_PROCESSING_PART - -> UP_PROCESSING_LOADING_PART: [ProcessEmpty]
+        UP_PROCESSING_LOADING_PART - -> UP_PROCESSING_PROCESSING_PART: PartInProcessEvent(tool, part)
+
+        UP_PROCESSING_PROCESSING_PART - -> UP_PROCESSING_UNLOADING_PART: [cycle time elapsed] / FINISHED
+        UP_PROCESSING_UNLOADING_PART - -> UP_PROCESSING_LOADING_PART: [FlowIsFree]]
+        UP_PROCESSING_UNLOADING_PART - -> [*]: [FlowIsNotFree]
+    }
+
+    [*] - -> UP_STOPPED
+    UP_STOPPED - -> UP_PROCESSING: START [FlowIsFree]
+    UP_STOPPED - -> UP_IDLE: START [InportEmpty] / \nToolIdleEvt(tool, UPSTREAM)
+    UP_STOPPED - -> UP_IDLE: START [OutportFull] / \nToolIdleEvt(tool, DOWNSTREAM)
+    UP_PROCESSING - -> UP_STOPPED: STOP
+    UP_PROCESSING - -> UP_IDLE: FINISHED [InportEmpty / \nToolIdleEvent(UPSTREAM)]
+    UP_PROCESSING - -> UP_IDLE: FINISHED [OutportFull / \nToolIdleEvent(DOWNSTREAM)]
+
+    UP_IDLE - -> UP_PROCESSING: [FlowIsFree]
+    UP_IDLE - -> UP_STOPPED: STOP
+}
+
+UP - -> DOWN: FAULT
+DOWN - -> UP: FAULT_CLEAR
+@enduml
+
+@startuml
+
+scale 350 width
+
+[*] - -> UP
+state DOWN : entry/ issue ToolDownEvent
+
+state UP {
+    state UP: entry/ ToolUpEventAction.execute() - - ToolUpEvent(tool)
+    state UP: PART_LOADING / LoadPartAction.execute - - PartLoadedEvt(tool, part)
+    state UP: PART_UNLOADING / UnloadPartAction.execute() - - PartUnloadedEvt(tool, part)
+
+    state UP_STOPPED
+    UP_STOPPED: entry / ToolStoppedEvent(tool)
+    state UP_IDLE
+    state UP_PROCESSING {
+        state UP_PROCESSING_PROCESSING_PART
+        state UP_PROCESSING_LOADING_PART
+        state UP_PROCESSING_UNLOADING_PART
+
+        UP_PROCESSING_PROCESSING_PART: exit / PartProcessedEvent(tool, part)
+
+        [*] - -> UP_PROCESSING_PROCESSING_PART
+        UP_PROCESSING_PROCESSING_PART - -> UP_PROCESSING_LOADING_PART: [ProcessEmpty]
+        UP_PROCESSING_LOADING_PART - -> UP_PROCESSING_PROCESSING_PART: PartInProcessEvent(tool, part)
+
+        UP_PROCESSING_PROCESSING_PART - -> UP_PROCESSING_UNLOADING_PART: [cycle time elapsed] / FINISHED
+        UP_PROCESSING_UNLOADING_PART - -> UP_PROCESSING_LOADING_PART: [FlowIsFree]]
+        UP_PROCESSING_UNLOADING_PART - -> [*]: [FlowIsNotFree]
+    }
+
+    [*] - -> UP_STOPPED
+    UP_STOPPED - -> UP_PROCESSING: START [FlowIsFree]
+    UP_STOPPED - -> UP_IDLE: START [InportEmpty] / \nToolIdleEvt(tool, UPSTREAM)
+    UP_STOPPED - -> UP_IDLE: START [OutportFull] / \nToolIdleEvt(tool, DOWNSTREAM)
+    UP_PROCESSING - -> UP_STOPPED: STOP
+    UP_PROCESSING - -> UP_IDLE: FINISHED [InportEmpty / \nToolIdleEvent(UPSTREAM)]
+    UP_PROCESSING - -> UP_IDLE: FINISHED [OutportFull / \nToolIdleEvent(DOWNSTREAM)]
+
+    UP_IDLE - -> UP_PROCESSING: [FlowIsFree]
+    UP_IDLE - -> UP_STOPPED: STOP
+}
+
+UP - -> DOWN: FAULT
+DOWN - -> UP: FAULT_CLEAR
+@enduml
+
+PlantUML version 1.2022.1(Tue Feb 01 19:19:58 CET 2022)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: GB
+--></g></svg>

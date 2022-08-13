@@ -15,7 +15,8 @@ state UP {
     state UP: PART_UNLOAD() / part=output.unload(); PartUnloadEvt(tool, part)
     state STOPPED: entry/ ToolStoppedEvt
     state IDLE
-    state PROCESSING: entry/ part=inport.next();ToolProcessingEvt(tool, part); process(part)
+    state PROCESSING
+    state PROCESSING: entry/ part=inport.next();PartInProcessEvt(tool, part); process(part)
     state PROCESSING: tool.process.run(Part) returns part/ FINISHED(part); output.add(part)
 
     state PROCESSING: exit/ PartProcessedEvt(tool, part)
@@ -29,6 +30,7 @@ state UP {
     PROCESSING --> IDLE: FINISHED(part) [InportEmpty]/ \nToolIdleEvt(tool, UPSTREAM)
     PROCESSING --> IDLE: FINISHED(part) [OutportFull]/ \nToolIdleEvt(tool, DOWNSTREAM)
     IDLE --> PROCESSING: [FlowIsFree]
+
 
 
     IDLE --> STOPPED: STOP

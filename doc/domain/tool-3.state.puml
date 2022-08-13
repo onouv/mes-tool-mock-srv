@@ -1,0 +1,47 @@
+@startuml
+'https://plantuml.com/state-diagram
+
+scale 350 width
+
+[*] --> UP
+state DOWN : entry/ issue ToolDownEvent
+
+state UP {
+    state UP: entry/ ToolUpEventAction.execute() -- ToolUpEvent(tool)
+    state UP: PART_LOADING / LoadPartAction.execute -- PartLoadedEvt(tool, part)
+    state UP: PART_UNLOADING / UnloadPartAction.execute() -- PartUnloadedEvt(tool, part)
+
+    state UP_STOPPED
+    UP_STOPPED: entry / ToolStoppedEvent(tool)
+    state UP_IDLE
+    state UP_PROCESSING {
+        state UP_PROCESSING_PROCESSING_PART
+        state UP_PROCESSING_LOADING_PART
+        state UP_PROCESSING_UNLOADING_PART
+
+        UP_PROCESSING_PROCESSING_PART: exit / PartProcessedEvent(tool, part)
+
+        [*] --> UP_PROCESSING_PROCESSING_PART
+        UP_PROCESSING_PROCESSING_PART --> UP_PROCESSING_LOADING_PART: [ProcessEmpty]
+        UP_PROCESSING_LOADING_PART --> UP_PROCESSING_PROCESSING_PART: PartInProcessEvent(tool, part)
+
+        UP_PROCESSING_PROCESSING_PART --> UP_PROCESSING_UNLOADING_PART: [cycle time elapsed] / FINISHED
+        UP_PROCESSING_UNLOADING_PART --> UP_PROCESSING_LOADING_PART: [FlowIsFree]]
+        UP_PROCESSING_UNLOADING_PART --> [*]: [FlowIsNotFree]
+    }
+
+    [*] --> UP_STOPPED
+    UP_STOPPED --> UP_PROCESSING: START [FlowIsFree]
+    UP_STOPPED --> UP_IDLE: START [InportEmpty] / \nToolIdleEvt(tool, UPSTREAM)
+    UP_STOPPED --> UP_IDLE: START [OutportFull] / \nToolIdleEvt(tool, DOWNSTREAM)
+    UP_PROCESSING --> UP_STOPPED: STOP
+    UP_PROCESSING --> UP_IDLE: FINISHED [InportEmpty / \nToolIdleEvent(UPSTREAM)]
+    UP_PROCESSING --> UP_IDLE: FINISHED [OutportFull / \nToolIdleEvent(DOWNSTREAM)]
+
+    UP_IDLE --> UP_PROCESSING: [FlowIsFree]
+    UP_IDLE --> UP_STOPPED: STOP
+}
+
+UP --> DOWN: FAULT
+DOWN --> UP: FAULT_CLEAR
+@enduml
