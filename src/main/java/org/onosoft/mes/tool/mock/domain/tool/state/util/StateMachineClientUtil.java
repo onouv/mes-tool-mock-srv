@@ -8,9 +8,7 @@ import org.onosoft.mes.tool.mock.domain.tool.ToolDefault;
 import org.onosoft.mes.tool.mock.domain.tool.entity.Part;
 import org.onosoft.mes.tool.mock.domain.tool.state.ToolEvents;
 import org.onosoft.mes.tool.mock.domain.tool.state.action.*;
-import org.onosoft.mes.tool.mock.domain.tool.state.guard.FlowIsFreeGuard;
-import org.onosoft.mes.tool.mock.domain.tool.state.guard.InportEmptyGuard;
-import org.onosoft.mes.tool.mock.domain.tool.state.guard.OutportFullGuard;
+import org.onosoft.mes.tool.mock.domain.tool.state.guard.*;
 import org.springframework.statemachine.StateMachine;
 import org.springframework.statemachine.config.StateMachineBuilder;
 import org.springframework.statemachine.state.State;
@@ -52,10 +50,14 @@ public class StateMachineClientUtil {
             .initial(ToolStates.UP_STOPPED)
             .state(ToolStates.UP_STOPPED, new ToolStoppedEventAction(), null)
             .state(ToolStates.UP_IDLE)
-            .state(
-                ToolStates.UP_PROCESSING,
-                new ProcessNewPartAction(),
-                null);
+            .state(ToolStates.UP_PROCESSING)
+            .and()
+          .withStates()
+            .parent(ToolStates.UP_PROCESSING)
+            .initial(ToolStates.UP_PROCESSING_PROCESSING_PART)
+            .state(ToolStates.UP_PROCESSING_LOADING_PART)
+            .stateExit(ToolStates.UP_PROCESSING_PROCESSING_PART, new EjectFinishedPartAction())
+            .state(ToolStates.UP_PROCESSING_UNLOADING_PART);
 
       builder.configureTransitions()
           .withExternal()
@@ -114,30 +116,34 @@ public class StateMachineClientUtil {
             .and()
           .withExternal()
             .source(ToolStates.UP_PROCESSING)
-            .target(ToolStates.UP_PROCESSING)
-            .event(ToolEvents.FINISHED)
-            .guard(new FlowIsFreeGuard())
-            .and()
-          .withInternal()
-            .source(ToolStates.UP)
-            .event(ToolEvents.PART_LOADING)
-            .action(new LoadPartAction())
-            .and()
-          .withInternal()
-            .source(ToolStates.UP)
-            .event(ToolEvents.PART_UNLOADING)
-            .action(new UnloadPartAction())
+            .target(ToolStates.UP_STOPPED)
+            .event(ToolEvents.STOP)
             .and()
           .withExternal()
-            .source(ToolStates.UP_PROCESSING)
-            .target(ToolStates.UP_IDLE)
-            .guard(new InportEmptyGuard())
-            .action(new ToolIdleEventUpstreamAction())
+            .source(ToolStates.UP_PROCESSING_PROCESSING_PART)
+            .target(ToolStates.UP_PROCESSING_LOADING_PART)
+            .guard(new ProcessEmptyGuard())
             .and()
-          .withInternal()
-            .source(ToolStates.UP_PROCESSING)
+          .withExternal()
+            .source(ToolStates.UP_PROCESSING_LOADING_PART)
+            .target(ToolStates.UP_PROCESSING_PROCESSING_PART)
+            .action(new ProcessNewPartAction())
+            .and()
+          .withExternal()
+            .source(ToolStates.UP_PROCESSING_PROCESSING_PART)
+            .target(ToolStates.UP_PROCESSING_UNLOADING_PART)
             .timer(ToolDefault.CYCLE_TIME)
-            .action(new CycleTimeElapsedAction());
+            .action(new CycleTimeElapsedAction())
+            .and()
+          .withExternal()
+            .source(ToolStates.UP_PROCESSING_UNLOADING_PART)
+            .target(ToolStates.UP_PROCESSING_LOADING_PART)
+            .guard(new FlowIsFreeGuard())
+            .and()
+          .withExternal()
+            .source(ToolStates.UP_PROCESSING_UNLOADING_PART)
+            .target(ToolStates.UP)
+            .guard(new FlowIsNotFreeGuard());
 
       builder.configureConfiguration()
           .withConfiguration()
