@@ -1,6 +1,6 @@
 # mes-tool-mock-srv
 
-backend service to mock a tool (i.e. a simple virtual machine producing parts), so that the mes data system can be manually tested. This service exposes a client-facing API for users to "operate" a virtual tool, which the service then publishes to associated topics in the **mes-bus**. 
+backend service to mock a tool (i.e. a simple simulated piece of machinery producing parts), so that the mes data system can be manually tested. This service exposes a client-facing API for users to "operate" a virtual tool, which the service then publishes to associated topics in the **mes-bus**. 
 
 Please note this is **work in progress** 
 
@@ -28,7 +28,7 @@ Please note this is **work in progress**
        - UNLOAD PART from Tool
          - returns CONFLICT if requested Loadport was empty or is not an outport
 		
-This results in state machine like shown below. Note that various DomainEvents for tool and part are issued to the mes-bus : 
+This results in state machine like shown below. Note that various DomainEvents for Tool and Part are issued to the mes-bus : 
 
 ![](doc/tool-fsm.svg)
 
