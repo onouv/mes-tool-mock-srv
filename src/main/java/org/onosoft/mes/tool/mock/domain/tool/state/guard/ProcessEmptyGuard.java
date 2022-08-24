@@ -16,9 +16,11 @@ public class ProcessEmptyGuard implements Guard<ToolStates, ToolEvents> {
   @Override
   public boolean evaluate(StateContext<ToolStates, ToolEvents> context) {
     Process process = StateContextVariableUtil.getProcess(context);
-    if(!process.isEmpty()) {
+    if(process.isEmpty()) {
+      logger.debug("ProcessEmptyGuard:  process empty");
       return true;
     } else {
+      logger.debug("ProcessEmptyGuard:  process empty");
       return false;
     }
   }

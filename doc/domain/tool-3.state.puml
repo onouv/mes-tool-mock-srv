@@ -1,45 +1,45 @@
 @startuml
 'https://plantuml.com/state-diagram
-
+skinparam defaultTextAlignment left
 scale 350 width
 
 [*] --> UP
 state DOWN : entry/ issue ToolDownEvent
 
 state UP {
-    state UP: entry/ ToolUpEventAction.execute() -- ToolUpEvent(tool)
-    state UP: PART_LOADING / LoadPartAction.execute -- PartLoadedEvt(tool, part)
-    state UP: PART_UNLOADING / UnloadPartAction.execute() -- PartUnloadedEvt(tool, part)
+    state UP: entry/ ToolUpEventAction, ToolUpEvent(tool)
+    state UP: PART_LOADING / LoadPartAction, PartLoadedEvt(tool, part)
+    state UP: PART_UNLOADING / UnloadPartAction, PartUnloadedEvt(tool, part)
 
-    state UP_STOPPED
-    UP_STOPPED: entry / ToolStoppedEvent(tool)
-    state UP_IDLE
-    state UP_PROCESSING {
-        state UP_PROCESSING_PROCESSING_PART
-        state UP_PROCESSING_LOADING_PART
-        state UP_PROCESSING_UNLOADING_PART
+    state STOPPED
+    STOPPED: entry / ToolStoppedEvent(tool)
+    state IDLE
+    state PROCESSING {
+        state PROCESSING_PART
+        state LOADING_PROCESS
+        state LOADING_PROCESS: entry/ ProcessNewPartAction, PartInProcessEvent(tool, part)
 
-        UP_PROCESSING_PROCESSING_PART: exit / PartProcessedEvent(tool, part)
+        state UNLOADING_PROCESS
 
-        [*] --> UP_PROCESSING_PROCESSING_PART
-        UP_PROCESSING_PROCESSING_PART --> UP_PROCESSING_LOADING_PART: [ProcessEmpty]
-        UP_PROCESSING_LOADING_PART --> UP_PROCESSING_PROCESSING_PART: PartInProcessEvent(tool, part)
+        [*] --> PROCESSING_PART
+        PROCESSING_PART --> LOADING_PROCESS: [ProcessEmpty]
+        LOADING_PROCESS --> PROCESSING_PART
 
-        UP_PROCESSING_PROCESSING_PART --> UP_PROCESSING_UNLOADING_PART: [cycle time elapsed] / FINISHED
-        UP_PROCESSING_UNLOADING_PART --> UP_PROCESSING_LOADING_PART: [FlowIsFree]]
-        UP_PROCESSING_UNLOADING_PART --> [*]: [FlowIsNotFree]
+        PROCESSING_PART --> UNLOADING_PROCESS: [await cycle time] / \nEjectFinishedPartAction, \nPartProcessedEvent(tool, part), \nFINISHED
+        UNLOADING_PROCESS --> LOADING_PROCESS: [FlowIsFree]
+
     }
 
-    [*] --> UP_STOPPED
-    UP_STOPPED --> UP_PROCESSING: START [FlowIsFree]
-    UP_STOPPED --> UP_IDLE: START [InportEmpty] / \nToolIdleEvt(tool, UPSTREAM)
-    UP_STOPPED --> UP_IDLE: START [OutportFull] / \nToolIdleEvt(tool, DOWNSTREAM)
-    UP_PROCESSING --> UP_STOPPED: STOP
-    UP_PROCESSING --> UP_IDLE: FINISHED [InportEmpty / \nToolIdleEvent(UPSTREAM)]
-    UP_PROCESSING --> UP_IDLE: FINISHED [OutportFull / \nToolIdleEvent(DOWNSTREAM)]
+    [*] --> STOPPED
+    STOPPED --> PROCESSING: START [FlowIsFree]
+    STOPPED --> IDLE: START [InportEmpty] / \nToolIdleEvt(tool, UPSTREAM)
+    STOPPED --> IDLE: START [OutportFull] / \nToolIdleEvt(tool, DOWNSTREAM)
+    PROCESSING --> STOPPED: STOP
+    PROCESSING --> IDLE: FINISHED: \n[InportEmpty] / \nToolIdleEvent(UPSTREAM)
+    PROCESSING --> IDLE: FINISHED: \n[OutportFull] / \nToolIdleEvent(DOWNSTREAM)
 
-    UP_IDLE --> UP_PROCESSING: [FlowIsFree]
-    UP_IDLE --> UP_STOPPED: STOP
+    IDLE --> PROCESSING: [FlowIsFree]
+    IDLE --> STOPPED: STOP
 }
 
 UP --> DOWN: FAULT

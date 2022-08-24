@@ -15,6 +15,7 @@ import org.springframework.statemachine.StateContext;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class StateContextVariableUtil {
   public static LoadPort getOutport(StateContext<ToolStates, ToolEvents> context) {
@@ -59,7 +60,20 @@ public class StateContextVariableUtil {
     context.getExtendedState().getVariables().put(StateVariableKeys.exception, ex);
   }
 
+  /*
   public static void setDomainEvents(StateContext<ToolStates, ToolEvents> context, List<DomainEvent> events) {
     context.getExtendedState().getVariables().put(StateVariableKeys.domainEvents, events);
+  }
+
+   */
+
+  public static void queueDomainEvents(StateContext<ToolStates, ToolEvents> context, List<DomainEvent> events) {
+    List<DomainEvent> extendedEvents =
+        (List<DomainEvent>) context.getExtendedState().getVariables().get(StateVariableKeys.domainEvents);
+
+    if(extendedEvents == null)  extendedEvents = new ArrayList<DomainEvent>();
+
+    extendedEvents.addAll(events);
+    context.getExtendedState().getVariables().put(StateVariableKeys.domainEvents, extendedEvents);
   }
 }

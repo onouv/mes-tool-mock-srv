@@ -19,11 +19,8 @@ public class ToolIdleEventUpstreamAction
 
     @Override
     public void execute(final StateContext<ToolStates, ToolEvents> context) {
-        ToolId toolId = StateContextVariableUtil.getToolId(context);
-        ToolIdleEvent domainEvent = new ToolIdleEvent(toolId, IdleReason.UPSTREAM);
-
-        List<DomainEvent> events = new ArrayList<>();
-        events.add(domainEvent);
-        StateContextVariableUtil.setDomainEvents(context, events);
+        init(context);
+        events.add(new ToolIdleEvent(toolId, IdleReason.UPSTREAM));
+        finish();
     }
 }

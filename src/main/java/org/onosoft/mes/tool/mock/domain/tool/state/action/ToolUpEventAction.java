@@ -1,6 +1,7 @@
 package org.onosoft.mes.tool.mock.domain.tool.state.action;
 
 import org.onosoft.mes.tool.mock.domain.event.DomainEvent;
+import org.onosoft.mes.tool.mock.domain.event.ToolStoppedEvent;
 import org.onosoft.mes.tool.mock.domain.event.ToolUpEvent;
 import org.onosoft.mes.tool.mock.domain.provided.value.ToolId;
 
@@ -18,10 +19,8 @@ public class ToolUpEventAction
     implements Action<ToolStates, ToolEvents> {
   @Override
   public void execute(StateContext<ToolStates, ToolEvents> stateContext) {
-
-    ToolId toolId = StateContextVariableUtil.getToolId(stateContext);
-    List<DomainEvent> events = new ArrayList<>();
+    init(stateContext);
     events.add(new ToolUpEvent(toolId));
-    StateContextVariableUtil.setDomainEvents(stateContext, events);
+    finish();
   }
 }

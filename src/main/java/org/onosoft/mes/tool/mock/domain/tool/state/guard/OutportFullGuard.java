@@ -16,10 +16,10 @@ public class OutportFullGuard implements Guard<ToolStates, ToolEvents> {
     PortStatus port = StateContextVariableUtil.getOutport(context);
 
     if(port.isFull()) {
-      logger.info("Guard: Outport found full.");
+      logger.debug("OutportFullGuard: Outport found full.");
       return true;
     } else {
-      logger.info("Guard: Outport found not full.");
+      logger.debug("OutportFullGuard: Outport found not full.");
       return false;
     }
   }

@@ -16,10 +16,10 @@ public class InportEmptyGuard implements Guard<ToolStates, ToolEvents> {
     PortStatus port = StateContextVariableUtil.getInport(context);
 
     if(port.isEmpty()) {
-      logger.info("Guard: Inport found empty.");
+      logger.debug("InportEmptyGuard: Inport found empty.");
       return true;
     } else {
-      logger.info("Guard: Inport found not empty.");
+      logger.debug("InportEmptyGuard: Inport found not empty.");
       return false;
     }
   }

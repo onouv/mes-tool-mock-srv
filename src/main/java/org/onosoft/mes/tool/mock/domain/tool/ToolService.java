@@ -120,6 +120,7 @@ public class ToolService  {
 
   protected void postDomainEvents(DomainResult domainResult) {
     this.publisher.publish(domainResult.getEvents());
+
   }
 
 }

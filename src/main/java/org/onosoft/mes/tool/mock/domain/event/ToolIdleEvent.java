@@ -22,6 +22,6 @@ public class ToolIdleEvent extends ToolEvent {
 
   public String toString() {
     return String.format(
-        "Tool %s IDLE for reason %s at %s.", this.toolId, this.reason, this.timeStamp);
+        "Tool id=%s IDLE for reason %s at %s.", this.toolId, this.reason, this.timeStamp);
   }
 }

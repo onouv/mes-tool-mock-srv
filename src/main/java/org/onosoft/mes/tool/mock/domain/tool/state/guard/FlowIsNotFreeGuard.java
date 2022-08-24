@@ -17,8 +17,10 @@ public class FlowIsNotFreeGuard implements Guard<ToolStates, ToolEvents> {
     PortStatus inport = StateContextVariableUtil.getInport(context);
     PortStatus outport = StateContextVariableUtil.getOutport(context);
     if((outport.isFull()) || (inport.isEmpty())) {
+      logger.debug("FlowIsNotFreeGuard:  Material flow found blocked.");
       return true;
     } else {
+      logger.debug("FlowIsNotFreeGuard:  Material flow found unblocked.");
       return false;
     }
   }

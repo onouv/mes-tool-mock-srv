@@ -14,6 +14,6 @@ public class StateMachineListener
   public void stateChanged(State from, State to) {
       String fromId = (from != null) ? from.getId().toString() : "Nirvana";
       String toId = (to != null) ? to.getId().toString() : "Nirvana";
-      logger.info(String.format("tool state transition from: %s to: %s\n", fromId, toId));
+      logger.debug(String.format("tool state transition from: %s to: %s\n", fromId, toId));
   }
 }

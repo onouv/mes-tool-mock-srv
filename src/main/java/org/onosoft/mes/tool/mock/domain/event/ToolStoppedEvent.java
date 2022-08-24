@@ -14,6 +14,6 @@ public class ToolStoppedEvent extends ToolEvent {
 
   public String toString() {
     return String.format(
-        "Tool %s STOPPED at %s.", this.toolId, this.timeStamp);
+        "Tool id=%s STOPPED at %s.", this.toolId, this.timeStamp);
   }
 }

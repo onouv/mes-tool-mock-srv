@@ -1,6 +1,7 @@
 package org.onosoft.mes.tool.mock.domain.tool.state.action;
 
 import org.onosoft.mes.tool.mock.domain.event.DomainEvent;
+import org.onosoft.mes.tool.mock.domain.provided.value.ToolId;
 import org.onosoft.mes.tool.mock.domain.tool.entity.LoadPort;
 import org.onosoft.mes.tool.mock.domain.tool.entity.Process;
 import org.onosoft.mes.tool.mock.domain.tool.state.ToolEvents;
@@ -15,6 +16,7 @@ import java.util.List;
 
 public abstract class ToolAction implements Action<ToolStates, ToolEvents> {
   protected StateContext<ToolStates, ToolEvents> context;
+  protected ToolId toolId;
   protected LoadPort inport;
   protected LoadPort outport;
   protected Process process;
@@ -22,13 +24,14 @@ public abstract class ToolAction implements Action<ToolStates, ToolEvents> {
 
   protected void init(StateContext<ToolStates, ToolEvents> context) {
     this.context = context;
+    this.toolId = StateContextVariableUtil.getToolId(context);
     this.inport = StateContextVariableUtil.getInport(context);
     this.outport = StateContextVariableUtil.getOutport(context);
     this.process = StateContextVariableUtil.getProcess(context);
   }
 
   protected void finish() {
-    StateContextVariableUtil.setDomainEvents(this.context, this.events);
+    StateContextVariableUtil.queueDomainEvents(this.context, this.events);
   }
 
 }

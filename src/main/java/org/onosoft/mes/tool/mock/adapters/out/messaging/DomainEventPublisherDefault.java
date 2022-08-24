@@ -19,7 +19,8 @@ public class DomainEventPublisherDefault implements DomainEventPublisher {
 
   @Override
   public boolean publish(List<DomainEvent> events) {
-    logger.info(String.format("Posting domain events: %s", this.logEvents(events)));
+    logger.info("*********************");
+    logger.info(String.format("POSTING DOMAIN EVENTS: %s", this.logEvents(events)));
 
     return true;
   }
