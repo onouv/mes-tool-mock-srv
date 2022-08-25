@@ -47,7 +47,6 @@ public class ToolDefault implements Tool {
         String description,
         LoadPort inport,
         LoadPort outport,
-        ToolRepository toolRepository,
         DomainEventPublisher partDomainEventPublisher
         ) throws Exception {
 
@@ -58,18 +57,12 @@ public class ToolDefault implements Tool {
         this.outport = outport;
         this.process = new Process();
         this.state = new StateMachineClientUtil(this, partDomainEventPublisher);
-
-        this.toolRepository = toolRepository;
     }
 
     public static Tool prototype(
         ToolId id,
         ToolDefinition definition,
-        ToolRepository repo,
-        DomainEventPublisher publisher)
-
-        throws Exception
-    {
+        DomainEventPublisher publisher) throws Exception {
 
         LoadPort inport = new LoadPort(
             id,
@@ -89,21 +82,17 @@ public class ToolDefault implements Tool {
             definition.getDescription(),
             inport,
             outport,
-            repo,
             publisher);
     }
 
     @Override
     public DomainResult create() throws ToolPreExistingException {
-
-        if(this.toolRepository.findTool(this.id) != null)
-            throw new ToolPreExistingException(id);
-
-        this.toolRepository.insertTool(this);
-
-        List<DomainEvent> events = this.state.getDomainEvents();
         ToolCreatedEvent createdEvent = new ToolCreatedEvent(id);
+        List<DomainEvent> events = new ArrayList<>();
         events.add(createdEvent);
+
+        this.state.start();
+        events.addAll(this.state.getDomainEvents());
         this.state.clearVariableFields();
 
         return DomainResult.builder()

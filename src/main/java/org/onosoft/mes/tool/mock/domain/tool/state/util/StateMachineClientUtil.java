@@ -32,7 +32,6 @@ public class StateMachineClientUtil {
       this.stateVariables.put(StateVariableKeys.outport, this.tool.getOutport());
       this.stateVariables.put(StateVariableKeys.process, this.tool.getProcess());
       this.stateVariables.put(StateVariableKeys.partDomainEventPublisher, publisher);
-      this.stateMachine.start();
     }
 
     protected StateMachine<ToolStates, ToolEvents> buildStateMachine() throws Exception {
@@ -159,6 +158,10 @@ public class StateMachineClientUtil {
           .listener(new StateMachineListener());
 
       return builder.build();
+    }
+
+    public void start() {
+      this.stateMachine.start();
     }
 
     public void send(ToolEvents event) {

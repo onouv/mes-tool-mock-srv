@@ -32,7 +32,11 @@ public class ToolService  {
       ToolId toolId,
       ToolDefinition definition) throws Exception {
 
-    Tool candidate = ToolDefault.prototype(toolId, definition, this.toolRepository, this.publisher);
+    Tool candidate = ToolDefault.prototype(toolId, definition, this.publisher);
+    if(this.toolRepository.findTool(toolId) != null)
+      throw new ToolPreExistingException(toolId);
+
+    this.toolRepository.insertTool(candidate);
     DomainResult result = candidate.create();
     this.postDomainEvents(result);
     return candidate;
