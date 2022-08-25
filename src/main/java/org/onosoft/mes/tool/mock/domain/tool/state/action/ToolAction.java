@@ -28,6 +28,7 @@ public abstract class ToolAction implements Action<ToolStates, ToolEvents> {
     this.inport = StateContextVariableUtil.getInport(context);
     this.outport = StateContextVariableUtil.getOutport(context);
     this.process = StateContextVariableUtil.getProcess(context);
+    this.events.clear();
   }
 
   protected void finish() {
