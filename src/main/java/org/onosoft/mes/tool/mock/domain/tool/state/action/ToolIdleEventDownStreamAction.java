@@ -16,8 +16,8 @@ public class ToolIdleEventDownStreamAction
   private static final Logger logger= LoggerFactory.getLogger(ToolIdleEventDownStreamAction.class);
   @Override
   public void execute(final StateContext<ToolStates, ToolEvents> context) {
-    logger.debug("Tool id=%s issues ToolIdleEvent with DOWNSTREAM reason.", toolId);
     init(context);
+    logger.debug("Tool id=%s issues ToolIdleEvent with DOWNSTREAM reason.", toolId);
     this.events.add(new ToolIdleEvent(toolId, IdleReason.DOWNSTREAM));
     finish();
   }

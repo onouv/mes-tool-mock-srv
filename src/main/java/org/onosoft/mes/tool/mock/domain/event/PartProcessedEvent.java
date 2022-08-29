@@ -13,9 +13,8 @@ public class PartProcessedEvent extends PartEvent {
   @Override
   public String toString() {
     return String.format(
-        "Part id = %s leaving process id = %s @ %s.",
+        "Part id = %s processed by process id = %s.",
         this.part.getId(),
-        this.processId,
-        this.timeStamp);
+        this.processId);
   }
 }

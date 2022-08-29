@@ -14,7 +14,7 @@ state UP {
     state STOPPED
     STOPPED: entry / ToolStoppedEvent(tool)
     state IDLE
-    state PROCESSING {
+    state OPERATING {
         state PROCESSING_PART
         state LOADING_PROCESS
         state LOADING_PROCESS: entry/ ProcessNewPartAction, PartInProcessEvent(tool, part)
@@ -31,14 +31,14 @@ state UP {
     }
 
     [*] --> STOPPED
-    STOPPED --> PROCESSING: START [FlowIsFree]
+    STOPPED --> OPERATING: START [FlowIsFree]
     STOPPED --> IDLE: START [InportEmpty] / \nToolIdleEvt(tool, UPSTREAM)
     STOPPED --> IDLE: START [OutportFull] / \nToolIdleEvt(tool, DOWNSTREAM)
-    PROCESSING --> STOPPED: STOP
-    PROCESSING --> IDLE: FINISHED: \n[InportEmpty] / \nToolIdleEvent(UPSTREAM)
-    PROCESSING --> IDLE: FINISHED: \n[OutportFull] / \nToolIdleEvent(DOWNSTREAM)
+    OPERATING --> STOPPED: STOP
+    OPERATING --> IDLE: FINISHED: \n[InportEmpty] / \nToolIdleEvent(UPSTREAM)
+    OPERATING --> IDLE: FINISHED: \n[OutportFull] / \nToolIdleEvent(DOWNSTREAM)
 
-    IDLE --> PROCESSING: [FlowIsFree]
+    IDLE --> OPERATING: [FlowIsFree]
     IDLE --> STOPPED: STOP
 }
 

@@ -15,15 +15,13 @@ import org.springframework.statemachine.action.Action;
 import java.util.ArrayList;
 import java.util.List;
 
-public class  ToolStoppedEventAction
-    extends ToolAction
-    implements Action<ToolStates, ToolEvents> {
+public class  ToolStoppedEventAction extends ToolAction {
 
   private static final Logger logger= LoggerFactory.getLogger(ToolStoppedEventAction.class);
   @Override
   public void execute(StateContext<ToolStates, ToolEvents> stateContext) {
-    logger.debug("Tool id=%s issues STOPPED event.", toolId);
     init(stateContext);
+    logger.debug("Tool id=%s issues STOPPED event.", toolId);
     events.add(new ToolStoppedEvent(toolId));
     finish();
   }

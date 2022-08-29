@@ -19,8 +19,8 @@ public class ToolDownEventAction
 
     @Override
     public void execute(StateContext<ToolStates, ToolEvents> stateContext) {
-        logger.debug("Tool id=%s issues down event", toolId);
         init(stateContext);
+        logger.debug("Tool id=%s issues down event", toolId);
         events.add(new ToolDownEvent(toolId));
         finish();
     }
