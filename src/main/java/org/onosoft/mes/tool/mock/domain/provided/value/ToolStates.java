@@ -1,7 +1,7 @@
 package org.onosoft.mes.tool.mock.domain.provided.value;
 
 public enum ToolStates {
-    DOWN, UP, STOPPED, IDLE, OPERATING, CHOICE_START
+    DOWN, UP, STOPPED, IDLE, OPERATING, CHOICE_START, UP_FINAL
 }
 /*
 public enum ToolStates {

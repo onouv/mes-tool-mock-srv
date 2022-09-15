@@ -14,25 +14,21 @@ state UP {
     state STOPPED
     STOPPED: entry / ToolStoppedEvent(tool)
 
-    state CHOICE_START <<choice>>
     [*] --> STOPPED
-    STOPPED --> CHOICE_START: START
-    CHOICE_START --> OPERATING: [FlowIsFree]
-    CHOICE_START --> IDLE: [else]
+    STOPPED --> OPERATING: START [FlowFree]
+    STOPPED --> IDLE: START [FlowNotFree]
 
     OPERATING --> STOPPED: STOP
     OPERATING --> IDLE
 
     state IDLE {
         IDLE: entry / ToolIdleEvent(tool)
-        state IDLE_UPSTREAM: entry / ToolIdleEvent(UPSTREAM)
-        state IDLE_DOWNSTREAM: entry: ToolIdleEvent(DOWNSTREAM)
+        state UPSTREAM: entry / ToolIdleEvent(UPSTREAM)
+        state DOWNSTREAM: entry: ToolIdleEvent(DOWNSTREAM)
         state CHOICE_IDLE <<choice>>
-        [*] --> CHOICE_IDLE
-        CHOICE_IDLE --> IDLE_UPSTREAM: [InportEmpty]
-        CHOICE_IDLE --> IDLE_DOWNSTREAM: [OutportFull]
-        IDLE_UPSTREAM --> [*]: STOP
-        IDLE_DOWNSTREAM --> [*]: STOP
+        [*] --> UPSTREAM: [InportEmpty]
+
+        CHOICE_IDLE --> DOWNSTREAM: [OutportFull]
     }
 
     state OPERATING {
@@ -55,9 +51,6 @@ state UP {
 
     IDLE --> OPERATING: [FlowIsFree]
     IDLE --> STOPPED: STOP
-    STOPPED --> [*]: FAULT
-    IDLE --> [*]: FAULT
-    OPERATING --> [*]: FAULT
 }
 
 UP --> DOWN: FAULT

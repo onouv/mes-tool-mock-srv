@@ -18,6 +18,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+
 public class StateMachineUtil {
     StateMachine<ToolStates, ToolEvents> stateMachine;
     Map<Object, Object> stateVariables;
@@ -43,15 +44,17 @@ public class StateMachineUtil {
           .initial(ToolStates.UP)
           .stateEntry(ToolStates.UP, new ToolUpEventAction())
           .stateEntry(ToolStates.DOWN, new ToolDownEventAction())
-
           .and()
+
           .withStates()
-          .parent(ToolStates.UP)
-          .state(ToolStates.STOPPED)
-          .state(ToolStates.IDLE)
-          .state(ToolStates.OPERATING)
-          .choice(ToolStates.CHOICE_START)
-          .initial(ToolStates.STOPPED);
+            .parent(ToolStates.UP)
+            .state(ToolStates.STOPPED)
+            .choice(ToolStates.CHOICE_START)
+            .state(ToolStates.IDLE)
+            .state(ToolStates.OPERATING)
+            .initial(ToolStates.STOPPED)
+            .end(ToolStates.UP_FINAL)
+      ;
 
       builder.configureTransitions()
           .withExternal()
@@ -63,7 +66,26 @@ public class StateMachineUtil {
           .withExternal()
               .source(ToolStates.DOWN)
                   .target(ToolStates.UP)
-                      .event(ToolEvents.FAULT_CLEARED);
+                      .event(ToolEvents.FAULT_CLEARED)
+                          .and()
+
+          .withExternal()
+              .source(ToolStates.STOPPED)
+                  .target(ToolStates.CHOICE_START)
+                      .event(ToolEvents.START)
+                          .and()
+
+          /*.withChoice()
+          .source(ToolStates.CHOICE_START)
+          .first(ToolStates.OPERATING, new FlowIsFreeGuard())
+          .and()
+*/
+          .withExternal()
+          .source(ToolStates.STOPPED)
+              .target(ToolStates.UP_FINAL)
+                  .event(ToolEvents.FAULT);
+
+
 /*
       builder.configureStates()
           .withStates()
