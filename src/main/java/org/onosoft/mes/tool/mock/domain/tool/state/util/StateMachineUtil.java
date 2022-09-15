@@ -45,6 +45,33 @@ public class StateMachineUtil {
           .stateEntry(ToolStates.DOWN, new ToolDownEventAction())
 
           .and()
+          .withStates()
+          .parent(ToolStates.UP)
+          .state(ToolStates.STOPPED)
+          .state(ToolStates.IDLE)
+          .state(ToolStates.OPERATING)
+          .choice(ToolStates.CHOICE_START)
+          .initial(ToolStates.STOPPED);
+
+      builder.configureTransitions()
+          .withExternal()
+          .source(ToolStates.UP)
+          .target(ToolStates.DOWN)
+          .event(ToolEvents.FAULT)
+          .and()
+
+          .withExternal()
+              .source(ToolStates.DOWN)
+                  .target(ToolStates.UP)
+                      .event(ToolEvents.FAULT_CLEARED);
+/*
+      builder.configureStates()
+          .withStates()
+          .initial(ToolStates.UP)
+          .stateEntry(ToolStates.UP, new ToolUpEventAction())
+          .stateEntry(ToolStates.DOWN, new ToolDownEventAction())
+
+          .and()
             .withStates()
             .parent(ToolStates.UP)
             .stateEntry(ToolStates.STOPPED, new ToolStoppedEventAction())
@@ -52,7 +79,6 @@ public class StateMachineUtil {
             .stateEntry(ToolStates.IDLE, new ToolIdleAction())
             .stateEntry(ToolStates.OPERATING, new ToolOperatingAction())
             .initial(ToolStates.STOPPED)
-
             .and()
               .withStates()
               .parent(ToolStates.IDLE)
@@ -68,9 +94,18 @@ public class StateMachineUtil {
               .state(ToolStates.PROCESSING_PART)
               .stateEntry(ToolStates.LOADING_PROCESS, new ProcessNewPartAction())
               .stateEntry(ToolStates.UNLOADING_PROCESS, new EjectFinishedPartAction())
-              .initial(ToolStates.CHOICE_LOADING);
-
+              .end(ToolStates.OPERATING_END)
+      ;
+      */
+      /*
+builder.configureTransitions()
       builder.configureTransitions()
+          .withExternal()
+            .source(ToolStates.STOPPED)
+            .target(ToolStates.CHOICE_START)
+            .event(ToolEvents.START)
+           .and()
+
           .withExternal()
             .source(ToolStates.UP)
             .target(ToolStates.DOWN)
@@ -94,6 +129,7 @@ public class StateMachineUtil {
             .target(ToolStates.UP)
             .event(ToolEvents.FAULT_CLEARED)
             .and()
+
 
           .withChoice()
             .source(ToolStates.CHOICE_IDLE)
@@ -149,15 +185,22 @@ public class StateMachineUtil {
 
           .withExternal()
             .source(ToolStates.UNLOADING_PROCESS)
-            .target(ToolStates.IDLE)
+            .target(ToolStates.OPERATING_END)
             .guard(new InportEmptyGuard())
             .and()
 
           .withExternal()
             .source(ToolStates.UNLOADING_PROCESS)
-            .target(ToolStates.IDLE)
+            .target(ToolStates.OPERATING_END)
             .guard(new OutportFullGuard())
-          ;
+            .and()
+
+          .withExternal()
+            .source(ToolStates.OPERATING_END)
+            .target(ToolStates.IDLE)
+      ;
+*/
+
       builder.configureConfiguration()
           .withConfiguration()
           .listener(new StateMachineListener());
