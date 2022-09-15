@@ -8,7 +8,7 @@ import org.onosoft.mes.tool.mock.domain.tool.ToolDefault;
 import org.onosoft.mes.tool.mock.domain.tool.entity.Part;
 import org.onosoft.mes.tool.mock.domain.tool.state.ToolEvents;
 import org.onosoft.mes.tool.mock.domain.tool.state.action.*;
-import org.onosoft.mes.tool.mock.domain.tool.state.guard.*;
+import org.onosoft.mes.tool.mock.domain.tool.state.guard.FlowIsFreeGuard;
 import org.springframework.statemachine.StateMachine;
 import org.springframework.statemachine.config.StateMachineBuilder;
 import org.springframework.statemachine.state.State;
@@ -49,19 +49,18 @@ public class StateMachineUtil {
           .withStates()
             .parent(ToolStates.UP)
             .state(ToolStates.STOPPED)
-            .choice(ToolStates.CHOICE_START)
+            .choice(ToolStates.UP_CHOICE)
             .state(ToolStates.IDLE)
             .state(ToolStates.OPERATING)
             .initial(ToolStates.STOPPED)
-            .end(ToolStates.UP_FINAL)
       ;
 
       builder.configureTransitions()
           .withExternal()
-          .source(ToolStates.UP)
-          .target(ToolStates.DOWN)
-          .event(ToolEvents.FAULT)
-          .and()
+            .source(ToolStates.UP)
+              .target(ToolStates.DOWN)
+                .event(ToolEvents.FAULT)
+                  .and()
 
           .withExternal()
               .source(ToolStates.DOWN)
@@ -71,19 +70,15 @@ public class StateMachineUtil {
 
           .withExternal()
               .source(ToolStates.STOPPED)
-                  .target(ToolStates.CHOICE_START)
+                  .target(ToolStates.UP_CHOICE)
                       .event(ToolEvents.START)
-                          .and()
+              .and()
 
-          /*.withChoice()
-          .source(ToolStates.CHOICE_START)
+      .withChoice()
+          .source(ToolStates.UP_CHOICE)
           .first(ToolStates.OPERATING, new FlowIsFreeGuard())
-          .and()
-*/
-          .withExternal()
-          .source(ToolStates.STOPPED)
-              .target(ToolStates.UP_FINAL)
-                  .event(ToolEvents.FAULT);
+          .last(ToolStates.IDLE);
+
 
 
 /*

@@ -12,23 +12,26 @@ state UP {
     state UP: PART_UNLOADING / UnloadPartAction, PartUnloadedEvt(tool, part)
 
     state STOPPED
+    state UP_CHOICE <<choice>>
+
     STOPPED: entry / ToolStoppedEvent(tool)
 
     [*] --> STOPPED
-    STOPPED --> OPERATING: START [FlowFree]
-    STOPPED --> IDLE: START [FlowNotFree]
+    STOPPED --> UP_CHOICE: START
+    UP_CHOICE --> OPERATING: [FlowIsFree]]
+    UP_CHOICE --> IDLE: [else]
 
     OPERATING --> STOPPED: STOP
     OPERATING --> IDLE
 
     state IDLE {
         IDLE: entry / ToolIdleEvent(tool)
-        state UPSTREAM: entry / ToolIdleEvent(UPSTREAM)
-        state DOWNSTREAM: entry: ToolIdleEvent(DOWNSTREAM)
-        state CHOICE_IDLE <<choice>>
-        [*] --> UPSTREAM: [InportEmpty]
-
-        CHOICE_IDLE --> DOWNSTREAM: [OutportFull]
+        state IDLE_UPSTREAM: entry / ToolIdleEvent(UPSTREAM)
+        state IDLE_DOWNSTREAM: entry: ToolIdleEvent(DOWNSTREAM)
+        state IDLE_CHOICE <<choice>>
+        [*] --> IDLE_CHOICE
+        IDLE_CHOICE --> IDLE_UPSTREAM: [InportEmpty]
+        IDLE_CHOICE --> IDLE_DOWNSTREAM: [OutportFull]
     }
 
     state OPERATING {

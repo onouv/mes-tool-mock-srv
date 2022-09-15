@@ -1,18 +1,15 @@
 package org.onosoft.mes.tool.mock.domain.provided.value;
 
-public enum ToolStates {
-    DOWN, UP, STOPPED, IDLE, OPERATING, CHOICE_START, UP_FINAL
-}
-/*
+
 public enum ToolStates {
     DOWN("DOWN"),
     UP("UP"),
     STOPPED("STOPPED"),
-    CHOICE_START("CHOICE_START"),
+    UP_CHOICE("UP_CHOICE"),
     IDLE("IDLE"),
     IDLE_UPSTREAM("IDLE_UPSTREAM"),
     IDLE_DOWNSTREAM("IDLE_DOWNSTREAM"),
-    CHOICE_IDLE("CHOICE_IDLE"),
+    IDLE_CHOICE("IDLE_CHOICE"),
     OPERATING("OPERATING"),
     OPERATING_END("OPERATING_END"),
     CHOICE_LOADING("CHOICE_LOADING"),
@@ -30,4 +27,3 @@ public enum ToolStates {
         return this.value;
     }
 }
-*/
