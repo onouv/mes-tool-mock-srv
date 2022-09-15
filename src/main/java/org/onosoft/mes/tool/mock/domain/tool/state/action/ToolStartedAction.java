@@ -7,8 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.statemachine.StateContext;
 
-public class ToolStartedEventAction extends ToolAction {
-  private static final Logger logger= LoggerFactory.getLogger(ToolStartedEventAction.class);
+public class ToolStartedAction extends ToolAction {
+  private static final Logger logger= LoggerFactory.getLogger(ToolStartedAction.class);
   @Override
   public void execute(StateContext<ToolStates, ToolEvents> stateContext) {
     init(stateContext);

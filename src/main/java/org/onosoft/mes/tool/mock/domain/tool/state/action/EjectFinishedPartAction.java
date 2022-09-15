@@ -30,7 +30,7 @@ public class EjectFinishedPartAction extends ToolAction {
     StateContextVariableUtil.publish(context, processedEvent);
     try {
       this.outport.load(finishedPart);
-      context.getStateMachine().sendEvent(ToolEvents.FINISHED);
+      // context.getStateMachine().sendEvent(ToolEvents.FINISHED);
       logger.debug("Tool id = %s ejects part ", toolId, finishedPart.getId());
     } catch (LoadportFullException e) {
       StateContextVariableUtil.setApplicationException(context, e);

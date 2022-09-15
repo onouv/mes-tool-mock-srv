@@ -17,7 +17,7 @@ import org.onosoft.mes.tool.mock.domain.required.ToolRepository;
 import org.onosoft.mes.tool.mock.domain.tool.entity.LoadPort;
 import org.onosoft.mes.tool.mock.domain.tool.entity.Process;
 import org.onosoft.mes.tool.mock.domain.tool.state.ToolEvents;
-import org.onosoft.mes.tool.mock.domain.tool.state.util.StateMachineClientUtil;
+import org.onosoft.mes.tool.mock.domain.tool.state.util.StateMachineUtil;
 import org.onosoft.mes.tool.mock.domain.value.DomainResult;
 
 import java.util.ArrayList;
@@ -37,7 +37,7 @@ public class ToolDefault implements Tool {
     protected final Process process;
 
     @Getter(AccessLevel.NONE)
-    protected StateMachineClientUtil state;
+    protected StateMachineUtil state;
     @Getter(AccessLevel.NONE)
     protected ToolRepository toolRepository;
 
@@ -56,7 +56,7 @@ public class ToolDefault implements Tool {
         this.inport = inport;
         this.outport = outport;
         this.process = new Process();
-        this.state = new StateMachineClientUtil(this, partDomainEventPublisher);
+        this.state = new StateMachineUtil(this, partDomainEventPublisher);
     }
 
     public static Tool prototype(

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="3247.6px" preserveAspectRatio="none" style="width:1798px;height:3247px;background:#FFFFFF;" version="1.1" viewBox="0 0 1798 3247" width="1798.6px" zoomAndPan="magnify"><defs><filter height="300%" id="fpnwaaqez84si" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="4.6"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="9.2" dy="9.2" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><ellipse cx="894.7" cy="36.8" fill="#000000" filter="url(#fpnwaaqez84si)" rx="23" ry="23" style="stroke:none;stroke-width:2.3;"/><g id="DOWN"><rect fill="#FEFECE" filter="url(#fpnwaaqez84si)" height="115.6109" rx="28.75" ry="28.75" style="stroke:#A80036;stroke-width:3.4499999999999997;" width="430.1" x="679.65" y="3100.4"/><line style="stroke:#A80036;stroke-width:3.4499999999999997;" x1="679.65" x2="1109.75" y1="3160.8828" y2="3160.8828"/><text fill="#000000" font-family="sans-serif" font-size="32.2" lengthAdjust="spacing" textLength="105.8" x="841.8" y="3141.7888">DOWN</text><text fill="#000000" font-family="sans-serif" font-size="27.6" lengthAdjust="spacing" textLength="384.1" x="691.15" y="3198.0018">entry/ issue ToolDownEvent</text></g><rect fill="#FEFECE" filter="url(#fpnwaaqez84si)" height="2724.2781" rx="28.75" ry="28.75" style="stroke:#A80036;stroke-width:3.4499999999999997;" width="1756.625" x="16.1" y="200.1"/><rect fill="#FFFFFF" height="2542.1109" rx="28.75" ry="28.75" style="stroke:#FFFFFF;stroke-width:2.3;" width="1742.825" x="23" y="375.3672"/><line style="stroke:#A80036;stroke-width:3.4499999999999997;" x1="16.1" x2="1772.725" y1="368.4672" y2="368.4672"/><line style="stroke:#A80036;stroke-width:3.4499999999999997;" x1="16.1" x2="1772.725" y1="260.5828" y2="260.5828"/><text fill="#000000" font-family="sans-serif" font-size="32.2" lengthAdjust="spacing" textLength="41.4" x="873.7125" y="241.4888">UP</text><text fill="#000000" font-family="sans-serif" font-size="27.6" lengthAdjust="spacing" textLength="621" x="27.6" y="286.2018">entry/ ToolUpEventAction, ToolUpEvent(tool)</text><text fill="#000000" font-family="sans-serif" font-size="27.6" lengthAdjust="spacing" textLength="816.5" x="27.6" y="318.3299">PART_LOADING / LoadPartAction, PartLoadedEvt(tool, part)</text><text fill="#000000" font-family="sans-serif" font-size="27.6" lengthAdjust="spacing" textLength="917.7" x="27.6" y="350.458">PART_UNLOADING / UnloadPartAction, PartUnloadedEvt(tool, part)</text><g id="UP.STOPPED"><rect fill="#FEFECE" filter="url(#fpnwaaqez84si)" height="115.6109" rx="28.75" ry="28.75" style="stroke:#A80036;stroke-width:3.4499999999999997;" width="473.8" x="832.232" y="524.8672"/><line style="stroke:#A80036;stroke-width:3.4499999999999997;" x1="832.232" x2="1306.032" y1="585.35" y2="585.35"/><text fill="#000000" font-family="sans-serif" font-size="32.2" lengthAdjust="spacing" textLength="149.5" x="994.382" y="566.256">STOPPED</text><text fill="#000000" font-family="sans-serif" font-size="27.6" lengthAdjust="spacing" textLength="427.8" x="843.732" y="622.4689">entry / ToolStoppedEvent(tool)</text></g><polygon fill="#FEFECE" filter="url(#fpnwaaqez84si)" points="933.432,761.7672,961.032,789.3672,933.432,816.9672,905.832,789.3672,933.432,761.7672" style="stroke:#A80036;stroke-width:3.4499999999999997;"/><ellipse cx="1069.132" cy="416.7672" fill="#000000" filter="url(#fpnwaaqez84si)" rx="23" ry="23" style="stroke:none;stroke-width:2.3;"/><rect fill="#FEFECE" filter="url(#fpnwaaqez84si)" height="594.6219" rx="28.75" ry="28.75" style="stroke:#A80036;stroke-width:3.4499999999999997;" width="1174.15" x="417.082" y="938.8672"/><rect fill="#FFFFFF" height="476.7109" rx="28.75" ry="28.75" style="stroke:#FFFFFF;stroke-width:2.3;" width="1160.35" x="423.982" y="1049.8781"/><line style="stroke:#A80036;stroke-width:3.4499999999999997;" x1="417.082" x2="1591.232" y1="1042.9781" y2="1042.9781"/><line style="stroke:#A80036;stroke-width:3.4499999999999997;" x1="417.082" x2="1591.232" y1="999.35" y2="999.35"/><text fill="#000000" font-family="sans-serif" font-size="32.2" lengthAdjust="spacing" textLength="73.6" x="967.357" y="980.256">IDLE</text><text fill="#000000" font-family="sans-serif" font-size="27.6" lengthAdjust="spacing" textLength="361.1" x="428.582" y="1024.9689">entry / ToolIdleEvent(tool)</text><g id="UP.IDLE.UPSTREAM"><rect fill="#FEFECE" filter="url(#fpnwaaqez84si)" height="115.6109" rx="28.75" ry="28.75" style="stroke:#A80036;stroke-width:3.4499999999999997;" width="506" x="444.682" y="1376.4781"/><line style="stroke:#A80036;stroke-width:3.4499999999999997;" x1="444.682" x2="950.682" y1="1436.9609" y2="1436.9609"/><text fill="#000000" font-family="sans-serif" font-size="32.2" lengthAdjust="spacing" textLength="177.1" x="609.132" y="1417.8669">UPSTREAM</text><text fill="#000000" font-family="sans-serif" font-size="27.6" lengthAdjust="spacing" textLength="460" x="456.182" y="1474.0799">entry / ToolIdleEvent(UPSTREAM)</text></g><g id="UP.IDLE.DOWNSTREAM"><rect fill="#FEFECE" filter="url(#fpnwaaqez84si)" height="115.6109" rx="28.75" ry="28.75" style="stroke:#A80036;stroke-width:3.4499999999999997;" width="549.7" x="993.232" y="1376.4781"/><line style="stroke:#A80036;stroke-width:3.4499999999999997;" x1="993.232" x2="1542.932" y1="1436.9609" y2="1436.9609"/><text fill="#000000" font-family="sans-serif" font-size="32.2" lengthAdjust="spacing" textLength="241.5" x="1147.332" y="1417.8669">DOWNSTREAM</text><text fill="#000000" font-family="sans-serif" font-size="27.6" lengthAdjust="spacing" textLength="503.7" x="1004.732" y="1474.0799">entry: ToolIdleEvent(DOWNSTREAM)</text></g><polygon fill="#FEFECE" filter="url(#fpnwaaqez84si)" points="982.882,1199.3781,1010.482,1226.9781,982.882,1254.5781,955.282,1226.9781,982.882,1199.3781" style="stroke:#A80036;stroke-width:3.4499999999999997;"/><ellipse cx="982.882" cy="1091.2781" fill="#000000" filter="url(#fpnwaaqez84si)" rx="23" ry="23" style="stroke:none;stroke-width:2.3;"/><!--MD5=[88e1ff3d6648b16f60050b4d4352cbac]
+link *start*IDLE to CHOICE_IDLE--><path d="M982.882,1114.6461 C982.882,1134.1271 982.882,1163.5211 982.882,1187.0271 " fill="none" id="*start*IDLE-to-CHOICE_IDLE" style="stroke:#A80036;stroke-width:2.3;"/><polygon fill="#A80036" points="982.882,1198.7111,992.082,1178.0111,982.882,1187.2111,973.682,1178.0111,982.882,1198.7111" style="stroke:#A80036;stroke-width:2.3;"/><!--MD5=[6621dcc7173cfcec785914c04f69919c]
+link CHOICE_IDLE to UPSTREAM--><path d="M967.541,1240.1571 C933.685,1264.1921 850.402,1323.3021 785.22,1369.5551 " fill="none" id="CHOICE_IDLE-to-UPSTREAM" style="stroke:#A80036;stroke-width:2.3;"/><polygon fill="#A80036" points="775.744,1376.2711,797.9491,1371.7921,785.1218,1369.6148,787.2991,1356.7875,775.744,1376.2711" style="stroke:#A80036;stroke-width:2.3;"/><text fill="#000000" font-family="sans-serif" font-size="29.9" lengthAdjust="spacing" textLength="207" x="886.282" y="1326.032">[InportEmpty]</text><!--MD5=[341abe41674dd0aa912d36f1a73ffa03]
+link CHOICE_IDLE to DOWNSTREAM--><path d="M1000.868,1237.7651 C1025.225,1249.5411 1069.661,1272.1041 1104.782,1295.9781 C1136.545,1317.5751 1169.527,1344.0711 1197.449,1367.9221 " fill="none" id="CHOICE_IDLE-to-DOWNSTREAM" style="stroke:#A80036;stroke-width:2.3;"/><polygon fill="#A80036" points="1206.718,1375.8801,1196.9887,1355.4236,1197.9865,1368.396,1185.0141,1369.3939,1206.718,1375.8801" style="stroke:#A80036;stroke-width:2.3;"/><text fill="#000000" font-family="sans-serif" font-size="29.9" lengthAdjust="spacing" textLength="188.6" x="1159.982" y="1326.032">[OutportFull]</text><rect fill="#FEFECE" filter="url(#fpnwaaqez84si)" height="1231.1109" rx="28.75" ry="28.75" style="stroke:#A80036;stroke-width:3.4499999999999997;" width="1283.4" x="363.032" y="1656.4672"/><rect fill="#FFFFFF" height="1113.2" rx="28.75" ry="28.75" style="stroke:#FFFFFF;stroke-width:2.3;" width="1269.6" x="369.932" y="1767.4781"/><line style="stroke:#A80036;stroke-width:3.4499999999999997;" x1="363.032" x2="1646.432" y1="1760.5781" y2="1760.5781"/><line style="stroke:#A80036;stroke-width:3.4499999999999997;" x1="363.032" x2="1646.432" y1="1716.95" y2="1716.95"/><text fill="#000000" font-family="sans-serif" font-size="32.2" lengthAdjust="spacing" textLength="188.6" x="910.432" y="1697.856">OPERATING</text><text fill="#000000" font-family="sans-serif" font-size="27.6" lengthAdjust="spacing" textLength="448.5" x="374.532" y="1742.5689">entry / ToolOperatingEvent(tool)</text><g id="UP.OPERATING.LOADING_PROCESS"><rect fill="#FEFECE" filter="url(#fpnwaaqez84si)" height="115.6109" rx="28.75" ry="28.75" style="stroke:#A80036;stroke-width:3.4499999999999997;" width="887.8" x="390.632" y="2094.0781"/><line style="stroke:#A80036;stroke-width:3.4499999999999997;" x1="390.632" x2="1278.432" y1="2154.5609" y2="2154.5609"/><text fill="#000000" font-family="sans-serif" font-size="32.2" lengthAdjust="spacing" textLength="317.4" x="675.832" y="2135.4669">LOADING_PROCESS</text><text fill="#000000" font-family="sans-serif" font-size="27.6" lengthAdjust="spacing" textLength="841.8" x="402.132" y="2191.6799">entry / ProcessNewPartAction, PartInProcessEvent(tool, part)</text></g><g id="UP.OPERATING.UNLOADING_PROCESS"><rect fill="#FEFECE" filter="url(#fpnwaaqez84si)" height="115.6109" rx="28.75" ry="28.75" style="stroke:#A80036;stroke-width:3.4499999999999997;" width="915.4" x="634.432" y="2567.8781"/><line style="stroke:#A80036;stroke-width:3.4499999999999997;" x1="634.432" x2="1549.832" y1="2628.3609" y2="2628.3609"/><text fill="#000000" font-family="sans-serif" font-size="32.2" lengthAdjust="spacing" textLength="363.4" x="910.432" y="2609.2669">UNLOADING_PROCESS</text><text fill="#000000" font-family="sans-serif" font-size="27.6" lengthAdjust="spacing" textLength="869.4" x="645.932" y="2665.4799">entry / EjectFinishedPartAction, PartProcessedEvent(tool, part)</text></g><polygon fill="#FEFECE" filter="url(#fpnwaaqez84si)" points="1087.532,1916.9781,1115.132,1944.5781,1087.532,1972.1781,1059.932,1944.5781,1087.532,1916.9781" style="stroke:#A80036;stroke-width:3.4499999999999997;"/><g id="UP.OPERATING.PROCESSING_PART"><rect fill="#FEFECE" filter="url(#fpnwaaqez84si)" height="115" rx="28.75" ry="28.75" style="stroke:#A80036;stroke-width:3.4499999999999997;" width="356.5" x="628.682" y="2330.9781"/><line style="stroke:#A80036;stroke-width:3.4499999999999997;" x1="628.682" x2="985.182" y1="2391.4609" y2="2391.4609"/><text fill="#000000" font-family="sans-serif" font-size="32.2" lengthAdjust="spacing" textLength="310.5" x="651.682" y="2372.3669">PROCESSING_PART</text></g><ellipse cx="1087.532" cy="1808.8781" fill="#000000" filter="url(#fpnwaaqez84si)" rx="23" ry="23" style="stroke:none;stroke-width:2.3;"/><ellipse cx="1092.132" cy="2827.7781" fill="none" filter="url(#fpnwaaqez84si)" rx="23" ry="23" style="stroke:#000000;stroke-width:2.3;"/><ellipse cx="1093.282" cy="2828.9281" fill="#000000" rx="13.8" ry="13.8" style="stroke:none;stroke-width:2.3;"/><!--MD5=[c4e64694a37e87b4cca6227dd48cc878]
+link *start*OPERATING to CHOICE_LOADING--><path d="M1087.532,1832.2461 C1087.532,1851.7271 1087.532,1881.1211 1087.532,1904.6271 " fill="none" id="*start*OPERATING-to-CHOICE_LOADING" style="stroke:#A80036;stroke-width:2.3;"/><polygon fill="#A80036" points="1087.532,1916.3111,1096.732,1895.6111,1087.532,1904.8111,1078.332,1895.6111,1087.532,1916.3111" style="stroke:#A80036;stroke-width:2.3;"/><!--MD5=[92bfc6ed6c470fb0f672088fe1ede271]
+link CHOICE_LOADING to LOADING_PROCESS--><path d="M1073.203,1958.3321 C1042.843,1982.6201 970.117,2040.8101 912.87,2086.6031 " fill="none" id="CHOICE_LOADING-to-LOADING_PROCESS" style="stroke:#A80036;stroke-width:2.3;"/><polygon fill="#A80036" points="903.808,2093.8481,925.7243,2088.1205,912.7944,2086.6722,914.2428,2073.7423,903.808,2093.8481" style="stroke:#A80036;stroke-width:2.3;"/><text fill="#000000" font-family="sans-serif" font-size="29.9" lengthAdjust="spacing" textLength="234.6" x="1002.432" y="2043.632">[ProcessEmpty]</text><!--MD5=[25ec274176a630e194392d1864e8cc40]
+link CHOICE_LOADING to UNLOADING_PROCESS--><path d="M1109.566,1951.4781 C1142.824,1959.3211 1206.465,1978.0431 1248.532,2013.5781 C1280.824,2040.8331 1287.425,2053.4831 1299.132,2094.0781 C1342.855,2245.7631 1321.741,2304.9421 1250.832,2445.9781 C1229.649,2488.1141 1195.747,2527.9271 1164.72,2559.0921 " fill="none" id="CHOICE_LOADING-to-UNLOADING_PROCESS" style="stroke:#A80036;stroke-width:2.3;"/><polygon fill="#A80036" points="1156.049,2567.6251,1177.2404,2559.6217,1164.2299,2559.5428,1164.3087,2546.5323,1156.049,2567.6251" style="stroke:#A80036;stroke-width:2.3;"/><text fill="#000000" font-family="sans-serif" font-size="29.9" lengthAdjust="spacing" textLength="287.5" x="1324.432" y="2280.532">[ProcessNotEmpty]</text><!--MD5=[a3f178933f85b92a19cc73c8d9d40f08]
+link LOADING_PROCESS to PROCESSING_PART--><path d="M827.931,2209.5151 C824.021,2242.3131 819.076,2284.0581 814.936,2318.7191 " fill="none" id="LOADING_PROCESS-to-PROCESSING_PART" style="stroke:#A80036;stroke-width:2.3;"/><polygon fill="#A80036" points="813.579,2330.1961,825.193,2310.7476,814.9569,2318.779,806.9256,2308.5429,813.579,2330.1961" style="stroke:#A80036;stroke-width:2.3;"/><!--MD5=[56a1263b32f9f86d3168510cc81dd10d]
+link PROCESSING_PART to UNLOADING_PROCESS--><path d="M779.769,2446.0931 C770.891,2472.6351 767.096,2503.5701 783.932,2526.4781 C793.454,2539.4501 804.724,2550.7201 817.19,2560.5181 " fill="none" id="PROCESSING_PART-to-UNLOADING_PROCESS" style="stroke:#A80036;stroke-width:2.3;"/><polygon fill="#A80036" points="826.988,2567.7171,815.7903,2548.026,817.7332,2560.8909,804.8683,2562.8337,826.988,2567.7171" style="stroke:#A80036;stroke-width:2.3;"/><text fill="#000000" font-family="sans-serif" font-size="29.9" lengthAdjust="spacing" textLength="271.4" x="786.232" y="2517.432">[await cycle time]</text><!--MD5=[d97e97f8aadf993069cdd8b8cbdb75b0]
+link UNLOADING_PROCESS to LOADING_PROCESS--><path d="M1084.22,2566.7741 C1073.617,2505.1801 1050.571,2405.3371 1004.732,2330.9781 C978.949,2289.1641 941.919,2249.1441 908.983,2217.7491 " fill="none" id="UNLOADING_PROCESS-to-LOADING_PROCESS" style="stroke:#A80036;stroke-width:2.3;"/><polygon fill="#A80036" points="899.806,2209.1241,908.5744,2230.0106,908.1803,2217.0058,921.1851,2216.6117,899.806,2209.1241" style="stroke:#A80036;stroke-width:2.3;"/><text fill="#000000" font-family="sans-serif" font-size="29.9" lengthAdjust="spacing" textLength="181.7" x="1057.632" y="2398.982">[FlowIsFree]</text><!--MD5=[330f8133c2ce4ecb2f6de8dd5f81d094]
+link UNLOADING_PROCESS to *end*OPERATING--><path d="M991.622,2683.4761 C963.608,2706.4761 945.185,2734.4901 963.332,2763.3781 C983.848,2796.0381 1026.904,2811.9311 1057.586,2819.3831 " fill="none" id="UNLOADING_PROCESS-to-*end*OPERATING" style="stroke:#A80036;stroke-width:2.3;"/><polygon fill="#A80036" points="1069.063,2821.9131,1050.8517,2808.4417,1057.8368,2819.4184,1046.8602,2826.4036,1069.063,2821.9131" style="stroke:#A80036;stroke-width:2.3;"/><text fill="#000000" font-family="sans-serif" font-size="29.9" lengthAdjust="spacing" textLength="207" x="965.632" y="2754.332">[InportEmpty]</text><!--MD5=[330f8133c2ce4ecb2f6de8dd5f81d094]
+link UNLOADING_PROCESS to *end*OPERATING--><path d="M1151.242,2683.5911 C1160.948,2695.9881 1169.573,2709.7651 1174.932,2724.2781 C1180.958,2740.5851 1182.706,2747.8301 1174.932,2763.3781 C1164.283,2784.6761 1142.479,2800.5691 1123.918,2810.9421 " fill="none" id="UNLOADING_PROCESS-to-*end*OPERATING-1" style="stroke:#A80036;stroke-width:2.3;"/><polygon fill="#A80036" points="1112.901,2816.6691,1135.5115,2815.293,1123.1067,2811.3688,1127.0309,2798.9639,1112.901,2816.6691" style="stroke:#A80036;stroke-width:2.3;"/><text fill="#000000" font-family="sans-serif" font-size="29.9" lengthAdjust="spacing" textLength="188.6" x="1184.132" y="2754.332">[OutportFull]</text><!--MD5=[3167d8dfba7618b340bd4b8c188eac9d]
+link *start*UP to STOPPED--><path d="M1069.132,440.1122 C1069.132,458.6042 1069.132,486.5262 1069.132,512.5622 " fill="none" id="*start*UP-to-STOPPED" style="stroke:#A80036;stroke-width:2.3;"/><polygon fill="#A80036" points="1069.132,524.3612,1078.332,503.6612,1069.132,512.8612,1059.932,503.6612,1069.132,524.3612" style="stroke:#A80036;stroke-width:2.3;"/><!--MD5=[aa4f426f76b3d85a3f3026cfc18a043b]
+link STOPPED to CHOICE_START--><path d="M969.588,639.9592 C956.041,651.8042 943.966,665.5582 935.732,681.2672 C923.933,703.7842 924.209,732.8792 926.969,754.8442 " fill="none" id="STOPPED-to-CHOICE_START" style="stroke:#A80036;stroke-width:2.3;"/><polygon fill="#A80036" points="928.694,766.2292,934.7154,744.3918,926.9849,754.8569,916.5197,747.1264,928.694,766.2292" style="stroke:#A80036;stroke-width:2.3;"/><text fill="#000000" font-family="sans-serif" font-size="29.9" lengthAdjust="spacing" textLength="96.6" x="938.032" y="711.321">START</text><!--MD5=[cf04fba4e79042eee0a6e43ff9a329d9]
+link CHOICE_START to OPERATING--><path d="M908.937,792.6562 C792.902,797.9462 300.518,826.8112 208.932,938.8672 C41.4,1143.8662 102.764,1292.0322 208.932,1534.5672 C245.203,1617.4132 295.918,1695.0612 354.384,1766.5452 " fill="none" id="CHOICE_START-to-OPERATING" style="stroke:#A80036;stroke-width:2.3;"/><polygon fill="#A80036" points="362.319,1776.1362,356.2305,1754.3174,354.9957,1767.2694,342.0437,1766.0346,362.319,1776.1362" style="stroke:#A80036;stroke-width:2.3;"/><text fill="#000000" font-family="sans-serif" font-size="29.9" lengthAdjust="spacing" textLength="181.7" x="211.232" y="1247.221">[FlowIsFree]</text><!--MD5=[5c50dc4e9c0374cf465611f2bf01c8f1]
+link CHOICE_START to IDLE--><path d="M936.146,814.4142 C938.745,835.8502 942.931,868.9012 947.232,897.4672 C948.681,907.1732 950.199,917.0172 951.763,926.9762 " fill="none" id="CHOICE_START-to-IDLE" style="stroke:#A80036;stroke-width:2.3;"/><polygon fill="#A80036" points="953.58,938.6832,959.478,916.8121,951.8067,927.3207,941.298,919.6494,953.58,938.6832" style="stroke:#A80036;stroke-width:2.3;"/><text fill="#000000" font-family="sans-serif" font-size="29.9" lengthAdjust="spacing" textLength="85.1" x="949.532" y="888.421">[else]</text><!--MD5=[90073fffbc82e79c59e627457c5c60c3]
+link OPERATING to STOPPED--><path d="M1560.044,1656.1682 C1580.974,1616.5162 1599.328,1575.8752 1614.232,1534.5672 C1704.07,1285.5232 1740.525,1171.5582 1614.232,938.8672 C1535.687,794.1512 1369.604,699.3452 1241.287,644.5592 " fill="none" id="OPERATING-to-STOPPED" style="stroke:#A80036;stroke-width:2.3;"/><polygon fill="#A80036" points="1230.569,640.0282,1246.0767,656.54,1241.1678,644.4908,1253.217,639.5819,1230.569,640.0282" style="stroke:#A80036;stroke-width:2.3;"/><text fill="#000000" font-family="sans-serif" font-size="29.9" lengthAdjust="spacing" textLength="78.2" x="1586.632" y="888.421">STOP</text><!--MD5=[4346f20216289b09d1c2b40e5ac8e089]
+link OPERATING to IDLE--><path d="M1088.866,1655.8922 C1087.854,1628.8902 1085.922,1602.1412 1082.932,1575.9672 C1081.828,1566.3072 1080.54,1556.5552 1079.114,1546.6882 " fill="none" id="OPERATING-to-IDLE" style="stroke:#A80036;stroke-width:2.3;"/><polygon fill="#A80036" points="1077.389,1535.1192,1071.3676,1556.9566,1079.0981,1546.4915,1089.5633,1554.222,1077.389,1535.1192" style="stroke:#A80036;stroke-width:2.3;"/><!--MD5=[f73100d716ce6e7b7beadc3c5b4f0ff2]
+link IDLE to OPERATING--><path d="M895.574,1535.2572 C892.446,1548.9192 889.709,1562.5352 887.432,1575.9672 C883.66,1598.2542 881.061,1620.9782 879.451,1643.8862 " fill="none" id="IDLE-to-OPERATING" style="stroke:#A80036;stroke-width:2.3;"/><polygon fill="#A80036" points="878.715,1655.9152,889.1417,1635.8051,879.4057,1644.4359,870.7749,1634.7,878.715,1655.9152" style="stroke:#A80036;stroke-width:2.3;"/><text fill="#000000" font-family="sans-serif" font-size="29.9" lengthAdjust="spacing" textLength="181.7" x="889.732" y="1606.021">[FlowIsFree]</text><!--MD5=[5b7a1d6a0aba5eb788015da42a92fdc7]
+link IDLE to STOPPED--><path d="M1034.057,938.5222 C1044.683,831.3882 1055.723,720.0222 1062.508,651.5052 " fill="none" id="IDLE-to-STOPPED" style="stroke:#A80036;stroke-width:2.3;"/><polygon fill="#A80036" points="1063.635,640.0742,1052.4658,659.7815,1062.5168,651.5197,1070.7786,661.5707,1063.635,640.0742" style="stroke:#A80036;stroke-width:2.3;"/><text fill="#000000" font-family="sans-serif" font-size="29.9" lengthAdjust="spacing" textLength="78.2" x="1055.332" y="799.871">STOP</text><!--MD5=[1484cf804706c17b6caeb7077b9bb997]
+link *start to UP--><path d="M894.7,60.582 C894.7,85.123 894.7,129.559 894.7,188.163 " fill="none" id="*start-to-UP" style="stroke:#A80036;stroke-width:2.3;"/><polygon fill="#A80036" points="894.7,200.077,903.9,179.377,894.7,188.577,885.5,179.377,894.7,200.077" style="stroke:#A80036;stroke-width:2.3;"/><!--MD5=[ecac89f1cb9a834dd3beff1ef5c67012]
+link UP to DOWN--><path d="M796.122,2923.737 C795.179,2946.76 794.305,2969.622 793.5,2992.3 C792.879,3009.665 787.681,3015.024 793.5,3031.4 C801.044,3052.629 813.947,3072.846 828.069,3090.579 " fill="none" id="UP-to-DOWN" style="stroke:#A80036;stroke-width:2.3;"/><polygon fill="#A80036" points="836.004,3100.17,829.8757,3078.3623,828.6646,3091.3166,815.7103,3090.1054,836.004,3100.17" style="stroke:#A80036;stroke-width:2.3;"/><text fill="#000000" font-family="sans-serif" font-size="29.9" lengthAdjust="spacing" textLength="94.3" x="795.8" y="3022.3539">FAULT</text><!--MD5=[1ce488963331178650d08126837d26c2]
+link DOWN to UP--><path d="M898.449,3099.986 C899.714,3078.55 900.979,3053.848 901.6,3031.4 C902.083,3014.035 901.646,3009.688 901.6,2992.3 C901.554,2973.555 901.508,2954.695 901.462,2935.697 " fill="none" id="DOWN-to-UP" style="stroke:#A80036;stroke-width:2.3;"/><polygon fill="#A80036" points="901.416,2923.852,892.2752,2944.5782,901.4489,2935.352,910.6751,2944.5256,901.416,2923.852" style="stroke:#A80036;stroke-width:2.3;"/><text fill="#000000" font-family="sans-serif" font-size="29.9" lengthAdjust="spacing" textLength="207" x="903.9" y="3022.3539">FAULT_CLEAR</text><!--MD5=[f6f2180c3a8f3369bc95e527738d6a3d]
+@startuml
+'https://plantuml.com/state-diagram
+skinparam defaultTextAlignment left
+scale 350 width
+
+[*] - -> UP
+state DOWN : entry/ issue ToolDownEvent
+
+state UP {
+    state UP: entry/ ToolUpEventAction, ToolUpEvent(tool)
+    state UP: PART_LOADING / LoadPartAction, PartLoadedEvt(tool, part)
+    state UP: PART_UNLOADING / UnloadPartAction, PartUnloadedEvt(tool, part)
+
+    state STOPPED
+    STOPPED: entry / ToolStoppedEvent(tool)
+
+    state CHOICE_START <<choice>>
+    [*] - -> STOPPED
+    STOPPED - -> CHOICE_START: START
+    CHOICE_START - -> OPERATING: [FlowIsFree]
+    CHOICE_START - -> IDLE: [else]
+
+    OPERATING - -> STOPPED: STOP
+    OPERATING - -> IDLE
+
+    state IDLE {
+        IDLE: entry / ToolIdleEvent(tool)
+        state UPSTREAM: entry / ToolIdleEvent(UPSTREAM)
+        state DOWNSTREAM: entry: ToolIdleEvent(DOWNSTREAM)
+        state CHOICE_IDLE <<choice>>
+        [*] - -> CHOICE_IDLE
+        CHOICE_IDLE - -> UPSTREAM: [InportEmpty]
+        CHOICE_IDLE - -> DOWNSTREAM: [OutportFull]
+    }
+
+    state OPERATING {
+        OPERATING: entry / ToolOperatingEvent(tool)
+        state LOADING_PROCESS: entry / ProcessNewPartAction, PartInProcessEvent(tool, part)
+        state UNLOADING_PROCESS: entry / EjectFinishedPartAction, PartProcessedEvent(tool, part)
+        state CHOICE_LOADING <<choice>>
+        state PROCESSING_PART
+
+        [*] - -> CHOICE_LOADING
+        CHOICE_LOADING - -> LOADING_PROCESS: [ProcessEmpty]
+        CHOICE_LOADING - -> UNLOADING_PROCESS: [ProcessNotEmpty]
+        LOADING_PROCESS - -> PROCESSING_PART
+
+        PROCESSING_PART - -> UNLOADING_PROCESS: [await cycle time]
+        UNLOADING_PROCESS - -> LOADING_PROCESS: [FlowIsFree]
+        UNLOADING_PROCESS - -> [*] : [InportEmpty]
+        UNLOADING_PROCESS - -> [*] : [OutportFull]
+    }
+
+    IDLE - -> OPERATING: [FlowIsFree]
+    IDLE - -> STOPPED: STOP
+}
+
+UP - -> DOWN: FAULT
+DOWN - -> UP: FAULT_CLEAR
+@enduml
+
+@startuml
+skinparam defaultTextAlignment left
+scale 350 width
+
+[*] - -> UP
+state DOWN : entry/ issue ToolDownEvent
+
+state UP {
+    state UP: entry/ ToolUpEventAction, ToolUpEvent(tool)
+    state UP: PART_LOADING / LoadPartAction, PartLoadedEvt(tool, part)
+    state UP: PART_UNLOADING / UnloadPartAction, PartUnloadedEvt(tool, part)
+
+    state STOPPED
+    STOPPED: entry / ToolStoppedEvent(tool)
+
+    state CHOICE_START <<choice>>
+    [*] - -> STOPPED
+    STOPPED - -> CHOICE_START: START
+    CHOICE_START - -> OPERATING: [FlowIsFree]
+    CHOICE_START - -> IDLE: [else]
+
+    OPERATING - -> STOPPED: STOP
+    OPERATING - -> IDLE
+
+    state IDLE {
+        IDLE: entry / ToolIdleEvent(tool)
+        state UPSTREAM: entry / ToolIdleEvent(UPSTREAM)
+        state DOWNSTREAM: entry: ToolIdleEvent(DOWNSTREAM)
+        state CHOICE_IDLE <<choice>>
+        [*] - -> CHOICE_IDLE
+        CHOICE_IDLE - -> UPSTREAM: [InportEmpty]
+        CHOICE_IDLE - -> DOWNSTREAM: [OutportFull]
+    }
+
+    state OPERATING {
+        OPERATING: entry / ToolOperatingEvent(tool)
+        state LOADING_PROCESS: entry / ProcessNewPartAction, PartInProcessEvent(tool, part)
+        state UNLOADING_PROCESS: entry / EjectFinishedPartAction, PartProcessedEvent(tool, part)
+        state CHOICE_LOADING <<choice>>
+        state PROCESSING_PART
+
+        [*] - -> CHOICE_LOADING
+        CHOICE_LOADING - -> LOADING_PROCESS: [ProcessEmpty]
+        CHOICE_LOADING - -> UNLOADING_PROCESS: [ProcessNotEmpty]
+        LOADING_PROCESS - -> PROCESSING_PART
+
+        PROCESSING_PART - -> UNLOADING_PROCESS: [await cycle time]
+        UNLOADING_PROCESS - -> LOADING_PROCESS: [FlowIsFree]
+        UNLOADING_PROCESS - -> [*] : [InportEmpty]
+        UNLOADING_PROCESS - -> [*] : [OutportFull]
+    }
+
+    IDLE - -> OPERATING: [FlowIsFree]
+    IDLE - -> STOPPED: STOP
+}
+
+UP - -> DOWN: FAULT
+DOWN - -> UP: FAULT_CLEAR
+@enduml
+
+PlantUML version 1.2022.1(Tue Feb 01 19:19:58 CET 2022)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: GB
+--></g></svg>

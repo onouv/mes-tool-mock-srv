@@ -9,11 +9,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.statemachine.StateContext;
 import org.springframework.statemachine.action.Action;
 
-public class ToolIdleEventDownStreamAction
+public class ToolIdleDownStreamEventAction
     extends ToolAction
     implements Action<ToolStates, ToolEvents> {
 
-  private static final Logger logger= LoggerFactory.getLogger(ToolIdleEventDownStreamAction.class);
+  private static final Logger logger= LoggerFactory.getLogger(ToolIdleDownStreamEventAction.class);
   @Override
   public void execute(final StateContext<ToolStates, ToolEvents> context) {
     init(context);
