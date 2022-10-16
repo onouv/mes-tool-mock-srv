@@ -17,7 +17,7 @@ public class ToolUpEvent extends ToolEvent {
 
 	public String toString() {
 		return String.format(
-				"Tool id=%s UP at %s.", this.toolId, this.timeStamp);
+				"Tool id=%s UP @ %s.", this.toolId, this.timeStamp);
 	}
 
 }

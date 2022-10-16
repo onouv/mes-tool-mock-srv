@@ -11,7 +11,7 @@ public class ToolOperatingAction extends ToolAction {
   @Override
   public void execute(StateContext<ToolStates, ToolEvents> stateContext) {
     init(stateContext);
-    logger.debug("Tool id=%s now OPERATING.", toolId);
+    logger.debug("Tool id={} now OPERATING.", toolId);
     finish();
   }
 }

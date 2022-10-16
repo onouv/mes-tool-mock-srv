@@ -14,6 +14,6 @@ public class ToolStoppedEvent extends ToolEvent {
 
   public String toString() {
     return String.format(
-        "Tool id=%s issues STOPPED event.", this.toolId);
+        "Tool id=%s STOPPED @ %s.", this.toolId, this.timeStamp);
   }
 }

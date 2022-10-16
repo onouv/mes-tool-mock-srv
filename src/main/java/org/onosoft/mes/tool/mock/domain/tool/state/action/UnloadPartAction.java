@@ -24,7 +24,7 @@ public class UnloadPartAction
       PartUnloadedEvent event = new PartUnloadedEvent(unloaded);
       events.add(event);
       finish();
-      logger.debug("Tool id=%s unloaded part id=%s", toolId, unloaded.getId());
+      logger.debug("Tool id={} unloaded part id={}", toolId, unloaded.getId());
     }
     catch(NoPartAvailableException e) {
       StateContextVariableUtil.setApplicationException(context, e);

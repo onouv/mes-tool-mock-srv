@@ -27,7 +27,7 @@ public class LoadPartAction extends ToolAction {
             inport.load(part);
             events.add(new PartLoadedEvent(part));
             finish();
-            logger.debug("LoadPartAction: Tool id=%s loaded part id=%s", toolId, part.getId());
+            logger.debug("LoadPartAction: Tool id={} loaded part id={}", toolId, part.getId());
         } catch (LoadportFullException e) {
             StateContextVariableUtil.setApplicationException(context, e);
         }

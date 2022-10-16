@@ -21,7 +21,7 @@ public class  ToolStoppedEventAction extends ToolAction {
   @Override
   public void execute(StateContext<ToolStates, ToolEvents> stateContext) {
     init(stateContext);
-    logger.debug("Tool id=%s issues STOPPED event.", toolId);
+    logger.debug("Tool id={} issues STOPPED event.", toolId);
     events.add(new ToolStoppedEvent(toolId));
     finish();
   }

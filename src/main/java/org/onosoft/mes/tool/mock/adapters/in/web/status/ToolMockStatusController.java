@@ -43,6 +43,7 @@ public class ToolMockStatusController {
 			@PathVariable("tool-id") String toolId,
 			@RequestBody ToolDefinitionDto body) throws Exception {
 
+		logger.info("********************************************************************************");
 		logger.info(String.format(
 				"processing POST /mes/tool/%s/mock with body %s",
 				toolId,
@@ -91,6 +92,7 @@ public class ToolMockStatusController {
 	@CrossOrigin(origins={"http://localhost:3000"})
 	public ResponseEntity<Void> deleteTool(@PathVariable("tool-id") String toolId)
 		throws NoSuchToolFoundException {
+		logger.info("********************************************************************************");
 		logger.info(String.format("processing DELETE /mes/tool/%s/mock", toolId));
 
 		this.domainService.destroyTool(new ToolId(toolId));
@@ -103,7 +105,8 @@ public class ToolMockStatusController {
 	@CrossOrigin(origins={"http://localhost:3000"})
 	public ResponseEntity<ToolDto> startTool(
 			@PathVariable("tool-id") String toolId) throws NoSuchToolFoundException {
-		
+
+		logger.info("********************************************************************************");
 		logger.info(String.format(
 				"processing PUT /mes/tool/%s/mock/status/start",
 				toolId));
@@ -118,7 +121,7 @@ public class ToolMockStatusController {
 	@CrossOrigin(origins={"http://localhost:3000"})
 	public ResponseEntity<ToolDto> stopTool(
 			@PathVariable("tool-id") String toolId) throws NoSuchToolFoundException {
-		
+		logger.info("****************************************");
 		logger.info(String.format(
 				"processing PUT /mes/tool/%s/mock/status/stop",
 				toolId));
@@ -133,7 +136,7 @@ public class ToolMockStatusController {
 	@CrossOrigin(origins={"http://localhost:3000"})
 	public ResponseEntity<ToolDto> faultTool(
 			@PathVariable("tool-id") String toolId) throws  NoSuchToolFoundException {
-
+		logger.info("********************************************************************************");
 		logger.info(String.format(
 				"processing PUT /mes/tool/%s/mock/status/fault",
 				toolId));
@@ -148,7 +151,7 @@ public class ToolMockStatusController {
 	@CrossOrigin(origins={"http://localhost:3000"})
 	public ResponseEntity<ToolDto> clearFaultTool(
 			@PathVariable("tool-id") String toolId) throws  NoSuchToolFoundException {
-
+		logger.info("********************************************************************************");
 		logger.info(String.format(
 				"processing DELETE /mes/tool/%s/mock/status/fault",
 				toolId));

@@ -15,6 +15,6 @@ public class ToolDownEvent extends ToolEvent {
 	
 	public String toString() {
 		return String.format(
-				"Tool id=%s DOWN at %s.", this.toolId, this.timeStamp);
+				"Tool id=%s DOWN @ %s.", this.toolId, this.timeStamp);
 	}
 }

@@ -16,7 +16,7 @@ public class ToolUpEventAction
   public void execute(StateContext<ToolStates, ToolEvents> stateContext) {
     init(stateContext);
     events.add(new ToolUpEvent(toolId));
-    logger.debug("Tool id=%s issues UP event.", toolId);
+    logger.debug("Tool id={} issues UP event.", toolId.toString());
     finish();
   }
 }

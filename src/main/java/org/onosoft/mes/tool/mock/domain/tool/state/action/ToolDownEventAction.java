@@ -20,7 +20,7 @@ public class ToolDownEventAction
     @Override
     public void execute(StateContext<ToolStates, ToolEvents> stateContext) {
         init(stateContext);
-        logger.debug("Tool id=%s issues down event", toolId);
+        logger.debug("Tool id={} issues down event", toolId);
         events.add(new ToolDownEvent(toolId));
         finish();
     }

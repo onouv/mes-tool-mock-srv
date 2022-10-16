@@ -12,7 +12,7 @@ public class ToolStartedAction extends ToolAction {
   @Override
   public void execute(StateContext<ToolStates, ToolEvents> stateContext) {
     init(stateContext);
-    logger.debug("Tool id=%s issues STARTED event.", toolId);
+    logger.debug("Tool id={} issues STARTED event.", toolId);
     events.add(new ToolStartedEvent(toolId));
     finish();
   }

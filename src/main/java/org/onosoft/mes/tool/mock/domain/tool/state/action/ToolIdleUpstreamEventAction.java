@@ -17,7 +17,7 @@ public class ToolIdleUpstreamEventAction
     @Override
     public void execute(final StateContext<ToolStates, ToolEvents> context) {
         init(context);
-        logger.debug("Tool id=%s issues ToolIdleEvent with UPSTREAM reason.", toolId);
+        logger.debug("Tool id={} issues ToolIdleEvent with UPSTREAM reason.", toolId);
         events.add(new ToolIdleEvent(toolId, IdleReason.UPSTREAM));
         finish();
     }

@@ -31,19 +31,21 @@ state UP {
         state IDLE_CHOICE <<choice>>
         [*] --> IDLE_CHOICE
         IDLE_CHOICE --> IDLE_UPSTREAM: [InportEmpty]
-        IDLE_CHOICE --> IDLE_DOWNSTREAM: [OutportFull]
+        IDLE_CHOICE --> IDLE_DOWNSTREAM: [else]
+        IDLE_UPSTREAM --> [*]:[FlowIsFree]
+        IDLE_DOWNSTREAM --> [*]:[FlowIsFree]
     }
 
     state OPERATING {
         OPERATING: entry / ToolOperatingEvent(tool)
         state LOADING_PROCESS: entry / ProcessNewPartAction, PartInProcessEvent(tool, part)
         state UNLOADING_PROCESS: entry / EjectFinishedPartAction, PartProcessedEvent(tool, part)
-        state CHOICE_LOADING <<choice>>
+        state OPERATING_CHOICE <<choice>>
         state PROCESSING_PART
 
-        [*] --> CHOICE_LOADING
-        CHOICE_LOADING --> LOADING_PROCESS: [ProcessEmpty]
-        CHOICE_LOADING --> UNLOADING_PROCESS: [ProcessNotEmpty]
+        [*] --> OPERATING_CHOICE
+        OPERATING_CHOICE --> LOADING_PROCESS: [ProcessEmpty]
+        OPERATING_CHOICE --> UNLOADING_PROCESS: [else]
         LOADING_PROCESS --> PROCESSING_PART
 
         PROCESSING_PART --> UNLOADING_PROCESS: [await cycle time]

@@ -13,6 +13,6 @@ public class ToolStartedEvent extends  ToolEvent{
 
   public String toString() {
     return String.format(
-        "Tool id=%s STARTED at %s.", this.toolId, this.timeStamp);
+        "Tool id=%s STARTED @ %s.", this.toolId, this.timeStamp);
   }
 }

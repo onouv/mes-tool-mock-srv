@@ -28,7 +28,7 @@ public class ProcessNewPartAction extends ToolAction{
     try {
       Part newPart = this.inport.next();
       this.process.run(newPart);
-      logger.debug("ProcessNewPartAction:  processing part " + newPart.getId());
+      logger.debug("ProcessNewPartAction: Tool id={} processing part {}", this.toolId, newPart.getId());
       PartInProcessEvent inProcessEvent = new PartInProcessEvent(
           newPart,
           this.process.getId());

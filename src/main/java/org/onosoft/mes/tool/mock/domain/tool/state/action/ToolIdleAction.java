@@ -8,12 +8,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.statemachine.StateContext;
 
 public class ToolIdleAction extends ToolAction {
-  private static final Logger logger= LoggerFactory.getLogger(ToolUpEventAction.class);
+  private static final Logger logger= LoggerFactory.getLogger(ToolIdleAction.class);
   @Override
   public void execute(StateContext<ToolStates, ToolEvents> stateContext) {
     init(stateContext);
     events.add(new ToolUpEvent(toolId));
-    logger.debug("Tool id=%s now IDLE.", toolId);
+    logger.debug("Tool id={} now IDLE.", toolId);
     finish();
   }
 }
