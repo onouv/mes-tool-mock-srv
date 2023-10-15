@@ -17,28 +17,26 @@ state UP {
     state CHOICE_START <<choice>>
     [*] --> STOPPED
     STOPPED --> CHOICE_START: START
-    CHOICE_START --> OPERATING: [FlowIsFree]
-    CHOICE_START --> IDLE: [else]
+    CHOICE_START --> OPERATING: [InportNotEmpty && OutportNotFull]
+    CHOICE_START --> IDLE: [InportEmpty || OutportFull]
 
     OPERATING --> STOPPED: STOP
     OPERATING --> IDLE
 
     state IDLE {
-        IDLE: entry / ToolIdleEvent(tool)
-        state IDLE_UPSTREAM: entry / ToolIdleEvent(UPSTREAM)
-        state IDLE_DOWNSTREAM: entry: ToolIdleEvent(DOWNSTREAM)
-        state CHOICE_IDLE <<choice>>
-        [*] --> CHOICE_IDLE
-        CHOICE_IDLE --> IDLE_UPSTREAM: [InportEmpty]
-        CHOICE_IDLE --> IDLE_DOWNSTREAM: [OutportFull]
-        IDLE_UPSTREAM --> [*]: STOP
-        IDLE_DOWNSTREAM --> [*]: STOP
+        state INPORT_EMPTY: entry / ToolIdleEvent(UPSTREAM)
+        [*] --> INPORT_EMPTY : [InportEmpty]
+        INPORT_EMPTY --> [*]: [InportNotEmpty]
+        ||
+        state OUTPORT_FULL: entry / ToolIdleEvent(DOWNSTREAM)
+        [*] --> OUTPORT_FULL: [OutportFull]
+        OUTPORT_FULL --> [*]: [OutportNotFull]
     }
 
     state OPERATING {
         OPERATING: entry / ToolOperatingEvent(tool)
-        state LOADING_PROCESS: entry / ProcessNewPartAction, PartInProcessEvent(tool, part)
-        state UNLOADING_PROCESS: entry / EjectFinishedPartAction, PartProcessedEvent(tool, part)
+        state LOADING_PROCESS: PartInProcessEvent(tool, part)
+        state UNLOADING_PROCESS: PartProcessedEvent(tool, part)
         state CHOICE_LOADING <<choice>>
         state PROCESSING_PART
 
@@ -48,16 +46,14 @@ state UP {
         LOADING_PROCESS --> PROCESSING_PART
 
         PROCESSING_PART --> UNLOADING_PROCESS: [await cycle time]
-        UNLOADING_PROCESS --> LOADING_PROCESS: [FlowIsFree]
+        UNLOADING_PROCESS --> LOADING_PROCESS: [InportNotEmpty && OutportNotFull]
         UNLOADING_PROCESS --> [*] : [InportEmpty]
         UNLOADING_PROCESS --> [*] : [OutportFull]
     }
 
-    IDLE --> OPERATING: [FlowIsFree]
+    IDLE --> OPERATING
     IDLE --> STOPPED: STOP
-    STOPPED --> [*]: FAULT
-    IDLE --> [*]: FAULT
-    OPERATING --> [*]: FAULT
+
 }
 
 UP --> DOWN: FAULT
