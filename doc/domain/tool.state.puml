@@ -14,11 +14,11 @@ state UP {
     state STOPPED
     STOPPED: entry / ToolStoppedEvent(tool)
 
-    state CHOICE_START <<choice>>
+    state UP_CHOICE <<choice>>
     [*] --> STOPPED
-    STOPPED --> CHOICE_START: START
-    CHOICE_START --> OPERATING: [ InportNotEmpty\n&&\nOutportNotFull ]
-    CHOICE_START --> IDLE: [ InportEmpty \n ||\n OutportFull ]
+    STOPPED --> UP_CHOICE: START
+    UP_CHOICE --> OPERATING: [ FlowIsFree ]
+    UP_CHOICE --> IDLE: [ else ]
 
     OPERATING --> STOPPED: STOP
     OPERATING --> IDLE
@@ -27,9 +27,11 @@ state UP {
 
         state BLOCKED_UPSTREAM: entry / ToolIdleEvent(UPSTREAM)
         state BLOCKED_DOWNSTREAM: entry / ToolIdleEvent(DOWNSTREAM)
+        state IDLE_CHOICE <<choice>>
 
-        [*] --> BLOCKED_UPSTREAM: [ InportEmpty ]
-        [*] --> BLOCKED_DOWNSTREAM: [ OutportFull ]
+        [*] --> IDLE_CHOICE
+        IDLE_CHOICE --> BLOCKED_UPSTREAM: [ InportEmpty ]
+        IDLE_CHOICE --> BLOCKED_DOWNSTREAM: [ else ]
         BLOCKED_DOWNSTREAM --> BLOCKED_UP_AND_DOWNSTREAM: [ InportEmpty ] /\n ToolIdleEvent(UPSTREAM) ]
         BLOCKED_UPSTREAM --> BLOCKED_UP_AND_DOWNSTREAM: [ OutportFull ] /\n ToolIdleEvent(DOWNSTREAM) ]
         BLOCKED_UP_AND_DOWNSTREAM --> BLOCKED_UPSTREAM: [ OutportNotFull ]
@@ -40,19 +42,20 @@ state UP {
 
     state OPERATING {
         OPERATING: entry / ToolOperatingEvent(tool)
-                state LOADING_PROCESS: PartInProcessEvent(tool, part)
-                state UNLOADING_PROCESS: PartProcessedEvent(tool, part)
-                state CHOICE_UNLOADING <<choice>>
-                state PROCESSING_PART
+            state LOADING_PROCESS: PartInProcessEvent(tool, part)
+            state UNLOADING_PROCESS: PartProcessedEvent(tool, part)
+            state CHOICE_PROCESS_EMPTY <<choice>>
+            state CHOICE_UNLOADING <<choice>>
+            state PROCESSING_PART
 
-                [*] --> LOADING_PROCESS: [ProcessEmpty]
-                [*] --> UNLOADING_PROCESS: [ProcessNotEmpty]
-                LOADING_PROCESS --> PROCESSING_PART
+            [*] --> CHOICE_PROCESS_EMPTY
+            CHOICE_PROCESS_EMPTY --> LOADING_PROCESS: [ProcessEmpty]
+            CHOICE_PROCESS_EMPTY --> UNLOADING_PROCESS: [else]
+            LOADING_PROCESS --> PROCESSING_PART
 
-                PROCESSING_PART --> UNLOADING_PROCESS: [await process time]
-                UNLOADING_PROCESS --> CHOICE_UNLOADING: [await unloading time]
-                CHOICE_UNLOADING --> LOADING_PROCESS: [ InportNotEmpty \n&& \nOutportNotFull ]
-                CHOICE_UNLOADING --> [*] : [ InportEmpty || OutportFull ]
+            PROCESSING_PART --> UNLOADING_PROCESS: [await process time]
+            UNLOADING_PROCESS --> LOADING_PROCESS: [ FlowIsFree ]
+            UNLOADING_PROCESS --> [*] : [ FlowIsNotFree ]
     }
 
     IDLE --> OPERATING

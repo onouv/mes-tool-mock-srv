@@ -8,18 +8,18 @@ import org.slf4j.LoggerFactory;
 import org.springframework.statemachine.StateContext;
 import org.springframework.statemachine.guard.Guard;
 
-public class OutportFullGuard implements Guard<ToolStates, ToolEvents> {
+public class InportNotEmptyGuard implements Guard<ToolStates, ToolEvents> {
+  private static final Logger logger= LoggerFactory.getLogger(InportEmptyGuard.class);
 
-  private static final Logger logger= LoggerFactory.getLogger(OutportFullGuard.class);
   @Override
   public boolean evaluate(StateContext<ToolStates, ToolEvents> context) {
-    PortStatus port = StateContextVariableUtil.getOutport(context);
+    PortStatus port = StateContextVariableUtil.getInport(context);
 
-    if(port.isFull()) {
-      logger.debug("OutportFullGuard: Outport found full --> true.");
+    if( ! port.isEmpty()) {
+      logger.debug("InportEmptyGuard: Inport found not empty --> true.");
       return true;
     } else {
-      logger.debug("OutportFullGuard: Outport found not full --> false.");
+      logger.debug("InportEmptyGuard: Inport found empty --> false.");
       return false;
     }
   }

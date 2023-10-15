@@ -8,18 +8,18 @@ import org.slf4j.LoggerFactory;
 import org.springframework.statemachine.StateContext;
 import org.springframework.statemachine.guard.Guard;
 
-public class OutportFullGuard implements Guard<ToolStates, ToolEvents> {
+public class OutportNotFullGuard implements Guard<ToolStates, ToolEvents> {
 
   private static final Logger logger= LoggerFactory.getLogger(OutportFullGuard.class);
   @Override
   public boolean evaluate(StateContext<ToolStates, ToolEvents> context) {
     PortStatus port = StateContextVariableUtil.getOutport(context);
 
-    if(port.isFull()) {
-      logger.debug("OutportFullGuard: Outport found full --> true.");
+    if( ! port.isFull()) {
+      logger.debug("OutportNotFullGuard: Outport found not full --> true.");
       return true;
     } else {
-      logger.debug("OutportFullGuard: Outport found not full --> false.");
+      logger.debug("OutportNotFullGuard: Outport found full --> false.");
       return false;
     }
   }

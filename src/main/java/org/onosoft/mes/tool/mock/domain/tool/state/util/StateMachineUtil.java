@@ -41,138 +41,183 @@ public class StateMachineUtil {
 
       builder.configureStates()
           .withStates()
-              .initial(ToolStates.UP)
-                  .stateEntry(ToolStates.UP, new ToolUpEventAction())
-                      .stateEntry(ToolStates.DOWN, new ToolDownEventAction())
-                          .and()
+          .initial(ToolStates.UP)
+          .stateEntry(ToolStates.UP, new ToolUpEventAction())
+          .stateEntry(ToolStates.DOWN, new ToolDownEventAction())
+          .and()
 
           .withStates()
-              .parent(ToolStates.UP)
-                  .stateEntry(ToolStates.STOPPED, new ToolStoppedEventAction())
-                      .choice(ToolStates.UP_CHOICE)
-                          .stateEntry(ToolStates.IDLE, new ToolIdleAction())
-                              .stateEntry(ToolStates.OPERATING, new ToolOperatingAction())
-                                  .initial(ToolStates.STOPPED)
-                                      .and()
+          .parent(ToolStates.UP)
+          .stateEntry(ToolStates.STOPPED, new ToolStoppedEventAction())
+          .choice(ToolStates.UP_CHOICE)
+          .stateEntry(ToolStates.IDLE, new ToolIdleAction())
+          .stateEntry(ToolStates.OPERATING, new ToolOperatingAction())
+          .initial(ToolStates.STOPPED)
+          .and()
 
           .withStates()
-              .parent(ToolStates.IDLE)
-                  .state(ToolStates.IDLE_CHOICE)
-                  .stateEntry(ToolStates.IDLE_UPSTREAM, new ToolIdleUpstreamEventAction())
-                      .stateEntry(ToolStates.IDLE_DOWNSTREAM,new ToolIdleDownStreamEventAction())
-                          .initial(ToolStates.IDLE_CHOICE)
-                              .and()
+          .parent(ToolStates.IDLE)
+          .choice(ToolStates.IDLE_CHOICE)
+          .stateEntry(ToolStates.BLOCKED_UPSTREAM, new ToolIdleUpstreamEventAction())
+          .stateEntry(ToolStates.BLOCKED_DOWNSTREAM,new ToolIdleDownStreamEventAction())
+          .state(ToolStates.BLOCKED_UP_AND_DOWNSTREAM)
+          .initial(ToolStates.IDLE_CHOICE)
+          .end(ToolStates.IDLE_END)
+          .and()
 
           .withStates()
-              .parent(ToolStates.OPERATING)
-                  .state(ToolStates.OPERATING_CHOICE)
-                      .stateEntry(ToolStates.LOADING_PROCESS, new ProcessNewPartAction())
-                          .state(ToolStates.PROCESSING_PART)
-                              .stateEntry(ToolStates.UNLOADING_PROCESS, new EjectFinishedPartAction())
-                                  .initial(ToolStates.OPERATING_CHOICE)
-                                      .end(ToolStates.OPERATING_END);
+          .parent(ToolStates.OPERATING)
+          .state(ToolStates.OPERATING_CHOICE)
+          .stateEntry(ToolStates.LOADING_PROCESS, new ProcessNewPartAction())
+          .state(ToolStates.PROCESSING_PART)
+          .stateEntry(ToolStates.UNLOADING_PROCESS, new EjectFinishedPartAction())
+          .state(ToolStates.UNLOADING_CHOICE)
+          .initial(ToolStates.OPERATING_CHOICE)
+          .end(ToolStates.OPERATING_END);
                   ;
 
       builder.configureTransitions()
           .withInternal()
-              .source(ToolStates.UP)
-                  .event(ToolEvents.PART_LOADING)
-                      .action(new LoadPartAction())
-                          .and()
+          .source(ToolStates.UP)
+          .event(ToolEvents.PART_LOADING)
+          .action(new LoadPartAction())
+          .and()
 
           .withInternal()
-              .source(ToolStates.UP)
-                  .event(ToolEvents.PART_UNLOADING)
-                      .action(new UnloadPartAction())
-                          .and()
+          .source(ToolStates.UP)
+          .event(ToolEvents.PART_UNLOADING)
+          .action(new UnloadPartAction())
+          .and()
+
+          //
+          // Top-Level transitions
+          //
+          .withExternal()
+          .source(ToolStates.UP)
+          .target(ToolStates.DOWN)
+          .event(ToolEvents.FAULT)
+          .and()
 
           .withExternal()
-              .source(ToolStates.UP)
-                  .target(ToolStates.DOWN)
-                      .event(ToolEvents.FAULT)
-                          .and()
+          .source(ToolStates.DOWN)
+          .target(ToolStates.UP)
+          .event(ToolEvents.FAULT_CLEARED)
+          .and()
 
+          //
+          // UP substate transitions
+          //
           .withExternal()
-              .source(ToolStates.DOWN)
-                  .target(ToolStates.UP)
-                      .event(ToolEvents.FAULT_CLEARED)
-                          .and()
-
-          .withExternal()
-              .source(ToolStates.STOPPED)
-                  .target(ToolStates.UP_CHOICE)
-                      .event(ToolEvents.START)
-                          .and()
+          .source(ToolStates.STOPPED)
+          .target(ToolStates.UP_CHOICE)
+          .event(ToolEvents.START)
+          .and()
 
           .withChoice()
-              .source(ToolStates.UP_CHOICE)
-                  .first(ToolStates.OPERATING, new FlowIsFreeGuard())
-                      .last(ToolStates.IDLE)
-                          .and()
+          .source(ToolStates.UP_CHOICE)
+          .first(ToolStates.OPERATING, new FlowIsFreeGuard())
+          .last(ToolStates.IDLE)
+          .and()
 
           .withExternal()
-              .source(ToolStates.IDLE)
-                  .target(ToolStates.STOPPED)
-                      .event(ToolEvents.STOP)
-                         .and()
+          .source(ToolStates.IDLE)
+          .target(ToolStates.STOPPED)
+          .event(ToolEvents.STOP)
+          .and()
 
           .withExternal()
-              .source(ToolStates.IDLE)
-                  .target(ToolStates.OPERATING)
-                      .guard(new FlowIsFreeGuard())
-                          .and()
+          .source(ToolStates.IDLE)
+          .target(ToolStates.OPERATING)
+          .and()
 
           .withExternal()
-              .source(ToolStates.OPERATING)
-                  .target(ToolStates.IDLE)
+          .source(ToolStates.OPERATING)
+          .target(ToolStates.IDLE)
+          .and()
+
+          .withExternal()
+          .source(ToolStates.OPERATING)
+          .target(ToolStates.STOPPED)
+          .event(ToolEvents.STOP)
+          .and()
+
+          //
+          // IDLE substate transitions
+          //
+          .withChoice()
+          .source(ToolStates.IDLE_CHOICE)
+          .first(ToolStates.BLOCKED_UPSTREAM, new InportEmptyGuard())
+          .last(ToolStates.BLOCKED_DOWNSTREAM)
+          .and()
+
+          .withExternal()
+          .source(ToolStates.BLOCKED_UPSTREAM)
+          .target(ToolStates.BLOCKED_UP_AND_DOWNSTREAM)
+          .guard(new OutportFullGuard())
+          .action(new ToolIdleDownStreamEventAction())
+          .and()
+
+          .withExternal()
+          .source(ToolStates.BLOCKED_UP_AND_DOWNSTREAM)
+          .target(ToolStates.BLOCKED_UPSTREAM)
+          .guard(new OutportNotFullGuard())
+          .and()
+
+          .withExternal()
+          .source(ToolStates.BLOCKED_UP_AND_DOWNSTREAM)
+          .target(ToolStates.BLOCKED_DOWNSTREAM)
+          .guard(new InportNotEmptyGuard())
+          .and()
+
+          .withExternal()
+          .source(ToolStates.BLOCKED_DOWNSTREAM)
+          .target(ToolStates.BLOCKED_UP_AND_DOWNSTREAM)
+          .guard(new InportEmptyGuard())
+          .action(new ToolIdleUpstreamEventAction())
+          .and()
+
+          .withExternal()
+          .source(ToolStates.BLOCKED_UPSTREAM)
+          .target(ToolStates.IDLE_END)
+          .guard(new InportNotEmptyGuard())
+          .and()
+
+          .withExternal()
+          .source(ToolStates.BLOCKED_DOWNSTREAM)
+          .target(ToolStates.IDLE_END)
+          .guard(new OutportNotFullGuard())
+          .and()
+
+          //
+          // OPERATING substate transitions
+          //
+          .withChoice()
+          .source(ToolStates.OPERATING_CHOICE)
+          .first(ToolStates.LOADING_PROCESS, new ProcessEmptyGuard())
+          .last(ToolStates.UNLOADING_PROCESS)
+          .and()
+
+          .withExternal()
+          .source(ToolStates.LOADING_PROCESS)
+          .target(ToolStates.PROCESSING_PART)
+          .and()
+
+          .withExternal()
+          .source(ToolStates.PROCESSING_PART)
+          .target(ToolStates.UNLOADING_PROCESS)
+          .timerOnce(ToolDefault.CYCLE_TIME)
+          .and()
+
+          .withExternal()
+          .source(ToolStates.UNLOADING_PROCESS)
+          .target(ToolStates.LOADING_PROCESS)
+          .guard(new FlowIsFreeGuard())
+          .and()
+
+          .withExternal()
+          .source(ToolStates.UNLOADING_PROCESS)
+          .target(ToolStates.OPERATING_END)
           .guard(new FlowIsNotFreeGuard())
-                      .and()
-
-          .withExternal()
-              .source(ToolStates.OPERATING)
-                  .target(ToolStates.STOPPED)
-                      .event(ToolEvents.STOP)
-                          .and()
-
-          .withChoice()
-              .source(ToolStates.IDLE_CHOICE)
-                  .first(ToolStates.IDLE_UPSTREAM, new InportEmptyGuard())
-                      .last(ToolStates.IDLE_DOWNSTREAM)
-                          .and()
-
-          .withChoice()
-              .source(ToolStates.OPERATING_CHOICE)
-                  .first(ToolStates.LOADING_PROCESS, new ProcessEmptyGuard())
-                      .last(ToolStates.UNLOADING_PROCESS)
-                          .and()
-
-          .withExternal()
-              .source(ToolStates.LOADING_PROCESS)
-                  .target(ToolStates.PROCESSING_PART)
-                      .and()
-
-          .withExternal()
-              .source(ToolStates.PROCESSING_PART)
-                  .target(ToolStates.UNLOADING_PROCESS)
-                      .timerOnce(ToolDefault.CYCLE_TIME)
-                        .and()
-
-          .withExternal()
-              .source(ToolStates.UNLOADING_PROCESS)
-                  .target(ToolStates.LOADING_PROCESS)
-                      .guard(new FlowIsFreeGuard())
-                          .and()
-
-          .withExternal()
-              .source(ToolStates.UNLOADING_PROCESS)
-                  .target(ToolStates.OPERATING_END)
-                      .guard(new InportEmptyGuard())
-                          .and()
-
-          .withExternal()
-              .source(ToolStates.UNLOADING_PROCESS)
-                  .target(ToolStates.OPERATING_END)
-                      .guard(new OutportFullGuard())
           ;
 
       builder.configureConfiguration()
@@ -180,6 +225,7 @@ public class StateMachineUtil {
           .listener(new StateMachineListener());
 
       return builder.build();
+
     }
 
     public void start() {
