@@ -74,7 +74,7 @@ public class StateMachineUtil {
           .state(ToolStates.UNLOADING_CHOICE)
           .initial(ToolStates.OPERATING_CHOICE)
           .end(ToolStates.OPERATING_END);
-                  ;
+      ;
 
       builder.configureTransitions()
           .withInternal()

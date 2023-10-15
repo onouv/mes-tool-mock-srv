@@ -41,21 +41,20 @@ state UP {
      }
 
     state OPERATING {
-        OPERATING: entry / ToolOperatingEvent(tool)
-            state LOADING_PROCESS: PartInProcessEvent(tool, part)
-            state UNLOADING_PROCESS: PartProcessedEvent(tool, part)
-            state CHOICE_PROCESS_EMPTY <<choice>>
-            state CHOICE_UNLOADING <<choice>>
-            state PROCESSING_PART
+        state LOADING_PROCESS: entry/ PartInProcessEvent(tool, part)
+        state UNLOADING_PROCESS: entry/ PartProcessedEvent(tool, part)
+        state CHOICE_PROCESS_EMPTY <<choice>>
+        state CHOICE_UNLOADING <<choice>>
+        state PROCESSING_PART
 
-            [*] --> CHOICE_PROCESS_EMPTY
-            CHOICE_PROCESS_EMPTY --> LOADING_PROCESS: [ProcessEmpty]
-            CHOICE_PROCESS_EMPTY --> UNLOADING_PROCESS: [else]
-            LOADING_PROCESS --> PROCESSING_PART
+        [*] --> CHOICE_PROCESS_EMPTY
+        CHOICE_PROCESS_EMPTY --> LOADING_PROCESS: [ProcessEmpty]
+        CHOICE_PROCESS_EMPTY --> UNLOADING_PROCESS: [else]
+        LOADING_PROCESS --> PROCESSING_PART
 
-            PROCESSING_PART --> UNLOADING_PROCESS: [await process time]
-            UNLOADING_PROCESS --> LOADING_PROCESS: [ FlowIsFree ]
-            UNLOADING_PROCESS --> [*] : [ FlowIsNotFree ]
+        PROCESSING_PART --> UNLOADING_PROCESS: [await process time]
+        UNLOADING_PROCESS --> LOADING_PROCESS: [ FlowIsFree ]
+        UNLOADING_PROCESS --> [*] : [ FlowIsNotFree ]
     }
 
     IDLE --> OPERATING
