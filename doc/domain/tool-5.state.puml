@@ -24,12 +24,12 @@ state UP {
     OPERATING --> IDLE
 
     state IDLE {
-        state CHOICE1 <<choice>>
+
         state BLOCKED_UPSTREAM: entry / ToolIdleEvent(UPSTREAM)
         state BLOCKED_DOWNSTREAM: entry / ToolIdleEvent(DOWNSTREAM)
-        [*] --> CHOICE1
-        CHOICE1 --> BLOCKED_UPSTREAM: [ InportEmpty ]
-        CHOICE1 --> BLOCKED_DOWNSTREAM: [ OutportFull ]
+
+        [*] --> BLOCKED_UPSTREAM: [ InportEmpty ]
+        [*] --> BLOCKED_DOWNSTREAM: [ OutportFull ]
         BLOCKED_DOWNSTREAM --> BLOCKED_UP_AND_DOWNSTREAM: [ InportEmpty ] /\n ToolIdleEvent(UPSTREAM) ]
         BLOCKED_UPSTREAM --> BLOCKED_UP_AND_DOWNSTREAM: [ OutportFull ] /\n ToolIdleEvent(DOWNSTREAM) ]
         BLOCKED_UP_AND_DOWNSTREAM --> BLOCKED_UPSTREAM: [ OutportNotFull ]
@@ -42,13 +42,11 @@ state UP {
         OPERATING: entry / ToolOperatingEvent(tool)
                 state LOADING_PROCESS: PartInProcessEvent(tool, part)
                 state UNLOADING_PROCESS: PartProcessedEvent(tool, part)
-                state CHOICE_LOADING <<choice>>
                 state CHOICE_UNLOADING <<choice>>
                 state PROCESSING_PART
 
-                [*] --> CHOICE_LOADING
-                CHOICE_LOADING --> LOADING_PROCESS: [ProcessEmpty]
-                CHOICE_LOADING --> UNLOADING_PROCESS: [ProcessNotEmpty]
+                [*] --> LOADING_PROCESS: [ProcessEmpty]
+                [*] --> UNLOADING_PROCESS: [ProcessNotEmpty]
                 LOADING_PROCESS --> PROCESSING_PART
 
                 PROCESSING_PART --> UNLOADING_PROCESS: [await process time]
@@ -56,8 +54,6 @@ state UP {
                 CHOICE_UNLOADING --> LOADING_PROCESS: [ InportNotEmpty \n&& \nOutportNotFull ]
                 CHOICE_UNLOADING --> [*] : [ InportEmpty || OutportFull ]
     }
-
-
 
     IDLE --> OPERATING
     IDLE --> STOPPED: STOP
