@@ -44,7 +44,6 @@ state UP {
         state LOADING_PROCESS: entry/ PartInProcessEvent(tool, part)
         state UNLOADING_PROCESS: entry/ PartProcessedEvent(tool, part)
         state CHOICE_PROCESS_EMPTY <<choice>>
-        state CHOICE_UNLOADING <<choice>>
         state PROCESSING_PART
 
         [*] --> CHOICE_PROCESS_EMPTY
