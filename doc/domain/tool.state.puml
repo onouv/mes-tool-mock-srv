@@ -1,47 +1,65 @@
 @startuml
 'https://plantuml.com/state-diagram
-
+skinparam defaultTextAlignment left
 scale 350 width
 
-hide empty description
+[*] --> UP
 state DOWN : entry/ issue ToolDownEvent
 
-[*] --> UP
-UP --> DOWN: FAULT
-DOWN --> UP: FAULT_CLEAR
 state UP {
-    state UP: entry/ ToolUpEvt
-    state UP: PART_LOAD(Part) [!InPortFull] / input.add(part); --> PartLoadEvt(tool, part)
-    state UP: PART_LOAD(Part) [InportFull] / return LoadPortFullException
-    state UP: PART_UNLOAD() [!OutportEmpty] / part=output.unload(); --> PartUnloadEvt(tool, part)
-    state UP: PART_UNLOAD() [OutportEmpty] / return NoPartAvailableException
-    state STOPPED: entry/ --> ToolStoppedEvt
-    state IDLE
-    state PROCESSING: entry/ ProcessNewPartAction --> PartInProcessEvent(tool, newPart)
-    state PROCESSING: timer(CYCLE_TIME)/ --> stateMachine.sendEvent(FINISHED)
-    state PROCESSING: exit/ EjectFinishedPartAction --> PartProcessedEvt(tool, part)
+    state UP: entry/ ToolUpEventAction, ToolUpEvent(tool)
+    state UP: PART_LOADING / LoadPartAction, PartLoadedEvt(tool, part)
+    state UP: PART_UNLOADING / UnloadPartAction, PartUnloadedEvt(tool, part)
 
+    state STOPPED
+    STOPPED: entry / ToolStoppedEvent(tool)
+
+    state CHOICE_START <<choice>>
     [*] --> STOPPED
-    STOPPED --> IDLE: START [InportEmpty] / \nToolIdleEvt(tool, UPSTREAM)
-    STOPPED --> IDLE: START [OutportFull] / \nToolIdleEvt(tool, DOWNSTREAM)
+    STOPPED --> CHOICE_START: START
+    CHOICE_START --> OPERATING: [ InportNotEmpty\n&&\nOutportNotFull ]
+    CHOICE_START --> IDLE: [ InportEmpty \n ||\n OutportFull ]
 
-    STOPPED --> PROCESSING: START [FlowIsFree]
-    PROCESSING --> PROCESSING: FINISHED [FlowFree]
-    PROCESSING --> IDLE: FINISHED [InportEmpty]/ \nToolIdleEvt(tool, UPSTREAM)
-    PROCESSING --> IDLE: FINISHED [OutportFull]/ \nToolIdleEvt(tool, DOWNSTREAM)
-    IDLE --> PROCESSING: [FlowIsFree]
+    OPERATING --> STOPPED: STOP
+    OPERATING --> IDLE
+
+    state IDLE {
+
+        state BLOCKED_UPSTREAM: entry / ToolIdleEvent(UPSTREAM)
+        state BLOCKED_DOWNSTREAM: entry / ToolIdleEvent(DOWNSTREAM)
+
+        [*] --> BLOCKED_UPSTREAM: [ InportEmpty ]
+        [*] --> BLOCKED_DOWNSTREAM: [ OutportFull ]
+        BLOCKED_DOWNSTREAM --> BLOCKED_UP_AND_DOWNSTREAM: [ InportEmpty ] /\n ToolIdleEvent(UPSTREAM) ]
+        BLOCKED_UPSTREAM --> BLOCKED_UP_AND_DOWNSTREAM: [ OutportFull ] /\n ToolIdleEvent(DOWNSTREAM) ]
+        BLOCKED_UP_AND_DOWNSTREAM --> BLOCKED_UPSTREAM: [ OutportNotFull ]
+        BLOCKED_UP_AND_DOWNSTREAM --> BLOCKED_DOWNSTREAM: [ InportNotEmpty ]
+        BLOCKED_DOWNSTREAM --> [*]: [ OutportNotFull ]
+        BLOCKED_UPSTREAM --> [*]: [ InputNotEmpty ]
+     }
+
+    state OPERATING {
+        OPERATING: entry / ToolOperatingEvent(tool)
+                state LOADING_PROCESS: PartInProcessEvent(tool, part)
+                state UNLOADING_PROCESS: PartProcessedEvent(tool, part)
+                state CHOICE_UNLOADING <<choice>>
+                state PROCESSING_PART
+
+                [*] --> LOADING_PROCESS: [ProcessEmpty]
+                [*] --> UNLOADING_PROCESS: [ProcessNotEmpty]
+                LOADING_PROCESS --> PROCESSING_PART
+
+                PROCESSING_PART --> UNLOADING_PROCESS: [await process time]
+                UNLOADING_PROCESS --> CHOICE_UNLOADING: [await unloading time]
+                CHOICE_UNLOADING --> LOADING_PROCESS: [ InportNotEmpty \n&& \nOutportNotFull ]
+                CHOICE_UNLOADING --> [*] : [ InportEmpty || OutportFull ]
+    }
+
+    IDLE --> OPERATING
     IDLE --> STOPPED: STOP
-    PROCESSING --> STOPPED: STOP
-
-    STOPPED --> [*]
-    IDLE --> [*]
-    PROCESSING --> [*]
-
-    note as N1
-        FlowIsFree: (!InportEmpty && !OutportFull)
-    end note
-
 
 }
 
+UP --> DOWN: FAULT
+DOWN --> UP: FAULT_CLEAR
 @enduml

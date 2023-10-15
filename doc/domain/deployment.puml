@@ -6,9 +6,9 @@ artifact "mes-tool-mock-ui" {
 
 }
 
-artifact "mes-tool-mock-srv" {
-    component ToolMockService
-    interface REST as rest2
+artifact "mes-tool-mock-srv" #FEFECE {
+    component ToolMockService #FEFECE
+    interface REST as rest2 #FEFECE
     ToolMockService -- rest2
 }
 
